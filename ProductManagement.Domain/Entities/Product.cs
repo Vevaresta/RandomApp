@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductManagement.Domain.Entities
+namespace Random.App.ProductManagement.Domain.Entities
 {
     public class Product
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProductManagement.Infrastructure.ORM;
+using Random.App.ProductManagement.Infrastructure.DataAccess;
 
 #nullable disable
 

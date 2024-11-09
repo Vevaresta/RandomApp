@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProductManagement.Domain.Entities;
+using Random.App.ProductManagement.Domain.Entities;
 
 
-namespace ProductManagement.Infrastructure.ORM
+namespace Random.App.ProductManagement.Infrastructure.DataAccess
 {
     public class ProductDbContext : DbContext
     {

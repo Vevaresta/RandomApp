@@ -1,7 +1,7 @@
 ﻿using Common.Infrastructure.Repositories;
-using ProductManagement.Infrastructure.ORM;
+using Random.App.ProductManagement.Infrastructure.DataAccess;
 
-namespace ProductManagement.Infrastructure.RepositoryImplementation
+namespace Random.App.ProductManagement.Infrastructure.RepositoryImplementation
 {
     public class ProductUnitOfWork : IUnitOfWork
     {
@@ -10,7 +10,7 @@ namespace ProductManagement.Infrastructure.RepositoryImplementation
 
         public ProductUnitOfWork(ProductDbContext context)
         {
-              _context = context;
+            _context = context;
         }
 
         public int Complete()

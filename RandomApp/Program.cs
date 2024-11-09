@@ -1,4 +1,4 @@
-using ProductManagement.Infrastructure.Config;
+using Random.App.ProductManagement.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.RegisterDbContext(builder.Configuration);
 
 var app = builder.Build();
 

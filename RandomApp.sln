@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomAppWeb", "RandomApp\RandomAppWeb.csproj", "{EDF127DF-2383-4EF5-A411-26D6C74CCDF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Server.Api", "RandomApp\RandomApp.Server.Api.csproj", "{EDF127DF-2383-4EF5-A411-26D6C74CCDF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductManagement", "ProductManagement", "{570DEA5D-5223-4746-A095-C96C49511E33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductManagement.API", "ProductManagement.API\ProductManagement.API.csproj", "{F6912950-D1B1-4A41-8BE5-281DA45B95EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random.App.ProductManagement.API", "ProductManagement.API\Random.App.ProductManagement.API.csproj", "{F6912950-D1B1-4A41-8BE5-281DA45B95EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductManagement.Domain", "ProductManagement.Domain\ProductManagement.Domain.csproj", "{4C47ECA3-9972-42D9-89B6-BB448ECBC956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random.App.ProductManagement.Domain", "ProductManagement.Domain\Random.App.ProductManagement.Domain.csproj", "{4C47ECA3-9972-42D9-89B6-BB448ECBC956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductManagement.Infrastructure", "ProductManagement.Infrastructure\ProductManagement.Infrastructure.csproj", "{59C33A88-94CA-489B-8947-FE92FAA96F62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random.App.ProductManagement.Infrastructure", "ProductManagement.Infrastructure\Random.App.ProductManagement.Infrastructure.csproj", "{59C33A88-94CA-489B-8947-FE92FAA96F62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{44EDAC1B-201C-4BDE-8E60-B65482D04CE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Infrastructure", "Common.Infrastructure\Common.Infrastructure.csproj", "{F790A2C2-16E0-4689-B94D-7E61FE97C08B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Infrastructure", "Common.Infrastructure\Common.Infrastructure.csproj", "{F790A2C2-16E0-4689-B94D-7E61FE97C08B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{EDCFA3CF-1DC6-4375-ACCE-884F21637D73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomApp.Server.Authentication", "RandomApp.Server.Authentication\RandomApp.Server.Authentication.csproj", "{7ABDA541-2062-40E1-8504-8BF4EF68E078}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,15 +47,21 @@ Global
 		{F790A2C2-16E0-4689-B94D-7E61FE97C08B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F790A2C2-16E0-4689-B94D-7E61FE97C08B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F790A2C2-16E0-4689-B94D-7E61FE97C08B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ABDA541-2062-40E1-8504-8BF4EF68E078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ABDA541-2062-40E1-8504-8BF4EF68E078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ABDA541-2062-40E1-8504-8BF4EF68E078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ABDA541-2062-40E1-8504-8BF4EF68E078}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{EDF127DF-2383-4EF5-A411-26D6C74CCDF8} = {EDCFA3CF-1DC6-4375-ACCE-884F21637D73}
 		{F6912950-D1B1-4A41-8BE5-281DA45B95EC} = {570DEA5D-5223-4746-A095-C96C49511E33}
 		{4C47ECA3-9972-42D9-89B6-BB448ECBC956} = {570DEA5D-5223-4746-A095-C96C49511E33}
 		{59C33A88-94CA-489B-8947-FE92FAA96F62} = {570DEA5D-5223-4746-A095-C96C49511E33}
 		{F790A2C2-16E0-4689-B94D-7E61FE97C08B} = {44EDAC1B-201C-4BDE-8E60-B65482D04CE7}
+		{7ABDA541-2062-40E1-8504-8BF4EF68E078} = {EDCFA3CF-1DC6-4375-ACCE-884F21637D73}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {254C33DF-E3C6-4F06-8D98-56E4B1382857}
