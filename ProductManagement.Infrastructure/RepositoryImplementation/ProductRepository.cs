@@ -15,9 +15,12 @@ namespace Random.App.ProductManagement.Infrastructure.RepositoryImplementation
             _productDbContext = context;
         }
 
-        public async Task<IEnumerable<Product>> GetPopularProducts(int count)
+        public async Task<IEnumerable<Product>> GetPopularProducts(string keyword)
         {
-            return await _productDbContext.Products.OrderByDescending(d => d.Name).Take(count).ToListAsync();
+            return await _productDbContext.Products
+                .Where(p => p.Description.Contains(keyword))
+                .ToListAsync();
+
         }
     }
 }

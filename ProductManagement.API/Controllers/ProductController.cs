@@ -1,5 +1,7 @@
 ﻿using Common.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Random.App.ProductManagement.API.Controllers;
 using Random.App.ProductManagement.Domain.Entities;
 using Random.App.ProductManagement.Domain.RepositoryInterfaces;
 using System.Linq.Expressions;
@@ -21,7 +23,7 @@ namespace Random.App.ProductManagement.API.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProductById(int id)
+        public async Task<ActionResult<Product>> GetProductById([FromRoute] int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
 
@@ -88,7 +90,7 @@ namespace Random.App.ProductManagement.API.Controllers
 
 
         [HttpDelete("removeRange")]
-        public async Task<IActionResult> RemoveProducts([FromBody]IEnumerable<int> products)
+        public async Task<IActionResult> RemoveProducts([FromQuery]IEnumerable<int> products)
         {
             if (products == null || !products.Any())
             {
@@ -108,6 +110,27 @@ namespace Random.App.ProductManagement.API.Controllers
 
             return Ok();
         }
+
+        [HttpGet("getPopularProducts")]
+        public async Task<IActionResult> GetPopularProducts([FromQuery] string? keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                return BadRequest("Keyword cannot be null or empty");
+            }
+
+            var popularProducts = await _productRepository.GetPopularProducts(keyword);
+
+            if (!popularProducts.Any())
+            {
+                return NotFound($"No products with the keyword {keyword} found");
+            }
+
+            var count = popularProducts.Count();
+            return Ok(count);
+            
+        }
+        
 
     }
 }
