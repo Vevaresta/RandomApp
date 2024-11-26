@@ -6,6 +6,7 @@ namespace Random.App.ProductManagement.Domain.Entities
 {
     public class Product
     {
+        // write validation for fields
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
