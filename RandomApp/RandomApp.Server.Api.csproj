@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middleware\" />
+    <ProjectReference Include="..\ProductManagement.API\Random.App.ProductManagement.API.csproj" />
+    <ProjectReference Include="..\ProductManagement.Infrastructure\Random.App.ProductManagement.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductManagement.API\Random.App.ProductManagement.API.csproj" />
-    <ProjectReference Include="..\ProductManagement.Infrastructure\Random.App.ProductManagement.Infrastructure.csproj" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
 
 </Project>
