@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random.App.ProductManagemen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{44EDAC1B-201C-4BDE-8E60-B65482D04CE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Infrastructure", "Common.Infrastructure\Common.Infrastructure.csproj", "{F790A2C2-16E0-4689-B94D-7E61FE97C08B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Shared", "Common.Infrastructure\Common.Shared.csproj", "{F790A2C2-16E0-4689-B94D-7E61FE97C08B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{EDCFA3CF-1DC6-4375-ACCE-884F21637D73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomApp.Server.Authentication", "RandomApp.Server.Authentication\RandomApp.Server.Authentication.csproj", "{7ABDA541-2062-40E1-8504-8BF4EF68E078}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Server.Authentication", "RandomApp.Server.Authentication\RandomApp.Server.Authentication.csproj", "{7ABDA541-2062-40E1-8504-8BF4EF68E078}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

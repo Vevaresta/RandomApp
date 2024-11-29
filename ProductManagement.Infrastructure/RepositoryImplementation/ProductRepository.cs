@@ -1,4 +1,4 @@
-﻿using Common.Infrastructure.Repositories;
+﻿using Common.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Random.App.ProductManagement.Domain.Entities;
 using Random.App.ProductManagement.Domain.RepositoryInterfaces;

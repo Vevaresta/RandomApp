@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
+using NLog.Web;
 using Random.App.ProductManagement.Infrastructure.Configuration;
-using System.Reflection;
+using RandomApp.Server.Api.Middleware;
 
 internal class Program
 {
@@ -9,8 +10,12 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Logging.AddJsonConsole();
+        builder.Logging.ClearProviders();
+        builder.Logging.AddConsole();
+        builder.Host.UseNLog();
+
         builder.Services.AddControllers();
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
@@ -38,7 +43,7 @@ internal class Program
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
             });
         }
-
+        app.UseMiddleware<ExceptionMiddleware>();
         app.UseHttpsRedirection();
 
         app.UseAuthorization();

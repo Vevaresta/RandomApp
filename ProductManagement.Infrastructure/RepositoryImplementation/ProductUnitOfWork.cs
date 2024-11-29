@@ -1,4 +1,4 @@
-﻿using Common.Infrastructure.Repositories;
+﻿using Common.Shared.Repositories;
 using Random.App.ProductManagement.Infrastructure.DataAccess;
 
 namespace Random.App.ProductManagement.Infrastructure.RepositoryImplementation

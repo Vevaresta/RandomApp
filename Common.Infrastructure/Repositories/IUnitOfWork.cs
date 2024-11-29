@@ -1,4 +1,4 @@
-﻿namespace Common.Infrastructure.Repositories
+﻿namespace Common.Shared.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {

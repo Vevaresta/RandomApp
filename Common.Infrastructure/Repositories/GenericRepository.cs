@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Common.Infrastructure.Repositories
+namespace Common.Shared.Repositories
 {
     public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
@@ -10,8 +10,8 @@ namespace Common.Infrastructure.Repositories
 
         public GenericRepository(DbContext context)
         {
-           _context = context;
-           DbSet = context.Set<TEntity>();
+            _context = context;
+            DbSet = context.Set<TEntity>();
         }
         public virtual async Task<TEntity> GetByIdAsync(int id)
         {

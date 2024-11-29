@@ -1,4 +1,4 @@
-﻿using Common.Infrastructure.Repositories;
+﻿using Common.Shared.Repositories;
 using Random.App.ProductManagement.Domain.Entities;
 
 namespace Random.App.ProductManagement.Domain.RepositoryInterfaces

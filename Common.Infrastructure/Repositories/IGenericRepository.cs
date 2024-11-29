@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-namespace Common.Infrastructure.Repositories
+namespace Common.Shared.Repositories
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

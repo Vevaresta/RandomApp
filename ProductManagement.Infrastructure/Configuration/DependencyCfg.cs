@@ -1,4 +1,4 @@
-﻿using Common.Infrastructure.Repositories;
+﻿using Common.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
