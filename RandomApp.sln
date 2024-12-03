@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{EDCFA3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Server.Authentication", "RandomApp.Server.Authentication\RandomApp.Server.Authentication.csproj", "{7ABDA541-2062-40E1-8504-8BF4EF68E078}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{C97CE7D4-3446-407C-986F-317315A11C2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomApp.Web.Client", "RandomApp.Web.Client\RandomApp.Web.Client.csproj", "{C5C02E52-58A4-4FED-B240-E896AC8016DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,10 @@ Global
 		{7ABDA541-2062-40E1-8504-8BF4EF68E078}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ABDA541-2062-40E1-8504-8BF4EF68E078}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ABDA541-2062-40E1-8504-8BF4EF68E078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5C02E52-58A4-4FED-B240-E896AC8016DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5C02E52-58A4-4FED-B240-E896AC8016DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5C02E52-58A4-4FED-B240-E896AC8016DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C02E52-58A4-4FED-B240-E896AC8016DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +70,7 @@ Global
 		{59C33A88-94CA-489B-8947-FE92FAA96F62} = {570DEA5D-5223-4746-A095-C96C49511E33}
 		{F790A2C2-16E0-4689-B94D-7E61FE97C08B} = {44EDAC1B-201C-4BDE-8E60-B65482D04CE7}
 		{7ABDA541-2062-40E1-8504-8BF4EF68E078} = {EDCFA3CF-1DC6-4375-ACCE-884F21637D73}
+		{C5C02E52-58A4-4FED-B240-E896AC8016DD} = {C97CE7D4-3446-407C-986F-317315A11C2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {254C33DF-E3C6-4F06-8D98-56E4B1382857}
