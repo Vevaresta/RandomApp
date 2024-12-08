@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Random.App.ProductManagement.Domain.Entities;
 using Random.App.ProductManagement.Domain.RepositoryInterfaces;
+using RandomApp.Web.Client.Products;
 using System.Linq.Expressions;
 
 
@@ -18,13 +19,15 @@ namespace Random.App.ProductManagement.API.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductRepository _productRepository;
         private readonly ILogger _logger;
+        private readonly IProductService _productService;
 
 
-        public ProductController(IUnitOfWork unitOfWork, IProductRepository productRepository)
+        public ProductController(IUnitOfWork unitOfWork, IProductRepository productRepository, IProductService productService)
         {
             _unitOfWork = unitOfWork;
             _productRepository = productRepository;
             this._logger = LogManager.GetCurrentClassLogger();
+            _productService = productService;
         }
 
         // ProducesResponseType->usefull for swagger API documentation, public facing APIs and when dealing with multiple response scenarios
@@ -243,6 +246,15 @@ namespace Random.App.ProductManagement.API.Controllers
             });
         }
 
+
+        [HttpPost("fetch-from-api")]
+        public async Task<IActionResult> FetchProductsFromApi()
+        {
+            try
+            {
+                await _productService.FetchAndSaveProductAsync();
+            }
+        }
 
     }
 }
