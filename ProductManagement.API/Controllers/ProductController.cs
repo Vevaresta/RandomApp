@@ -247,13 +247,29 @@ namespace Random.App.ProductManagement.API.Controllers
         }
 
 
-        [HttpPost("fetch-from-api")]
-        public async Task<IActionResult> FetchProductsFromApi()
+        [HttpPost("GetDataFromApi")]
+        public async Task<IActionResult> GetDataFromApi()
         {
-            try
+
+            var products = await _productService.GetProductsFromApiAsync();
+
+            if (products == null || !products.Any())
             {
-                await _productService.FetchAndSaveProductAsync();
+                return NoContent();
             }
+
+
+            foreach (var product in products)
+            {
+                var existingProduct = await _productRepository.GetByIdAsync(product.Id);
+                if (existingProduct == null)
+                {
+                    await _productRepository.AddAsync(product);
+                }
+            }
+
+            await _unitOfWork.CompleteAsync();
+            return Ok(new { Message = "Products fetched and saved successfully." });
         }
 
     }

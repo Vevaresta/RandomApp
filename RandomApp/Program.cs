@@ -3,6 +3,7 @@ using NLog;
 using NLog.Web;
 using Random.App.ProductManagement.Infrastructure.Configuration;
 using RandomApp.Server.Api.Middleware;
+using RandomApp.Web.Client.Configuration;
 
 internal class Program
 {
@@ -33,7 +34,8 @@ internal class Program
                 });
             });
 
-            builder.Services.RegisterServices();
+            builder.Services.RegisterFrontendServices();
+            builder.Services.RegisterBackendServices();
             builder.Services.RegisterDbContext(builder.Configuration);
 
 

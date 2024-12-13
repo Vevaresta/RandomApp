@@ -6,6 +6,7 @@ namespace RandomApp.Web.Client.Products
     public class ProductService : ApiClientBase, IProductService
     {
         public ProductService(IHttpClientCreator httpClientCreator) : base(httpClientCreator) { }
+
         public async Task<IEnumerable<Product>> GetProductsFromApiAsync()
         {
             var response = await HttpClient.GetAsync("products");

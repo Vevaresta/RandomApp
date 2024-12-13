@@ -5,7 +5,7 @@ namespace RandomApp.Web.Client.Configuration
 {
     public static class DependencyCfg
     {
-        public static void RegisterServices(this IServiceCollection services)
+        public static void RegisterFrontendServices(this IServiceCollection services)
         {
             services.AddTransient<IHttpClientCreator, HttpClientCreator>();
             services.AddTransient<IProductService, ProductService>();

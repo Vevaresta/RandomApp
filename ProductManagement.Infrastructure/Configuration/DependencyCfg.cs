@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Random.App.ProductManagement.Domain.RepositoryInterfaces;
 using Random.App.ProductManagement.Infrastructure.DataAccess;
+using Random.App.ProductManagement.Infrastructure.Mapping;
 using Random.App.ProductManagement.Infrastructure.RepositoryImplementation;
 
 
@@ -11,10 +12,11 @@ namespace Random.App.ProductManagement.Infrastructure.Configuration
 {
     public static class DependencyCfg
     {
-        public static void RegisterServices(this IServiceCollection services)
+        public static void RegisterBackendServices(this IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUnitOfWork, ProductUnitOfWork>();
+            services.AddAutoMapper(typeof(ProductMappingProfile));
         }
 
         public static void RegisterDbContext(this IServiceCollection services, IConfiguration configuration)
