@@ -48,5 +48,10 @@ namespace Common.Shared.Repositories
             DbSet.RemoveRange(entities);
         }
 
+        public virtual void Update(TEntity entity)
+        {
+            DbSet.Update(entity);
+        }
+
     }
 }

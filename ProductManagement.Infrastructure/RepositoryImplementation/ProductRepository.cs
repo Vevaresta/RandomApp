@@ -22,5 +22,10 @@ namespace Random.App.ProductManagement.Infrastructure.RepositoryImplementation
                 .ToListAsync();
 
         }
+
+        public async Task<Product> GetProductByApiIdAsync(int originalApiId)
+        {
+            return await _productDbContext.Products.FirstOrDefaultAsync(p => p.OriginalApiId == originalApiId);
+        }
     }
 }

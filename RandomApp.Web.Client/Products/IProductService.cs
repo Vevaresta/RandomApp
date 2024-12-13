@@ -6,5 +6,6 @@ namespace RandomApp.Web.Client.Products
     {
         Task<IEnumerable<Product>> GetProductsFromApiAsync();
 
+
     }
 }

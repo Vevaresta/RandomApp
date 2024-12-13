@@ -17,9 +17,6 @@ namespace RandomApp.Web.Client
 
         public HttpClient GetHttpClient()
         {
-            //var httpClient = _httpClientFactory.CreateClient("RandomApp_ApiHttpClient");
-            //httpClient.BaseAddress = new Uri(_configuration.GetValue<string>("baseAddress") ?? "");
-            //return httpClient;
             var httpClient = _httpClientFactory.CreateClient("RandomApp_ApiHttpClient");
             var baseAddress = _configuration.GetValue<string>("ApiSettings:BaseAddress");
             if (string.IsNullOrWhiteSpace(baseAddress))

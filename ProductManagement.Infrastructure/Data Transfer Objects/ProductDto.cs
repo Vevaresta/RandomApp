@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Random.App.ProductManagement.Infrastructure.Data_Transfer_Objects
+﻿namespace Random.App.ProductManagement.Infrastructure.Data_Transfer_Objects
 {
     public class ProductDto
     {

@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+    <PackageReference Include="NLog" Version="5.3.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProductManagement.Domain\Random.App.ProductManagement.Domain.csproj" />
+    <ProjectReference Include="..\ProductManagement.Infrastructure\Random.App.ProductManagement.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

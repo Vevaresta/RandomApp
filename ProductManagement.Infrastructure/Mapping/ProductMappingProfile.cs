@@ -9,10 +9,12 @@ namespace Random.App.ProductManagement.Infrastructure.Mapping
         public ProductMappingProfile()
         {
             CreateMap<ProductDto, Product>()
-                .ForMember(dest => dest.Name,
-                           opt => opt.MapFrom(src => src.Title))
-                .ForMember(dest => dest.Id,
-                           opt => opt.MapFrom(src => src.Id));
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.OriginalApiId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src =>
+                    string.IsNullOrEmpty(src.Title) ? "Unknown Product" : src.Title))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src =>
+                    string.IsNullOrEmpty(src.Category) ? "Uncategorized" : src.Category));
         }
     }
 }
