@@ -1,5 +1,5 @@
 ﻿using Random.App.ProductManagement.Domain.Entities;
-using Random.App.ProductManagement.Infrastructure.Data_Transfer_Objects;
+using Random.App.ProductManagement.Infrastructure.DataTransferObjects;
 
 namespace Random.App.ProductManagement.Infrastructure.Mapping
 {

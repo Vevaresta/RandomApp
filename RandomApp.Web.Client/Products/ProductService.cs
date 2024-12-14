@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using NLog;
 using Random.App.ProductManagement.Domain.Entities;
-using Random.App.ProductManagement.Infrastructure.Data_Transfer_Objects;
+using Random.App.ProductManagement.Infrastructure.DataTransferObjects;
 using System.Text.Json;
 
 namespace RandomApp.Web.Client.Products
@@ -45,7 +45,7 @@ namespace RandomApp.Web.Client.Products
 
             var products = productDtos
                 .Where(dto => !string.IsNullOrEmpty(dto.Title))
-                .Select(dto => _mapper.Map<Product>(dto))
+                .Select(_mapper.Map<Product>)
                 .ToList();
 
             return products;

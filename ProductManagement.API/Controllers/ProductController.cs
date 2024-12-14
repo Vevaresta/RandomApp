@@ -34,7 +34,7 @@ namespace Random.App.ProductManagement.API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Product>> GetProductById([FromRoute] int id)
+        public async Task<ActionResult<Product>> GetProductById(int id)
         {
             _logger.Info("Fetching product with ID: {id}", id);
             var product = await _productRepository.GetByIdAsync(id);
@@ -75,7 +75,7 @@ namespace Random.App.ProductManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> FindEProducts([FromQuery] string? name, [FromQuery] string? description)
+        public async Task<IActionResult> FindEProducts(string? name, string? description)
         {
             _logger.Info("Fetching product with name {name} and description {description}.", name, description);
 
@@ -105,7 +105,7 @@ namespace Random.App.ProductManagement.API.Controllers
         [HttpPost("add")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddProduct([FromBody] Product product)
+        public async Task<IActionResult> AddProduct(Product product)
         {
             // Check if the model is valid (e.g., all required fields are provided and valid)
             //if (!ModelState.IsValid) 
@@ -132,7 +132,7 @@ namespace Random.App.ProductManagement.API.Controllers
         [HttpPost("addRange")]
         [ProducesResponseType(typeof(IEnumerable<Product>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddProducts([FromBody] IEnumerable<Product> products)
+        public async Task<IActionResult> AddProducts(IEnumerable<Product> products)
         {
             if (products == null || !products.Any())
             {
@@ -155,7 +155,7 @@ namespace Random.App.ProductManagement.API.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> RemoveProduct([FromRoute] int id)
+        public async Task<IActionResult> RemoveProduct(int id)
         {
             _logger.Info("Attempting to find product with ID {id}", id);
 
@@ -183,7 +183,7 @@ namespace Random.App.ProductManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> RemoveProducts([FromQuery] IEnumerable<int> products)
+        public async Task<IActionResult> RemoveProducts(IEnumerable<int> products)
         {
             _logger.Info("Attempting to remove range of products.");
 
@@ -217,7 +217,7 @@ namespace Random.App.ProductManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetPopularProducts([FromQuery] string? keyword)
+        public async Task<IActionResult> GetPopularProducts(string? keyword)
         {
             _logger.Info("Attempting to search for product with the keyword {keyword}", keyword);
 
