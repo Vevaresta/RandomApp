@@ -21,6 +21,8 @@ internal class Program
             builder.Host.UseNLog();
 
             builder.Services.AddControllers();
+            // if my API calls often send the same data, instead of having to to back to the DB, with this methods I can cache the data in memory
+            builder.Services.AddResponseCaching();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

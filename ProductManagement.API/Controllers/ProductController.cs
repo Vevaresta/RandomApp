@@ -107,7 +107,7 @@ namespace Random.App.ProductManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddProduct(Product product)
         {
-            // Check if the model is valid (e.g., all required fields are provided and valid)
+            // Check if the model is valid (e.g., all required fields are provided and valid) you don't have to write this if you activate [ApiController] it does it automatically
             //if (!ModelState.IsValid) 
             //{
             //    return BadRequest(ModelState);
@@ -248,6 +248,7 @@ namespace Random.App.ProductManagement.API.Controllers
 
 
         [HttpPost("GetDataFromApi")]
+        [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any)]
         public async Task<IActionResult> GetDataFromApi()
         {
 
