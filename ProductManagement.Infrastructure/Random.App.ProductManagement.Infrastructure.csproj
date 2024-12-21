@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ProductManagement.Domain\Random.App.ProductManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BackgroundServices\" />
+  </ItemGroup>
+
 </Project>
