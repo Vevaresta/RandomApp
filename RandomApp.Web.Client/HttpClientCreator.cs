@@ -22,8 +22,10 @@ namespace RandomApp.Web.Client
         public HttpClient GetHttpClient()
         {
             _logger.Info("Creating new HTTP client for API communication");
+
             var httpClient = _httpClientFactory.CreateClient("RandomApp_ApiHttpClient");
             var baseAddress = _configuration.GetValue<string>("ApiSettings:BaseAddress");
+
             _logger.Debug("Configuring client with base address: {BaseAddress}",
                 baseAddress?.TrimEnd('/') ?? "null");
 
