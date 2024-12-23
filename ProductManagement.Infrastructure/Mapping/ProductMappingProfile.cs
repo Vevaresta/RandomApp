@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Random.App.ProductManagement.Domain.Entities;
-using Random.App.ProductManagement.Infrastructure.DataTransferObjects;
+using RandomApp.ProductManagement.Domain.Entities;
+using RandomApp.ProductManagement.Infrastructure.DataTransferObjects;
 
-namespace Random.App.ProductManagement.Infrastructure.Mapping
+namespace RandomApp.ProductManagement.Infrastructure.Mapping
 {
     public class ProductMappingProfile : Profile
     {

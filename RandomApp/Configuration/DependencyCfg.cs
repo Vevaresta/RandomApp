@@ -4,7 +4,7 @@
     {
         public static void RegisterBackendServices(this IServiceCollection services)
         {
-            Random.App.ProductManagement.Infrastructure.Configuration.DependencyCfg.RegisterBackendServices(services);           
+            ProductManagement.Infrastructure.Configuration.DependencyCfg.RegisterBackendServices(services);           
         }
     }
 }

@@ -19,10 +19,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
+    <PackageReference Include="NLog" Version="5.3.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductManagement.Domain\Random.App.ProductManagement.Domain.csproj" />
+    <ProjectReference Include="..\ProductManagement.Domain\RandomApp.ProductManagement.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using Random.App.ProductManagement.Domain.Entities;
-using Random.App.ProductManagement.Domain.RepositoryInterfaces;
+using RandomApp.ProductManagement.Domain.Entities;
+using RandomApp.ProductManagement.Domain.Models;
+using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using RandomApp.Web.Client.Products;
 using System.Linq.Expressions;
 
 
-namespace Random.App.ProductManagement.API.Controllers
+namespace RandomApp.ProductManagement.Application.Controllers
 {
-    //The use of the FromBody attribute to select data from the request body and explicitly check the
+    
     // ModelState.IsValid property is not required in controllers that have been decorated with the ApiController attribute.  
     [ApiController]
     [Route("api/[controller]")]
@@ -20,14 +21,16 @@ namespace Random.App.ProductManagement.API.Controllers
         private readonly IProductRepository _productRepository;
         private readonly ILogger _logger;
         private readonly IProductService _productService;
+        private readonly IProductSyncService _productSyncService;
 
 
-        public ProductController(IUnitOfWork unitOfWork, IProductRepository productRepository, IProductService productService)
+        public ProductController(IUnitOfWork unitOfWork, IProductRepository productRepository, IProductService productService, IProductSyncService productSyncService)
         {
             _unitOfWork = unitOfWork;
             _productRepository = productRepository;
-            this._logger = LogManager.GetCurrentClassLogger();
+            _logger = LogManager.GetCurrentClassLogger();
             _productService = productService;
+            _productSyncService = productSyncService;
         }
 
         // ProducesResponseType->usefull for swagger API documentation, public facing APIs and when dealing with multiple response scenarios
@@ -86,8 +89,8 @@ namespace Random.App.ProductManagement.API.Controllers
             }
 
             Expression<Func<Product, bool>> filter = entity =>
-                (!string.IsNullOrEmpty(name) && entity.Name.Contains(name)) ||
-                (!string.IsNullOrEmpty(description) && entity.Description.Contains(description));
+                !string.IsNullOrEmpty(name) && entity.Name.Contains(name) ||
+                !string.IsNullOrEmpty(description) && entity.Description.Contains(description);
 
             var entities = await _productRepository.Find(filter);
 
@@ -248,6 +251,8 @@ namespace Random.App.ProductManagement.API.Controllers
 
 
         [HttpPost("GetDataFromApi")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any)]
         public async Task<IActionResult> GetDataFromApi()
         {
@@ -272,7 +277,7 @@ namespace Random.App.ProductManagement.API.Controllers
 
                 if (existingProduct == null)
                 {
-                    product.Id = 0;                
+                    product.Id = 0;
                     await _productRepository.AddAsync(product);
                     newProducts++;
                     _logger.Info("Adding new/restored product with OriginalApiId", product.OriginalApiId);
@@ -299,6 +304,37 @@ namespace Random.App.ProductManagement.API.Controllers
                 Message = "Products processed successfully.",
                 NewProductsAdded = newProducts,
                 ProductsUpdated = updatedProducts,
+            });
+        }
+
+
+        [HttpGet("sync/status")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<ProductSyncStatus?> GetProductSyncStatus()
+        {
+            var status = _productSyncService.CurrentSyncStatus;
+            return Ok(status);
+        }
+
+
+        [HttpGet("sync/initiate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> InitProductSync()
+        {
+            if (_productSyncService.CurrentSyncStatus?.IsSyncRunning == true)
+            {
+                return Conflict(new
+                {
+                    message = "Sync is already in progress",
+                    status = _productSyncService.CurrentSyncStatus
+                });
+            }
+
+            await _productSyncService.InitiateSyncAsync();
+            return Ok(new
+            {
+                message = "Sync initiated successfully",
+                status = _productSyncService.CurrentSyncStatus
             });
         }
 

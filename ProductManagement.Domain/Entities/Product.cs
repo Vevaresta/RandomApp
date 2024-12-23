@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Random.App.ProductManagement.Domain.Entities
+namespace RandomApp.ProductManagement.Domain.Entities
 {
     public class Product
     {
@@ -11,10 +11,10 @@ namespace Random.App.ProductManagement.Domain.Entities
         public int Id { get; set; }
 
         [Required]
-        public int OriginalApiId {  get; set; }
+        public int OriginalApiId { get; set; }
 
         [Required]
-        [StringLength(200)]  
+        [StringLength(200)]
         public string Name { get; set; }
 
         [Required]
@@ -25,7 +25,7 @@ namespace Random.App.ProductManagement.Domain.Entities
         [StringLength(100)]
         public string Category { get; set; }
 
-        [StringLength(1000)]  
+        [StringLength(1000)]
         public string Description { get; set; }
 
         public string Image { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Random.App.ProductManagement.Infrastructure.DataTransferObjects
+﻿namespace RandomApp.ProductManagement.Infrastructure.DataTransferObjects
 {
     public class ProductDto
     {

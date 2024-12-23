@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
-using Random.App.ProductManagement.Infrastructure.Configuration;
+using RandomApp.ProductManagement.Infrastructure.Configuration;
 using RandomApp.Server.Api.Middleware;
 using RandomApp.Web.Client.Configuration;
 

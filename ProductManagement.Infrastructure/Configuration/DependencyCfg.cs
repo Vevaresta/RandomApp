@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Random.App.ProductManagement.Domain.RepositoryInterfaces;
-using Random.App.ProductManagement.Infrastructure.DataAccess;
-using Random.App.ProductManagement.Infrastructure.Mapping;
-using Random.App.ProductManagement.Infrastructure.RepositoryImplementation;
+using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
+using RandomApp.ProductManagement.Infrastructure.DataAccess;
+using RandomApp.ProductManagement.Infrastructure.Mapping;
+using RandomApp.ProductManagement.Infrastructure.RepositoryImplementation;
 
 
-namespace Random.App.ProductManagement.Infrastructure.Configuration
+namespace RandomApp.ProductManagement.Infrastructure.Configuration
 {
     public static class DependencyCfg
     {

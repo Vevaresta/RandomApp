@@ -1,7 +1,7 @@
 ﻿using Common.Shared.Repositories;
-using Random.App.ProductManagement.Infrastructure.DataAccess;
+using RandomApp.ProductManagement.Infrastructure.DataAccess;
 
-namespace Random.App.ProductManagement.Infrastructure.RepositoryImplementation
+namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
 {
     public class ProductUnitOfWork : IUnitOfWork
     {

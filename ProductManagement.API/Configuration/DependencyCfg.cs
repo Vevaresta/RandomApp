@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Random.App.ProductManagement.API.Configuration
+namespace RandomApp.ProductManagement.Application.Configuration
 {
     public static class DependencyCfg
     {
-        public static void RegisterBackendServices(this IServiceCollection service) 
+        public static void RegisterBackendServices(this IServiceCollection service)
         {
-            
+
         }
     }
 }

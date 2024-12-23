@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,8 +29,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common.Infrastructure\Common.Shared.csproj" />
-    <ProjectReference Include="..\ProductManagement.API\Random.App.ProductManagement.API.csproj" />
-    <ProjectReference Include="..\ProductManagement.Infrastructure\Random.App.ProductManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\ProductManagement.API\RandomApp.ProductManagement.Application.csproj" />
+    <ProjectReference Include="..\ProductManagement.Infrastructure\RandomApp.ProductManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\RandomApp.Web.Client\RandomApp.Web.Client.csproj" />
   </ItemGroup>
 

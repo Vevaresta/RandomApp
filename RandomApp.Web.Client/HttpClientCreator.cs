@@ -6,10 +6,10 @@ namespace RandomApp.Web.Client
     // centralizes http client creation
     public class HttpClientCreator : IHttpClientCreator
     {
-        private IHttpClientFactory _httpClientFactory;
+        private readonly IHttpClientFactory _httpClientFactory;
         //private ILocalStorageService _localStorage;
-        private IConfiguration _configuration;
-        private ILogger _logger;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger _logger;
 
         public HttpClientCreator(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
@@ -21,7 +21,7 @@ namespace RandomApp.Web.Client
 
         public HttpClient GetHttpClient()
         {
-            _logger.Info("Creating new HTTP client for API communication");
+            _logger.Info("Creating new HTTP client for API communication.");
 
             var httpClient = _httpClientFactory.CreateClient("RandomApp_ApiHttpClient");
             var baseAddress = _configuration.GetValue<string>("ApiSettings:BaseAddress");
@@ -31,12 +31,12 @@ namespace RandomApp.Web.Client
 
             if (string.IsNullOrWhiteSpace(baseAddress))
             {
-                _logger.Error("Base adress configuration is missing or empty");
+                _logger.Error("Base adress configuration is missing or empty.");
                 throw new InvalidOperationException("Base address is not configured.");
             }
             httpClient.BaseAddress = new Uri(baseAddress);
 
-            _logger.Info("HTTP client successfully configured and ready for use");
+            _logger.Info("HTTP client successfully configured and ready for use.");
 
             return httpClient;
         }

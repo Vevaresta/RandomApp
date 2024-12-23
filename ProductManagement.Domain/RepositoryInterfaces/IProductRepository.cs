@@ -1,7 +1,7 @@
 ﻿using Common.Shared.Repositories;
-using Random.App.ProductManagement.Domain.Entities;
+using RandomApp.ProductManagement.Domain.Entities;
 
-namespace Random.App.ProductManagement.Domain.RepositoryInterfaces
+namespace RandomApp.ProductManagement.Domain.RepositoryInterfaces
 {
     public interface IProductRepository : IGenericRepository<Product>
     {

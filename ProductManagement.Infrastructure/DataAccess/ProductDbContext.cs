@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Random.App.ProductManagement.Domain.Entities;
+using RandomApp.ProductManagement.Domain.Entities;
 
 
-namespace Random.App.ProductManagement.Infrastructure.DataAccess
+namespace RandomApp.ProductManagement.Infrastructure.DataAccess
 {
     public class ProductDbContext : DbContext
     {
@@ -12,8 +12,8 @@ namespace Random.App.ProductManagement.Infrastructure.DataAccess
         public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
- 
-        
+
+
         }
     }
 }

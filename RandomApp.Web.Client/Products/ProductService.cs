@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using NLog;
-using Random.App.ProductManagement.Domain.Entities;
-using Random.App.ProductManagement.Infrastructure.DataTransferObjects;
+using RandomApp.ProductManagement.Domain.Entities;
+using RandomApp.ProductManagement.Infrastructure.DataTransferObjects;
 using System.Text.Json;
 
 namespace RandomApp.Web.Client.Products
@@ -10,6 +10,7 @@ namespace RandomApp.Web.Client.Products
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+
         public ProductService(IHttpClientCreator httpClientCreator, IMapper mapper) : base(httpClientCreator) 
         {
             _mapper = mapper;
@@ -37,7 +38,7 @@ namespace RandomApp.Web.Client.Products
 
             if (productDtos == null)
             {
-                _logger.Warn("No products returned from API");
+                _logger.Warn("No products returned from API.");
                 return new List<Product>();
             }
 
@@ -50,6 +51,7 @@ namespace RandomApp.Web.Client.Products
 
             return products;
         }
+
 
     }
 }

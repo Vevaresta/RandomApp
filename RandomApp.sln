@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Server.Api", "Ran
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductManagement", "ProductManagement", "{570DEA5D-5223-4746-A095-C96C49511E33}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random.App.ProductManagement.API", "ProductManagement.API\Random.App.ProductManagement.API.csproj", "{F6912950-D1B1-4A41-8BE5-281DA45B95EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ProductManagement.Application", "ProductManagement.API\RandomApp.ProductManagement.Application.csproj", "{F6912950-D1B1-4A41-8BE5-281DA45B95EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random.App.ProductManagement.Domain", "ProductManagement.Domain\Random.App.ProductManagement.Domain.csproj", "{4C47ECA3-9972-42D9-89B6-BB448ECBC956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ProductManagement.Domain", "ProductManagement.Domain\RandomApp.ProductManagement.Domain.csproj", "{4C47ECA3-9972-42D9-89B6-BB448ECBC956}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random.App.ProductManagement.Infrastructure", "ProductManagement.Infrastructure\Random.App.ProductManagement.Infrastructure.csproj", "{59C33A88-94CA-489B-8947-FE92FAA96F62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ProductManagement.Infrastructure", "ProductManagement.Infrastructure\RandomApp.ProductManagement.Infrastructure.csproj", "{59C33A88-94CA-489B-8947-FE92FAA96F62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{44EDAC1B-201C-4BDE-8E60-B65482D04CE7}"
 EndProject
@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Server.Authentica
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{C97CE7D4-3446-407C-986F-317315A11C2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomApp.Web.Client", "RandomApp.Web.Client\RandomApp.Web.Client.csproj", "{C5C02E52-58A4-4FED-B240-E896AC8016DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Web.Client", "RandomApp.Web.Client\RandomApp.Web.Client.csproj", "{C5C02E52-58A4-4FED-B240-E896AC8016DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

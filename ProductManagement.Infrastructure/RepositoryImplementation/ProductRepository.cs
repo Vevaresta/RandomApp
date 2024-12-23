@@ -1,10 +1,10 @@
 ﻿using Common.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Random.App.ProductManagement.Domain.Entities;
-using Random.App.ProductManagement.Domain.RepositoryInterfaces;
-using Random.App.ProductManagement.Infrastructure.DataAccess;
+using RandomApp.ProductManagement.Domain.Entities;
+using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
+using RandomApp.ProductManagement.Infrastructure.DataAccess;
 
-namespace Random.App.ProductManagement.Infrastructure.RepositoryImplementation
+namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
 {
     public class ProductRepository : GenericRepository<Product>, IProductRepository
     {

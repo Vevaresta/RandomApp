@@ -3,7 +3,7 @@
     // Provides a base class that any API client (like Product Service) can inherit
     public abstract class ApiClientBase
     {
-        private IHttpClientCreator _httpClientCreator;
+        private readonly IHttpClientCreator _httpClientCreator;
 
         protected ApiClientBase(IHttpClientCreator httpClientCreator)
         {

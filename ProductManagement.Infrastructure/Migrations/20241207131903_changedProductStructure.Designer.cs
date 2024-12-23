@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Random.App.ProductManagement.Infrastructure.DataAccess;
+using RandomApp.ProductManagement.Infrastructure.DataAccess;
 
 #nullable disable
 
