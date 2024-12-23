@@ -1,4 +1,5 @@
 ﻿using RandomApp.ProductManagement.Domain.Models;
+using RandomApp.ProductManagement.Domain.Enums;
 using Microsoft.Extensions.Hosting;
 using NLog;
 
@@ -14,43 +15,61 @@ namespace RandomApp.Web.Client.Products
             get { return _currentSyncStatus; }
         }
         public event Action<ProductSyncStatus>? OnSyncStatusChanged;
-        private Timer? _timer = null;
-        private int executionCount = 0;
 
         public ProductSyncService(ILogger logger, IProductService productService)
         {
 
             _logger = logger;
             _productService = productService;
+      
         }
 
-        public Task InitiateSyncAsync()
+        public async Task InitiateSyncAsync()
         {
-            var initiate = _productService.GetProductsFromApiAsync();
-            return Task.CompletedTask;
+            _currentSyncStatus.IsSyncRunning = true;
+            _currentSyncStatus.LastRequestType = ProductSyncRequestType.AUTOMATIC;
+
+            OnSyncStatusChanged?.Invoke(_currentSyncStatus);
+
+            var startTime = DateTime.Now;
+
+            var products = await _productService.GetProductsFromApiAsync();
+            if (products == null || !products.Any())
+            {
+                _currentSyncStatus.LastResultType = ProductSyncResultType.FAILED;
+                _logger.Error("Product sync failed - No produccts received from API");
+                return;
+            }
+
+            _currentSyncStatus.LastResultType = ProductSyncResultType.SUCCESS;
+            _currentSyncStatus.SyncDuration = DateTime.Now - startTime;
+
+            _logger.Info($"Successfully synced {products.Count()} products");
+
+            _currentSyncStatus.IsSyncRunning = false;
+            OnSyncStatusChanged?.Invoke(_currentSyncStatus);
+
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            await InitiateSyncAsync();
 
             using PeriodicTimer timer = new(TimeSpan.FromHours(24));
 
-            while(await timer.WaitForNextTickAsync(stoppingToken))
+            while(!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
             {
                 await InitiateSyncAsync();
             }
-    
-                
+
+            _logger.Info("Product sync service is stopping");
+                  
         }
-        public void Dispose()
+        public override async Task StopAsync(CancellationToken stoppingToken)
         {
-            _timer?.Dispose();
+            _logger.Info("Product sync service is stopping");
+            await base.StopAsync(stoppingToken);
         }
 
-        private void DoWork(object? state)
-        {
-            var count = Interlocked.Increment(ref executionCount);
-            _logger.Info("Timed Hosted Service is working. Count: {Count}", count);
-        }
     }
 }

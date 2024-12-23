@@ -16,7 +16,7 @@ namespace RandomApp.Web.Client.Products
             _mapper = mapper;
             this._logger = LogManager.GetCurrentClassLogger();
         }
-
+        // Add manual sync status maybe???
         public async Task<IEnumerable<Product>> GetProductsFromApiAsync()
         {
 
