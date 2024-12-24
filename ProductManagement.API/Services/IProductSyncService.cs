@@ -1,10 +1,10 @@
 ﻿using RandomApp.ProductManagement.Domain.Models;
 
-namespace RandomApp.Web.Client.Products
+namespace RandomApp.ProductManagement.Application.Services
 {
     public interface IProductSyncService : IDisposable
     {
-        public Task InitiateSyncAsync();
+        public Task<SyncResult> InitiateSyncAsync();
         public ProductSyncStatus? CurrentSyncStatus { get; }
 
         public event Action<ProductSyncStatus> OnSyncStatusChanged;

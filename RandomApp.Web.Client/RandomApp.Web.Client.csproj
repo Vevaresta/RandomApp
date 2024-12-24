@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductManagement.Domain\RandomApp.ProductManagement.Domain.csproj" />
-    <ProjectReference Include="..\ProductManagement.Infrastructure\RandomApp.ProductManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\ProductManagement.API\RandomApp.ProductManagement.Application.csproj" />
   </ItemGroup>
 
 </Project>

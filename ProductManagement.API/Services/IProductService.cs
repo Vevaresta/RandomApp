@@ -1,7 +1,6 @@
 ﻿using RandomApp.ProductManagement.Domain.Entities;
-using RandomApp.ProductManagement.Domain.Models;
 
-namespace RandomApp.Web.Client.Products
+namespace RandomApp.ProductManagement.Application.Services
 {
     public interface IProductService
     {

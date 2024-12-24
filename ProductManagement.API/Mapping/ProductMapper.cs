@@ -1,7 +1,7 @@
-﻿using RandomApp.ProductManagement.Domain.Entities;
-using RandomApp.ProductManagement.Infrastructure.DataTransferObjects;
+﻿using RandomApp.ProductManagement.Application.DataTransferObjects;
+using RandomApp.ProductManagement.Domain.Entities;
 
-namespace RandomApp.ProductManagement.Infrastructure.Mapping
+namespace RandomApp.ProductManagement.Application.Mapping
 {
     //  A static mapper class is like a utility that takes input, transforms it, and produces output, without needing any internal state or instance-specific data.
     public static class ProductMapper

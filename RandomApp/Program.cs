@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 using RandomApp.ProductManagement.Infrastructure.Configuration;
+using RandomApp.Server.Api.Configuration;
 using RandomApp.Server.Api.Middleware;
 using RandomApp.Web.Client.Configuration;
 
@@ -36,9 +37,10 @@ internal class Program
                 });
             });
 
-            builder.Services.RegisterFrontendServices();
-            builder.Services.RegisterBackendServices();
             builder.Services.RegisterDbContext(builder.Configuration);
+            builder.Services.RegisterBackendServices();
+            builder.Services.RegisterFrontendServices();
+            builder.Services.RegisterLogging();
 
 
             var app = builder.Build();

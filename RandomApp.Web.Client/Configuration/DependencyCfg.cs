@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RandomApp.Web.Client.Products;
+using RandomApp.ProductManagement.Application.Services;
+using RandomApp.Web.Client.Services;
 
 namespace RandomApp.Web.Client.Configuration
 {
@@ -7,10 +8,10 @@ namespace RandomApp.Web.Client.Configuration
     {
         public static void RegisterFrontendServices(this IServiceCollection services)
         {
-            services.AddTransient<IHttpClientCreator, HttpClientCreator>();
-            services.AddTransient<IProductService, ProductService>();
+            services.AddScoped<IHttpClientCreator, HttpClientCreator>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddHttpClient();
-            //services.AddTransient<IProductSyncService, ProductSyncService>();
+            services.AddHostedService<ProductSyncService>();
         }
     }
 }

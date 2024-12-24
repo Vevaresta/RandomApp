@@ -1,22 +1,23 @@
 ﻿using AutoMapper;
 using NLog;
+using RandomApp.ProductManagement.Application.DataTransferObjects;
+using RandomApp.ProductManagement.Application.Services;
 using RandomApp.ProductManagement.Domain.Entities;
-using RandomApp.ProductManagement.Infrastructure.DataTransferObjects;
 using System.Text.Json;
 
-namespace RandomApp.Web.Client.Products
+namespace RandomApp.Web.Client.Services
 {
     public class ProductService : ApiClientBase, IProductService
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public ProductService(IHttpClientCreator httpClientCreator, IMapper mapper) : base(httpClientCreator) 
+        public ProductService(IHttpClientCreator httpClientCreator, IMapper mapper) : base(httpClientCreator)
         {
             _mapper = mapper;
-            this._logger = LogManager.GetCurrentClassLogger();
+            _logger = LogManager.GetCurrentClassLogger();
         }
-        // Add manual sync status maybe???
+
         public async Task<IEnumerable<Product>> GetProductsFromApiAsync()
         {
 

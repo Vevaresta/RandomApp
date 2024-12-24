@@ -7,6 +7,8 @@ namespace RandomApp.ProductManagement.Domain.Models
         public bool IsSyncRunning { get; set; }
         public ProductSyncRequestType? LastRequestType { get; set; }
         public ProductSyncResultType? LastResultType { get; set; }
+
+        public DateTime LastSyncTime { get; set; }
         public TimeSpan? SyncDuration { get; set; }
     }
 }

@@ -2,16 +2,16 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using RandomApp.ProductManagement.Application.Services;
 using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Domain.Models;
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
-using RandomApp.Web.Client.Products;
 using System.Linq.Expressions;
 
 
 namespace RandomApp.ProductManagement.Application.Controllers
 {
-    
+
     // ModelState.IsValid property is not required in controllers that have been decorated with the ApiController attribute.  
     [ApiController]
     [Route("api/[controller]")]
@@ -250,62 +250,62 @@ namespace RandomApp.ProductManagement.Application.Controllers
         }
 
 
-        [HttpPost("GetDataFromApi")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any)]
-        public async Task<IActionResult> GetDataFromApi()
-        {
+        //[HttpPost("GetDataFromApi")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any)]
+        //public async Task<IActionResult> GetDataFromApi()
+        //{
 
-            var products = await _productService.GetProductsFromApiAsync();
+        //    var products = await _productService.GetProductsFromApiAsync();
 
-            if (products == null || !products.Any())
-            {
-                _logger.Warn("No products retrieved from API");
-                return NoContent();
-            }
+        //    if (products == null || !products.Any())
+        //    {
+        //        _logger.Warn("No products retrieved from API");
+        //        return NoContent();
+        //    }
 
-            var existingProducts = await _productRepository.GetAllAsync();
+        //    var existingProducts = await _productRepository.GetAllAsync();
 
-            int newProducts = 0;
-            int updatedProducts = 0;
+        //    int newProducts = 0;
+        //    int updatedProducts = 0;
 
-            foreach (var product in products)
-            {
+        //    foreach (var product in products)
+        //    {
 
-                var existingProduct = existingProducts.FirstOrDefault(p => p.OriginalApiId == product.OriginalApiId);
+        //        var existingProduct = existingProducts.FirstOrDefault(p => p.OriginalApiId == product.OriginalApiId);
 
-                if (existingProduct == null)
-                {
-                    product.Id = 0;
-                    await _productRepository.AddAsync(product);
-                    newProducts++;
-                    _logger.Info("Adding new/restored product with OriginalApiId", product.OriginalApiId);
+        //        if (existingProduct == null)
+        //        {
+        //            product.Id = 0;
+        //            await _productRepository.AddAsync(product);
+        //            newProducts++;
+        //            _logger.Info("Adding new/restored product with OriginalApiId", product.OriginalApiId);
 
-                }
-                else
-                {
-                    existingProduct.Name = product.Name;
-                    existingProduct.Price = product.Price;
-                    existingProduct.Category = product.Category;
-                    existingProduct.Description = product.Description;
-                    existingProduct.Image = product.Image;
-                    _productRepository.Update(existingProduct);
-                    updatedProducts++;
-                    _logger.Info("Updating existing product with OriginalApiId:", existingProduct.OriginalApiId);
-                }
+        //        }
+        //        else
+        //        {
+        //            existingProduct.Name = product.Name;
+        //            existingProduct.Price = product.Price;
+        //            existingProduct.Category = product.Category;
+        //            existingProduct.Description = product.Description;
+        //            existingProduct.Image = product.Image;
+        //            _productRepository.Update(existingProduct);
+        //            updatedProducts++;
+        //            _logger.Info("Updating existing product with OriginalApiId:", existingProduct.OriginalApiId);
+        //        }
 
 
-            }
+        //    }
 
-            await _unitOfWork.CompleteAsync();
-            return Ok(new
-            {
-                Message = "Products processed successfully.",
-                NewProductsAdded = newProducts,
-                ProductsUpdated = updatedProducts,
-            });
-        }
+        //    await _unitOfWork.CompleteAsync();
+        //    return Ok(new
+        //    {
+        //        Message = "Products processed successfully.",
+        //        NewProductsAdded = newProducts,
+        //        ProductsUpdated = updatedProducts,
+        //    });
+        //}
 
 
         [HttpGet("sync/status")]
