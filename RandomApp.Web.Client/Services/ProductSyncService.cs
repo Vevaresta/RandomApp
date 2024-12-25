@@ -4,13 +4,14 @@ using Microsoft.Extensions.Hosting;
 using NLog;
 using RandomApp.ProductManagement.Application.Orchestrators;
 using RandomApp.ProductManagement.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace RandomApp.Web.Client.Services
 {
     public class ProductSyncService : BackgroundService, IProductSyncService
     {
         private readonly ILogger _logger;
-        private readonly IProductSyncOrchestrator _productSyncOrchestrator;
+        private readonly IServiceScopeFactory _scopeFactory;
         private readonly SemaphoreSlim _synLock = new(1, 1);
         private ProductSyncStatus? _currentSyncStatus;
         public ProductSyncStatus? CurrentSyncStatus
@@ -19,11 +20,11 @@ namespace RandomApp.Web.Client.Services
         }
         public event Action<ProductSyncStatus>? OnSyncStatusChanged;
 
-        public ProductSyncService(IProductSyncOrchestrator productSyncOrchestrator)
+        public ProductSyncService(IServiceScopeFactory scopeFactory)
         {
 
             _logger = LogManager.GetCurrentClassLogger();
-            _productSyncOrchestrator = productSyncOrchestrator;
+            _scopeFactory = scopeFactory;
 
         }
 
@@ -36,12 +37,14 @@ namespace RandomApp.Web.Client.Services
 
             try
             {
+                using var scope = _scopeFactory.CreateAsyncScope();
+                var orchestrator = scope.ServiceProvider.GetRequiredService<IProductSyncOrchestrator>();
+
                 UpdateStatus(true, ProductSyncRequestType.MANUAL);
                 var startTime = DateTime.Now;
 
-                var result = await _productSyncOrchestrator.SyncProducts();
+                var result = await orchestrator.SyncProducts();
                 UpdateStatusAfterSync(startTime, result.Success);
-
                 return result;
             }
 
