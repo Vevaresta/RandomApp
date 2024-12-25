@@ -313,7 +313,11 @@ namespace RandomApp.ProductManagement.Application.Controllers
         public ActionResult<ProductSyncStatus?> GetProductSyncStatus()
         {
             var status = _productSyncService.CurrentSyncStatus;
-            return Ok(status);
+            return Ok(new
+            {
+                status = status,
+                message = "Current sync status retrieved"
+            });
         }
 
 
@@ -330,11 +334,13 @@ namespace RandomApp.ProductManagement.Application.Controllers
                 });
             }
 
-            await _productSyncService.InitiateSyncAsync();
+            var result = await _productSyncService.InitiateSyncAsync();
+
             return Ok(new
             {
-                message = "Sync initiated successfully",
-                status = _productSyncService.CurrentSyncStatus
+                message = result.Success ? "Sync compleed successfully" : "Sync failed",
+                status = _productSyncService.CurrentSyncStatus,
+                result = result
             });
         }
 

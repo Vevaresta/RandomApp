@@ -5,6 +5,7 @@ using RandomApp.ProductManagement.Infrastructure.Configuration;
 using RandomApp.Server.Api.Configuration;
 using RandomApp.Server.Api.Middleware;
 using RandomApp.Web.Client.Configuration;
+using System.Text.Json.Serialization;
 
 internal class Program
 {
@@ -21,7 +22,11 @@ internal class Program
             builder.Logging.AddConsole();
             builder.Host.UseNLog();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                 });
             // if my API calls often send the same data, instead of having to to back to the DB, with this methods I can cache the data in memory
             builder.Services.AddResponseCaching();
 

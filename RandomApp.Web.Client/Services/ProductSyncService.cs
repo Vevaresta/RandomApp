@@ -37,49 +37,35 @@ namespace RandomApp.Web.Client.Services
 
             try
             {
-                using var scope = _scopeFactory.CreateAsyncScope();
+                using var scope = _scopeFactory.CreateScope();
                 var orchestrator = scope.ServiceProvider.GetRequiredService<IProductSyncOrchestrator>();
 
-                UpdateStatus(true, ProductSyncRequestType.MANUAL);
-                var startTime = DateTime.Now;
+                _currentSyncStatus = new ProductSyncStatus
+                {
+                    IsSyncRunning = true,
+                    LastRequestType = ProductSyncRequestType.MANUAL,
+                    LastSyncTime = DateTime.Now
+                };
+                OnSyncStatusChanged?.Invoke(_currentSyncStatus);
 
+                var startTime = DateTime.Now;
                 var result = await orchestrator.SyncProducts();
-                UpdateStatusAfterSync(startTime, result.Success);
+
+                _currentSyncStatus.LastResultType = result.Success
+                    ? ProductSyncResultType.SUCCESS
+                    : ProductSyncResultType.FAILED;
+                _currentSyncStatus.SyncDuration = DateTime.Now - startTime;
+                _currentSyncStatus.IsSyncRunning = false;
+
+                OnSyncStatusChanged?.Invoke(_currentSyncStatus);
                 return result;
             }
 
             finally
             {
-                UpdateStatus(false, _currentSyncStatus?.LastRequestType ?? ProductSyncRequestType.MANUAL);
                 _synLock.Release();
             }
 
-        }
-
-        private void UpdateStatus(bool isRunning, ProductSyncRequestType requestType)
-        {
-            _currentSyncStatus = new ProductSyncStatus
-            {
-                IsSyncRunning = isRunning,
-                LastRequestType = requestType
-            };
-
-            OnSyncStatusChanged?.Invoke(_currentSyncStatus);
-        }
-
-
-        private void UpdateStatusAfterSync(DateTime startTime, bool success)
-        {
-            if (_currentSyncStatus != null)
-            {
-
-                _currentSyncStatus.LastResultType = success
-                    ? ProductSyncResultType.SUCCESS
-                    : ProductSyncResultType.FAILED;
-
-                _currentSyncStatus.LastSyncTime = DateTime.Now;
-                _currentSyncStatus.SyncDuration = DateTime.Now - startTime;
-            }
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -90,7 +76,6 @@ namespace RandomApp.Web.Client.Services
 
             while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
             {
-                UpdateStatus(true, ProductSyncRequestType.AUTOMATIC);
                 await InitiateSyncAsync();
             }
         }
