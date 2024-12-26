@@ -7,7 +7,7 @@ namespace RandomApp.Web.Client
     public class HttpClientCreator : IHttpClientCreator
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        //private ILocalStorageService _localStorage;
+        //private ILocalStorageService _localStorage; maybe later
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
@@ -23,11 +23,8 @@ namespace RandomApp.Web.Client
         {
             _logger.Info("Creating new HTTP client for API communication.");
 
-            var httpClient = _httpClientFactory.CreateClient("RandomApp_ApiHttpClient");
+            var httpClient = _httpClientFactory.CreateClient();
             var baseAddress = _configuration.GetValue<string>("ApiSettings:BaseAddress");
-
-            _logger.Debug("Configuring client with base address: {BaseAddress}",
-                baseAddress?.TrimEnd('/') ?? "null");
 
             if (string.IsNullOrWhiteSpace(baseAddress))
             {
@@ -39,11 +36,6 @@ namespace RandomApp.Web.Client
             _logger.Info("HTTP client successfully configured and ready for use.");
 
             return httpClient;
-        }
-
-        public Task RefreshClientAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

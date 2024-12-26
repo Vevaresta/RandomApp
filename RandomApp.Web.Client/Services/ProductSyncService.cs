@@ -28,7 +28,7 @@ namespace RandomApp.Web.Client.Services
 
         }
 
-        public async Task<SyncResult> InitiateSyncAsync()
+        private async Task<SyncResult> InitiateSyncAsync(ProductSyncRequestType requestType = ProductSyncRequestType.MANUAL)
         {
             if (!await _synLock.WaitAsync(TimeSpan.Zero))
             {
@@ -43,7 +43,7 @@ namespace RandomApp.Web.Client.Services
                 _currentSyncStatus = new ProductSyncStatus
                 {
                     IsSyncRunning = true,
-                    LastRequestType = ProductSyncRequestType.MANUAL,
+                    LastRequestType = requestType,
                     LastSyncTime = DateTime.Now
                 };
                 OnSyncStatusChanged?.Invoke(_currentSyncStatus);
@@ -68,15 +68,20 @@ namespace RandomApp.Web.Client.Services
 
         }
 
+        public async Task<SyncResult> InitiateSyncAsync()
+        {
+            return await InitiateSyncAsync(ProductSyncRequestType.MANUAL);
+        }
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await InitiateSyncAsync();
+            await InitiateSyncAsync(ProductSyncRequestType.AUTOMATIC);
 
             using PeriodicTimer timer = new(TimeSpan.FromHours(24));
 
             while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
             {
-                await InitiateSyncAsync();
+                await InitiateSyncAsync(ProductSyncRequestType.AUTOMATIC);
             }
         }
     }

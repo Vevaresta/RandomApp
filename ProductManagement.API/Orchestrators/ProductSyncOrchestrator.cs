@@ -76,6 +76,7 @@ namespace RandomApp.ProductManagement.Application.Orchestrators
 
         private async Task AddNewProduct(Product product)
         {
+            // resets ID to 0 for database auto-increment
             product.Id = 0;
             await _productRepository.AddAsync(product);
             _logger.Info("Adding new/restored product with OriginalApiId {0}", product.OriginalApiId);

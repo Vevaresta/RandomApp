@@ -52,7 +52,5 @@ namespace RandomApp.Web.Client.Services
 
             return products;
         }
-
-
     }
 }

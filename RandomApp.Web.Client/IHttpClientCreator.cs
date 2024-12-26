@@ -3,7 +3,5 @@
     public interface IHttpClientCreator
     {
         HttpClient GetHttpClient();
-
-        Task RefreshClientAsync();
     }
 }

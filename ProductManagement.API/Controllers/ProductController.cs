@@ -250,64 +250,6 @@ namespace RandomApp.ProductManagement.Application.Controllers
         }
 
 
-        //[HttpPost("GetDataFromApi")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ResponseCache(Duration = 120, Location = ResponseCacheLocation.Any)]
-        //public async Task<IActionResult> GetDataFromApi()
-        //{
-
-        //    var products = await _productService.GetProductsFromApiAsync();
-
-        //    if (products == null || !products.Any())
-        //    {
-        //        _logger.Warn("No products retrieved from API");
-        //        return NoContent();
-        //    }
-
-        //    var existingProducts = await _productRepository.GetAllAsync();
-
-        //    int newProducts = 0;
-        //    int updatedProducts = 0;
-
-        //    foreach (var product in products)
-        //    {
-
-        //        var existingProduct = existingProducts.FirstOrDefault(p => p.OriginalApiId == product.OriginalApiId);
-
-        //        if (existingProduct == null)
-        //        {
-        //            product.Id = 0;
-        //            await _productRepository.AddAsync(product);
-        //            newProducts++;
-        //            _logger.Info("Adding new/restored product with OriginalApiId", product.OriginalApiId);
-
-        //        }
-        //        else
-        //        {
-        //            existingProduct.Name = product.Name;
-        //            existingProduct.Price = product.Price;
-        //            existingProduct.Category = product.Category;
-        //            existingProduct.Description = product.Description;
-        //            existingProduct.Image = product.Image;
-        //            _productRepository.Update(existingProduct);
-        //            updatedProducts++;
-        //            _logger.Info("Updating existing product with OriginalApiId:", existingProduct.OriginalApiId);
-        //        }
-
-
-        //    }
-
-        //    await _unitOfWork.CompleteAsync();
-        //    return Ok(new
-        //    {
-        //        Message = "Products processed successfully.",
-        //        NewProductsAdded = newProducts,
-        //        ProductsUpdated = updatedProducts,
-        //    });
-        //}
-
-
         [HttpGet("sync/status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ProductSyncStatus?> GetProductSyncStatus()
@@ -323,6 +265,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
 
         [HttpGet("sync/initiate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> InitProductSync()
         {
             if (_productSyncService.CurrentSyncStatus?.IsSyncRunning == true)
