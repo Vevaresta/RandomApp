@@ -13,7 +13,7 @@ namespace RandomApp.Web.Client.Configuration
             services.AddSingleton<IHostedService>(sp => sp.GetRequiredService<ProductSyncService>());
             services.AddSingleton<IProductSyncService>(sp => sp.GetRequiredService<ProductSyncService>());
 
-            services.AddScoped<IHttpClientCreator, HttpClientCreator>();
+            services.AddSingleton<IHttpClientCreator, HttpClientCreator>();
             services.AddScoped<IProductService, ProductService>();
             services.AddHttpClient();
         }

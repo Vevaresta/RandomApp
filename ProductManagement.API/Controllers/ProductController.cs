@@ -254,6 +254,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ProductSyncStatus?> GetProductSyncStatus()
         {
+            _logger.Info("Product status finding initiated");
             var status = _productSyncService.CurrentSyncStatus;
             return Ok(new
             {
