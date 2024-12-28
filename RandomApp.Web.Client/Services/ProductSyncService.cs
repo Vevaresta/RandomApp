@@ -86,7 +86,7 @@ namespace RandomApp.Web.Client.Services
 
         public async Task<SyncResult> InitiateSyncAsync()
         {
-            _logger.Info("Activated manual syncronization.");
+            _logger.Info("Activated manual synchronization.");
             return await InitiateSyncAsync(ProductSyncRequestType.MANUAL);
         }
 

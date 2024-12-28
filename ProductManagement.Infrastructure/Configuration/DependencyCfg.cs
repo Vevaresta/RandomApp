@@ -23,7 +23,7 @@ namespace RandomApp.ProductManagement.Infrastructure.Configuration
             services.AddDbContext<ProductDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("Random.App.ProductManagement.Infrastructure")));
+                    b => b.MigrationsAssembly("RandomApp.ProductManagement.Infrastructure")));
         }
     }
 }
