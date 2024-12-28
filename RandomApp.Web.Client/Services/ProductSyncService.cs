@@ -25,13 +25,15 @@ namespace RandomApp.Web.Client.Services
 
             _logger = LogManager.GetCurrentClassLogger();
             _scopeFactory = scopeFactory;
-
         }
 
         private async Task<SyncResult> InitiateSyncAsync(ProductSyncRequestType requestType = ProductSyncRequestType.MANUAL)
         {
+            _logger.Debug("Attempting to inititate {requestType} sync", requestType);
+
             if (!await _synLock.WaitAsync(TimeSpan.Zero))
             {
+                _logger.Info("Sync attempt rejected - another sync already in progress");
                 return new SyncResult { Message = "Sync already in progress" };
             }
 
@@ -40,49 +42,69 @@ namespace RandomApp.Web.Client.Services
                 using var scope = _scopeFactory.CreateScope();
                 var orchestrator = scope.ServiceProvider.GetRequiredService<IProductSyncOrchestrator>();
 
+                _logger.Info("Starting {requestType} product sync", requestType);
                 _currentSyncStatus = new ProductSyncStatus
                 {
                     IsSyncRunning = true,
                     LastRequestType = requestType,
                     LastSyncTime = DateTime.Now
                 };
+
                 OnSyncStatusChanged?.Invoke(_currentSyncStatus);
 
                 var startTime = DateTime.Now;
+
+                _logger.Debug("Calling orchestrator.SyncProducts()");
                 var result = await orchestrator.SyncProducts();
 
-                _currentSyncStatus.LastResultType = result.Success
-                    ? ProductSyncResultType.SUCCESS
-                    : ProductSyncResultType.FAILED;
+                if (result.Success)
+                {
+                    _logger.Info("Product synchronized  successfully in {Duration}.", DateTime.Now - startTime);
+                    _currentSyncStatus.LastResultType = ProductSyncResultType.SUCCESS;
+                }
+                else
+                {
+                    _logger.Warn("Product synchronization failed with message {Message}.", result.Message);
+                    _currentSyncStatus.LastResultType = ProductSyncResultType.FAILED;
+                }
+
                 _currentSyncStatus.SyncDuration = DateTime.Now - startTime;
                 _currentSyncStatus.IsSyncRunning = false;
-
+                // if there are any subs, notify them-> later make some UI component that subscribes to it
                 OnSyncStatusChanged?.Invoke(_currentSyncStatus);
+
                 return result;
             }
 
             finally
             {
                 _synLock.Release();
+                _logger.Debug("Sync lock released.");
             }
 
         }
 
         public async Task<SyncResult> InitiateSyncAsync()
         {
+            _logger.Info("Activated manual syncronization.");
             return await InitiateSyncAsync(ProductSyncRequestType.MANUAL);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.Info("Background service started");
+
             await InitiateSyncAsync(ProductSyncRequestType.AUTOMATIC);
 
             using PeriodicTimer timer = new(TimeSpan.FromHours(24));
 
             while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
             {
+                _logger.Info("24-hour timer triggered, initiating automatic sync");
                 await InitiateSyncAsync(ProductSyncRequestType.AUTOMATIC);
             }
+
+            _logger.Info("Background service stopped");
         }
     }
 }
