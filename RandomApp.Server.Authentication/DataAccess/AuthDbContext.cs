@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RandomApp.Server.Authentication.Configuration;
 using RandomApp.Server.Authentication.Models;
 
 namespace RandomApp.Server.Authentication.DataAccess
@@ -11,6 +12,8 @@ namespace RandomApp.Server.Authentication.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-        }
+
+            builder.ApplyConfiguration(new RoleConfiguration());
+        }        
     }
 }
