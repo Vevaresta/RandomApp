@@ -31,6 +31,7 @@
     <ProjectReference Include="..\Common.Infrastructure\Common.Shared.csproj" />
     <ProjectReference Include="..\ProductManagement.API\RandomApp.ProductManagement.Application.csproj" />
     <ProjectReference Include="..\ProductManagement.Infrastructure\RandomApp.ProductManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\RandomApp.Server.Authentication\RandomApp.Server.Authentication.csproj" />
     <ProjectReference Include="..\RandomApp.Web.Client\RandomApp.Web.Client.csproj" />
   </ItemGroup>
 

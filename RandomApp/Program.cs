@@ -6,6 +6,7 @@ using RandomApp.Server.Api.Configuration;
 using RandomApp.Server.Api.Middleware;
 using RandomApp.Web.Client.Configuration;
 using System.Text.Json.Serialization;
+using RandomApp.Server.Authentication.Configuration;
 
 internal class Program
 {
@@ -21,6 +22,7 @@ internal class Program
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
             builder.Host.UseNLog();
+            
 
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
@@ -46,6 +48,8 @@ internal class Program
             builder.Services.RegisterBackendServices();
             builder.Services.RegisterFrontendServices();
             builder.Services.RegisterLogging();
+            builder.Services.RegisterAuthDbContext(builder.Configuration);
+            builder.Services.ConfigureIdentity();
 
 
             var app = builder.Build();
@@ -63,7 +67,7 @@ internal class Program
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
             app.MapControllers();
 
             app.Run();
