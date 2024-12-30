@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RandomApp.Server.Authentication.Models;
 using Microsoft.AspNetCore.Identity;
 using RandomApp.Server.Authentication.Mapping;
+using RandomApp.Server.Authentication.Services;
 
 namespace RandomApp.Server.Authentication.Configuration
 {
@@ -36,6 +37,7 @@ namespace RandomApp.Server.Authentication.Configuration
         public static void RegisterAuthServices(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(AuthMappingProfile));
+            services.AddScoped<IAuthenticationService, AuthenticationService>(); 
         }
     }
 }
