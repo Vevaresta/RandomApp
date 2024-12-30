@@ -4,10 +4,14 @@ namespace RandomApp.Server.Api.Configuration
 {
     public static class DependencyCfg
     {
-        public static void RegisterBackendServices(this IServiceCollection services)
+        public static void RegisterBackendServices(this IServiceCollection services, IConfiguration configuration)
         {
-            ProductManagement.Infrastructure.Configuration.DependencyCfg.RegisterInfrastructureServices(services);
             ProductManagement.Application.Configuration.DependencyCfg.RegisterApplicationServices(services);
+            ProductManagement.Infrastructure.Configuration.DependencyCfg.RegisterInfrastructureServices(services);
+            ProductManagement.Infrastructure.Configuration.DependencyCfg.RegisterDbContext(services, configuration);
+            Authentication.Configuration.DependencyCfg.RegisterAuthDbContext(services, configuration);
+            Authentication.Configuration.DependencyCfg.ConfigureIdentity(services);
+            Authentication.Configuration.DependencyCfg.RegisterAuthServices(services);
         }
 
         public static void RegisterLogging(this IServiceCollection services)

@@ -44,12 +44,12 @@ internal class Program
                 });
             });
 
-            builder.Services.RegisterDbContext(builder.Configuration);
-            builder.Services.RegisterBackendServices();
+
+            builder.Services.RegisterBackendServices(builder.Configuration);
             builder.Services.RegisterFrontendServices();
             builder.Services.RegisterLogging();
-            builder.Services.RegisterAuthDbContext(builder.Configuration);
-            builder.Services.ConfigureIdentity();
+
+
 
 
             var app = builder.Build();

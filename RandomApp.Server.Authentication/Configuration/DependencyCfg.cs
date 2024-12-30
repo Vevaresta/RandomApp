@@ -4,6 +4,7 @@ using RandomApp.Server.Authentication.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using RandomApp.Server.Authentication.Models;
 using Microsoft.AspNetCore.Identity;
+using RandomApp.Server.Authentication.Mapping;
 
 namespace RandomApp.Server.Authentication.Configuration
 {
@@ -30,6 +31,11 @@ namespace RandomApp.Server.Authentication.Configuration
             })
                 .AddEntityFrameworkStores<AuthDbContext>()
                 .AddDefaultTokenProviders();
+        }
+
+        public static void RegisterAuthServices(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(AuthMappingProfile));
         }
     }
 }
