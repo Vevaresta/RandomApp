@@ -12,6 +12,7 @@ namespace RandomApp.Server.Api.Configuration
             Authentication.Configuration.DependencyCfg.RegisterAuthDbContext(services, configuration);
             Authentication.Configuration.DependencyCfg.ConfigureIdentity(services);
             Authentication.Configuration.DependencyCfg.RegisterAuthServices(services);
+            Authentication.Configuration.JwtConfiguration.ConfigureJWT(services, configuration);
         }
 
         public static void RegisterLogging(this IServiceCollection services)

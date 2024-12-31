@@ -39,5 +39,6 @@ namespace RandomApp.Server.Authentication.Configuration
             services.AddAutoMapper(typeof(AuthMappingProfile));
             services.AddScoped<IAuthenticationService, AuthenticationService>(); 
         }
+
     }
 }
