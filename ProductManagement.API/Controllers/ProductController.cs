@@ -1,4 +1,6 @@
-﻿using Common.Shared.Repositories;
+﻿using Common.Shared.Authorization;
+using Common.Shared.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -37,6 +39,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = Policies.RequireAdminPolicy)]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
             _logger.Info("Fetching product with ID: {id}", id);
@@ -58,6 +61,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
         [HttpGet("all")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = Policies.RequireUserPolicy)]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
             _logger.Info("Fetching all products.");
