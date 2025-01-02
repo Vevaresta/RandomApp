@@ -6,7 +6,7 @@ using RandomApp.Server.Authentication.Models;
 using Microsoft.AspNetCore.Identity;
 using RandomApp.Server.Authentication.Mapping;
 using RandomApp.Server.Authentication.Services;
-//using Common.Shared.Authorization;
+using Common.Shared.Authorization;
 
 namespace RandomApp.Server.Authentication.Configuration
 {
@@ -39,14 +39,14 @@ namespace RandomApp.Server.Authentication.Configuration
         {
             services.AddAutoMapper(typeof(AuthMappingProfile));
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy(Policies.RequireAdminPolicy, policy =>
-            //        policy.RequireRole("Administrator"));
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.RequireAdminPolicy, policy =>
+                    policy.RequireRole("Administrator"));
 
-            //    options.AddPolicy(Policies.RequireUserPolicy, policy =>
-            //        policy.RequireRole("User"));
-            //});
+                options.AddPolicy(Policies.RequireUserPolicy, policy =>
+                    policy.RequireRole("User"));
+            });
         }
 
 

@@ -68,18 +68,11 @@ namespace RandomApp.Server.Authentication.Services
             return result;
         }
 
-        //private SigningCredentials GetSigningCredentials()
-        //{
-        //    var secretKey = _configuration.GetSection("JwtSettings:SecretKey").Value;
-        //    var key = Encoding.UTF8.GetBytes(secretKey);          
-        //    var secret = new SymmetricSecurityKey(key);
-
-        //    return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-        //}
         private SigningCredentials GetSigningCredentials()
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
+
             if (string.IsNullOrEmpty(secretKey))
             {
                 _logger.Error("JWT secret key is null or empty");
@@ -107,22 +100,6 @@ namespace RandomApp.Server.Authentication.Services
 
             return claims;
         }
-
-        //private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
-        //{
-        //    var jwtSettings = _configuration.GetSection("JwtSettings");
-
-        //    var tokenOptions = new JwtSecurityToken
-        //        (
-        //            issuer: jwtSettings["validIssuer"],
-        //            audience: jwtSettings["validAudience"],
-        //            claims: claims,
-        //            expires: DateTime.Now.AddHours(Convert.ToDouble(jwtSettings["expires"])),
-        //            signingCredentials: signingCredentials
-        //        );
-
-        //    return tokenOptions;
-        //}
 
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
