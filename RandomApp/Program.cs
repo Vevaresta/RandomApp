@@ -22,13 +22,13 @@ internal class Program
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
             builder.Host.UseNLog();
-            
+
 
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                 });
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
             // if my API calls often send the same data, instead of having to to back to the DB, with this methods I can cache the data in memory
             builder.Services.AddResponseCaching();
 
@@ -41,6 +41,30 @@ internal class Program
                     Title = "RandomApp",
                     Version = "v1",
                     Description = "Testing my routes"
+                });
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+
                 });
             });
 
@@ -66,8 +90,10 @@ internal class Program
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            // Authentication has to come before Authorization otherwise your tokens wont be validated because authorization
+            // middleware tries to check permissions before the user is autenticated
             app.UseAuthentication();
+            app.UseAuthorization();
             app.MapControllers();
 
             app.Run();

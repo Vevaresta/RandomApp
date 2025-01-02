@@ -42,9 +42,28 @@ namespace RandomApp.Server.Authentication.Controllers
                 return BadRequest(ModelState);
             }
 
-            _logger.Info("User sucsessfuly registered: {UserName}", userForRegistration.UserName);
+            _logger.Info("User successfuly registered: {UserName}", userForRegistration.UserName);
             return Created();
         }
+
+
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> Authenticate(UserForAuthenticationDto user)
+        {
+            _logger.Info("Authenticating attempt for user: {Username}", user.UserName);
+            if (!await _authenticationService.ValidateUser(user))
+            {
+                _logger.Warn("Authentication failed for user: {Username}", user.UserName);
+                return Unauthorized();
+            }
+
+            var token = await _authenticationService.CreateToken();
+            _logger.Info("Token successfully created for user: {Username}", user.UserName);
+            return Ok(new { Token = token });
+        }
+
 
     }
         
