@@ -59,9 +59,9 @@ namespace RandomApp.Server.Authentication.Controllers
                 return Unauthorized();
             }
 
-            var token = await _authenticationService.CreateToken();
+            var tokenDto = await _authenticationService.CreateToken(populateExp: true);
             _logger.Info("Token successfully created for user: {Username}", user.UserName);
-            return Ok(new { Token = token });
+            return Ok(tokenDto);
         }
 
 

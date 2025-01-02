@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RandomApp.Server.Authentication.DataAccess;
 
@@ -11,9 +12,11 @@ using RandomApp.Server.Authentication.DataAccess;
 namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250102125402_AdditionalUserFieldsForRefreshToken")]
+    partial class AdditionalUserFieldsForRefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,15 +54,13 @@ namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrat
                     b.HasData(
                         new
                         {
-                            Id = "69d0066e-9930-4cb4-b319-c58fd17e5ebf",
-                            //Id = "9d8cb52a-4c3b-4f26-8e46-4c35a1515b4e",
+                            Id = "9d8cb52a-4c3b-4f26-8e46-4c35a1515b4e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "658046d7-996b-457f-87a0-2d50015888e4",
-                            //Id = "72133567-a10f-43c0-97eb-110d47a2f7fc",
+                            Id = "72133567-a10f-43c0-97eb-110d47a2f7fc",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
