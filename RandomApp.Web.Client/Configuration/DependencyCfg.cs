@@ -15,6 +15,7 @@ namespace RandomApp.Web.Client.Configuration
 
             services.AddSingleton<IHttpClientCreator, HttpClientCreator>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductDisplayService,  ProductDisplayService>();
             services.AddHttpClient();
         }
     }

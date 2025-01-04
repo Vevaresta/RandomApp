@@ -1,4 +1,4 @@
-using RandomApp.Web.Blazor.Features;
+using RandomApp.Web.Blazor.Features.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 

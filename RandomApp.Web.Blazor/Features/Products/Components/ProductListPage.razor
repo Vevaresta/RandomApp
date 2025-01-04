@@ -1,8 +1,31 @@
-﻿<h3>Products</h3>
-<div>
-    <h2>This is my first component</h2>
-</div>
+﻿@page "/products"
+@using RandomApp.ProductManagement.Application.DataTransferObjects
+@using RandomApp.Web.Client
+@inject IProductDisplayService ProductDisplayService
+
+<h3>ProductsList</h3>
+
+@if (productDtos == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @foreach(var productDto in productDtos)
+    {
+        <div class="product-item">
+            <h4>@productDto.Title</h4>
+            <p>@productDto.Description</p>
+        </div>
+    }
+}
+
 
 @code {
+    private IEnumerable<ProductDto> productDtos;
 
+    protected override async Task OnInitializedAsync()
+    {
+        productDtos = await ProductDisplayService.GetProductsAsync();
+    }
 }

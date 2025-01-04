@@ -6,4 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProductManagement.API\RandomApp.ProductManagement.Application.csproj" />
+    <ProjectReference Include="..\RandomApp.Web.Client\RandomApp.Web.Client.csproj" />
+  </ItemGroup>
+
 </Project>

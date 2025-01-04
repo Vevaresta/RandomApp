@@ -1,9 +1,11 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Components.Web
+@using RandomApp.Web.Blazor.Features.Products.Components
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
-<RandomApp.Web.Blazor.Features.Products.Components.ProductListPage></RandomApp.Web.Blazor.Features.Products.Components.ProductListPage>
 Welcome to your new Random app.
 
-<SurveyPrompt title="How is blazor working for you"></SurveyPrompt>
+<ProductListPage/>
+
