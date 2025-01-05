@@ -12,10 +12,9 @@ namespace RandomApp.Web.Client.Configuration
             services.AddSingleton<ProductSyncService>();
             services.AddSingleton<IHostedService>(sp => sp.GetRequiredService<ProductSyncService>());
             services.AddSingleton<IProductSyncService>(sp => sp.GetRequiredService<ProductSyncService>());
-
+          
             services.AddSingleton<IHttpClientCreator, HttpClientCreator>();
             services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IProductDisplayService,  ProductDisplayService>();
             services.AddHttpClient();
         }
     }

@@ -21,7 +21,8 @@ namespace RandomApp.Web.Client.Services
         public async Task<IEnumerable<ProductDto>> GetProductsAsync()
         {
             var products = await _productRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<ProductDto>>(products);
+            var productsDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+            return productsDtos;
         }
     }
 }

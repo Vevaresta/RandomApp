@@ -15,6 +15,12 @@ namespace RandomApp.ProductManagement.Application.Mapping
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Title) ? "Unknown Product" : src.Title))
                 // if Category is null or empty return "Uncategorized" else Category
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Category) ? "Uncategorized" : src.Category));
+
+
+            CreateMap<Product, ProductDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.OriginalApiId))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category));
         }
     }
 }

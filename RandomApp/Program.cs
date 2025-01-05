@@ -73,9 +73,6 @@ internal class Program
             builder.Services.RegisterFrontendServices();
             builder.Services.RegisterLogging();
 
-
-
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
