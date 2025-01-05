@@ -69,8 +69,7 @@ internal class Program
             });
 
 
-            builder.Services.RegisterBackendServices(builder.Configuration);
-            builder.Services.RegisterFrontendServices();
+            builder.Services.RegisterBackendServices(builder.Configuration);          
             builder.Services.RegisterLogging();
 
             var app = builder.Build();

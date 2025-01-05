@@ -1,7 +1,7 @@
 using RandomApp.Web.Blazor.Configuration;
 using RandomApp.Web.Blazor.Features.Shared;
-using NLog;
 using NLog.Web;
+using RandomApp.Web.Client.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
