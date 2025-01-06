@@ -23,22 +23,37 @@ namespace RandomApp.Web.Client.Services
         {
             try
             {
-                _logger.Info($"Calling {products_endpoint}");
+                _logger.Info("Calling {endpoint}", products_endpoint);
                 var response = await HttpClient.GetAsync(products_endpoint);
-                _logger.Info($"Response status: {response.StatusCode}");
+                _logger.Info("Response status: {StatusCode}", response.StatusCode);
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.Error($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                    _logger.Error("Error: {StatusCode} - {ReasonPhrase}", response.StatusCode, response.ReasonPhrase);
                     return Enumerable.Empty<Product>();
                 }
 
                 var content = await response.Content.ReadAsStringAsync();
-                _logger.Info($"Response content: {content}");
+                _logger.Info("Response content: {content}", content);
 
                 var products = await response.Content.ReadFromJsonAsync<IEnumerable<Product>>();
-                _logger.Info($"Parsed {products?.Count() ?? 0} products");
-                return products ?? Enumerable.Empty<Product>();
+                if (products == null)
+                {
+                    _logger.Info("Parsed 0 products");
+                }
+                else
+                {
+                    _logger.Info("Parsed {Count} products", products.Count());
+                }
+
+                if (products == null)
+                {
+                    return Enumerable.Empty<Product>();
+                }
+                else
+                {
+                    return products;
+                }
             }
             catch (Exception ex)
             {
