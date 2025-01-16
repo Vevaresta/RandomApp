@@ -4,7 +4,6 @@
 @using RandomApp.Web.Client.Services
 @using Microsoft.AspNetCore.Components.Web
 @inject IProductDisplayService ProductDisplayService
-@inject NavigationManager NavigationManager
 
 <PageTitle>Products</PageTitle>
 <h3>Products List</h3>
@@ -19,7 +18,10 @@ else
         @foreach (var productDto in productDtos)
         {
             <li class="list-group-item">
-                    <div class="d-flex flex-column" @onclick="@(() => NavigateToDetails(productDto.Id))" style="cursor: pointer;">
+                    <div class="d-flex flex-column">
+                    <a href="/product/@productDto.Id" class="btn btn-primary">
+                        View Details for @productDto.Title
+                    </a>
                         <h5 class="mb-1">@productDto.Title</h5>
                         <p class="mt-2 mb-0 text-muted">@productDto.Description</p>
                     </div>
@@ -35,10 +37,5 @@ else
     protected override async Task OnInitializedAsync()
     {
         productDtos = await ProductDisplayService.GetProductsAsync();
-    }
-
-    private void NavigateToDetails(int id)
-    {
-        NavigationManager.NavigateTo($"/product/{id}");
     }
 }
