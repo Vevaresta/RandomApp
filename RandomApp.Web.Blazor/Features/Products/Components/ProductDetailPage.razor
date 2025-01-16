@@ -1,5 +1,43 @@
-﻿<h3>ProductDetail</h3>
+﻿@page "/product/{Id:int}"
+@using RandomApp.Web.Client
+@inject IProductDisplayService ProductDisplayService
+@using RandomApp.ProductManagement.Application.DataTransferObjects
 
-@code {
 
+@if (productDto != null)
+{
+    <div class="container mt-4">
+        <h2>@productDto.Title</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <p class="lead">@productDto.Description</p>
+                <div class="mt-3">
+                    <p><strong>Price:</strong> @productDto.Price</p>
+                    <p><strong>Category:</strong> @productDto.Category</p>
+                    @if (!string.IsNullOrEmpty(productDto.Image))
+                    {
+                        <img src="@productDto.Image" alt="@productDto.Title" class="img-fluid mt-3" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+
+
+@code{
+    [Parameter]
+    public int Id { get; set; }
+
+    private ProductDto productDto;
+
+    protected override async Task OnInitializedAsync()
+    {
+        productDto = await ProductDisplayService.GetProductByIdAsync(Id);
+    }
 }

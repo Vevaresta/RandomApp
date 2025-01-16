@@ -41,6 +41,8 @@ public class MockProductDisplayService
         var mockService = new Mock<IProductDisplayService>();
         mockService.Setup(x => x.GetProductsAsync()).ReturnsAsync(mockProducts);
 
+        mockService.Setup(x => x.GetProductByIdAsync(It.IsAny<int>())).ReturnsAsync((int id) => mockProducts.FirstOrDefault(p => p.Id == id));
+
         return mockService.Object;
     }
 }
