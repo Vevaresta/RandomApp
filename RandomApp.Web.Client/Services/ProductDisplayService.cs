@@ -22,8 +22,11 @@ namespace RandomApp.Web.Client.Services
         {
             var products = await _productRepository.GetAllAsync();
             _logger.Info("Got {Count} products from repository", products.Count());
+
             var productsDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+
             _logger.Info("Mapped to {Count} DTOs", productsDtos.Count());
+
             return productsDtos;
         }
     }
