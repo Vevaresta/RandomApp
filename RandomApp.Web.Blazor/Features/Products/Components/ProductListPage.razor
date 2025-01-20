@@ -6,7 +6,12 @@
 @inject IProductDisplayService ProductDisplayService
 
 <PageTitle>Products</PageTitle>
-<h3>Products List</h3>
+
+<div class="container d-flex justify-content-center bg-primary p-4 text-white">
+    <h3>Product List</h3>
+</div>
+
+
 
 @if (productDtos == null)
 {
@@ -29,6 +34,7 @@ else
         }
     </ol>
 }
+
 
 
 @code {
