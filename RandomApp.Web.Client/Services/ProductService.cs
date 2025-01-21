@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using NLog;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Services;
 using RandomApp.ProductManagement.Domain.Entities;
@@ -10,19 +9,14 @@ namespace RandomApp.Web.Client.Services
     public class ProductService : ApiClientBase, IProductService
     {
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
 
         public ProductService(IHttpClientCreator httpClientCreator, IMapper mapper) : base(httpClientCreator)
         {
             _mapper = mapper;
-            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public async Task<IEnumerable<Product>> GetProductsFromApiAsync()
         {
-
-            _logger.Info("Fetching products from external API");
-
             var response = await HttpClient.GetAsync("products");
 
             if (!response.IsSuccessStatusCode)
@@ -39,11 +33,8 @@ namespace RandomApp.Web.Client.Services
 
             if (productDtos == null)
             {
-                _logger.Warn("No products returned from API.");
                 return new List<Product>();
             }
-
-            _logger.Info("Successfully retrieved {Count} products from API", productDtos.Count());
 
             var products = productDtos
                 .Where(dto => !string.IsNullOrEmpty(dto.Title))

@@ -1,9 +1,8 @@
-﻿using NLog;
-using RandomApp.ProductManagement.Application.Mapping;
+﻿using RandomApp.ProductManagement.Application.Mapping;
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using RandomApp.Web.Client;
 using RandomApp.Web.Client.Services;
-using Moq;
+
 
 
 namespace RandomApp.Web.Blazor.Configuration
@@ -19,11 +18,6 @@ namespace RandomApp.Web.Blazor.Configuration
             services.AddScoped<IProductDisplayService>(serviceProvider => MockProductDisplayService.CreateMockProductService());
             services.AddAutoMapper(typeof(ProductMappingProfile).Assembly);
             
-        }
-
-        public static void RegisterLogging(this IServiceCollection services)
-        {
-            services.AddScoped<NLog.ILogger>(sp => LogManager.GetCurrentClassLogger());
         }
     }
 }

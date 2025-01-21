@@ -1,5 +1,4 @@
 ﻿using RandomApp.ProductManagement.Application.DataTransferObjects;
-using NLog;
 using AutoMapper;
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 
@@ -8,13 +7,11 @@ namespace RandomApp.Web.Client.Services
     public class ProductDisplayService : IProductDisplayService
     {
         private readonly IProductRepository _productRepository;
-        private readonly ILogger _logger;
         private readonly IMapper _mapper;
 
-        public ProductDisplayService(IProductRepository productRepository, ILogger logger, IMapper mapper) 
+        public ProductDisplayService(IProductRepository productRepository, IMapper mapper) 
         {
             _productRepository = productRepository;
-            _logger = logger;
             _mapper = mapper;
             
         }
@@ -22,19 +19,15 @@ namespace RandomApp.Web.Client.Services
         public async Task<ProductDto> GetProductByIdAsync(int Id)
         {
             var product = await _productRepository.GetByIdAsync(Id);
-
             var productDto = _mapper.Map<ProductDto>(product);
+
             return productDto;
         }
 
         public async Task<IEnumerable<ProductDto>> GetProductsAsync()
         {
             var products = await _productRepository.GetAllAsync();
-            _logger.Info("Got {Count} products from repository", products.Count());
-
             var productsDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
-
-            _logger.Info("Mapped to {Count} DTOs", productsDtos.Count());
 
             return productsDtos;
         }

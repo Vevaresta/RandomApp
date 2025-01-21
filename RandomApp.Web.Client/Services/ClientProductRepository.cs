@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using NLog;
 using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using System.Linq.Expressions;
@@ -10,40 +9,33 @@ namespace RandomApp.Web.Client.Services
     public class ClientProductRepository : ApiClientBase, IProductRepository
     {
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
         public const string products_endpoint = "api/product/all";
-        public ClientProductRepository(IHttpClientCreator httpClientCreator, IMapper mapper, ILogger logger) : base(httpClientCreator)
+        public ClientProductRepository(IHttpClientCreator httpClientCreator, IMapper mapper) : base(httpClientCreator)
         {   
             _mapper = mapper;
-            _logger = logger;
-
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
             try
             {
-                _logger.Info("Calling {endpoint}", products_endpoint);
                 var response = await HttpClient.GetAsync(products_endpoint);
-                _logger.Info("Response status: {StatusCode}", response.StatusCode);
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.Error("Error: {StatusCode} - {ReasonPhrase}", response.StatusCode, response.ReasonPhrase);
                     return Enumerable.Empty<Product>();
                 }
 
                 var content = await response.Content.ReadAsStringAsync();
-                _logger.Info("Response content: {content}", content);
 
                 var products = await response.Content.ReadFromJsonAsync<IEnumerable<Product>>();
                 if (products == null)
                 {
-                    _logger.Info("Parsed 0 products");
+
                 }
                 else
                 {
-                    _logger.Info("Parsed {Count} products", products.Count());
+
                 }
 
                 if (products == null)
@@ -57,7 +49,6 @@ namespace RandomApp.Web.Client.Services
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error fetching products");
                 throw;
             }
         }
