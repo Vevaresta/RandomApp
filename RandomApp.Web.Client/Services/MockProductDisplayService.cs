@@ -14,7 +14,7 @@ public class MockProductDisplayService
                 Title = "iPhone 14 Pro",
                 Price = 999.99,
                 Category = "Electronics",
-                Description = "Latest iPhone model with advanced camera system and A16 Bionic chip",
+                Description = "Latest iPhone model with advanced camera system and A16 Bionic chipggggggggggggggggggggggggggggggggggggggggg",
                 Image = "https://placeholder.com/iphone14pro.jpg"
             },
             new ProductDto
