@@ -3,63 +3,104 @@
 @inject IProductDisplayService ProductDisplayService
 @using RandomApp.ProductManagement.Application.DataTransferObjects
 
-<div class="container">
-
-    @if (productDto != null)
-    {
-        <div class="container mt-4">
-            <h2>@productDto.Title</h2>
-            <div class="row">
-                <div class="col-md-8">
-                    <p class="lead">@productDto.Description</p>
-                    <div class="mt-3">
-                        <p><strong>Price:</strong> @productDto.Price</p>
-                        <p><strong>Category:</strong> @productDto.Category</p>
-                        @if (!string.IsNullOrEmpty(productDto.Image))
-                        {
-                            <img src="@productDto.Image" class="img-fluid mt-3" />
-                        }
+<div class="container py-5">
+    <div class="row">
+        <!-- Product Images -->
+        <div class="col-md-6">
+            <div class="card">
+                <svg class="card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#868e96"></rect>
+                </svg>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <img src="" class="img-thumbnail" alt="Thumbnail 1">
+                        </div>
+                        <div class="col">
+                            <img src="" class="img-thumbnail" alt="Thumbnail 2">
+                        </div>
+                        <div class="col">
+                            <img src="" class="img-thumbnail" alt="Thumbnail 3">
+                        </div>
+                        <div class="col">
+                            <img src="" class="img-thumbnail" alt="Thumbnail 4">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        // Quantity
-        <div class="mb-4">
-            <div class="d-flex align-items-center">
-                <label class="m-2">Quantity:</label>
-                <select class="form-select w-auto">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
+
+        @if (productDto != null)
+        {
+            <div class="container mt-4">
+                <h2>@productDto.Title</h2>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="text-warning me-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                </div>
+                                <span class="text-muted">(128 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="lead">@productDto.Description</p>
+                        <div class="mt-3">
+                            <p><strong>Price:</strong> @productDto.Price</p>
+                            <p><strong>Category:</strong> @productDto.Category</p>
+@*                             @if (!string.IsNullOrEmpty(productDto.Image))
+                            {
+                                <img src="@productDto.Image" class="img-fluid mt-3" />
+                            } *@
+
+                                <div class="d-flex">
+                                <p><strong>Quantity:</strong></p>
+                                    <select class="form-select w-auto mx-2 py-2">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                           
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        // Additional Info
-        <div class="mt-4">
-            <div class="d-flex align-items-center mb-2">
-                <i class="bi bi-truck"></i>
-                <span>Free shipping on orders over $50</span>
+
+            // Additional Info
+            <div class="mt-4">
+                <div class="d-flex mb-2">
+                    <i class="bi bi-truck"></i>
+                    <span>Free shipping on orders over $50</span>
+                </div>
+                <div class="d-flex mb-2">
+                    <i class="bi bi-arrow-clockwise"></i>
+                    <span>30-day return policy</span>
+                </div>
+                <div class="d-flex">
+                    <i class="bi bi-shield-shaded"></i>
+                    <span>2-year warranty</span>
+                </div>
             </div>
-            <div class="d-flex align-items-center mb-2">
-                <i class="fas fa-undo text-primary me-2"></i>
-                <span>30-day return policy</span>
-            </div>
-            <div class="d-flex align-items-center">
-                <i class="fas fa-shield-alt text-primary me-2"></i>
-                <span>2-year warranty</span>
-            </div>
-        </div>
-    }
-    else
-    {
-        <p>Loading...</p>
-    }
+        }
+        else
+        {
+            <p>Loading...</p>
+        }
+    </div>
+
 </div>
 
-@code{
+
+@code {
     [Parameter]
     public int Id { get; set; }
 
@@ -69,4 +110,4 @@
     {
         productDto = await ProductDisplayService.GetProductByIdAsync(Id);
     }
-}
+    }
