@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Common.Infrastructure\Common.Shared.csproj" />
     <ProjectReference Include="..\RandomApp.ShoppingCart.Domain\RandomApp.ShoppingCart.Domain.csproj" />
   </ItemGroup>
 
