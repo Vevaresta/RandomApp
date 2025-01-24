@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RandomApp.ShoppingCart.Domain.Entities;
+using RandomApp.ShoppingCartManagement.Domain.Entities;
+
 
 namespace RandomApp.ShoppingCartManagement.Infrastructure.DataAccess
 {
     public class ShoppingCartDbContext : DbContext
     {
-        public DbSet<Domain.Entities.ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
         public ShoppingCartDbContext(DbContextOptions<ShoppingCartDbContext> options) : base(options) { }
@@ -13,7 +14,7 @@ namespace RandomApp.ShoppingCartManagement.Infrastructure.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Domain.Entities.ShoppingCart>(entity =>
+            modelBuilder.Entity<ShoppingCart>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.UserId).IsRequired();
