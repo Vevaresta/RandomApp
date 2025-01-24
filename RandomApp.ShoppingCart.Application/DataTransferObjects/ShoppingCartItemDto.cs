@@ -1,10 +1,8 @@
-﻿namespace RandomApp.ShoppingCartManagement.Domain.Entities
+﻿namespace RandomApp.ShoppingCartManagement.Application.DataTransferObjects
 {
-    public class ShoppingCartItem
+    public class ShoppingCartItemDto
     {
         public int Id { get; set; }
-        public int ShoppingCartId { get; set; }
-        public ShoppingCart ShoppingCart { get; set; }
         public int ProductId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }

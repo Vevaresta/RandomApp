@@ -31,13 +31,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Web.Client.Compon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Web.Client.Pages", "RandomApp.Web.Client.Pages\RandomApp.Web.Client.Pages.csproj", "{B35C3839-376A-4785-8F59-C30AAE9BE883}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShoppingCart", "ShoppingCart", "{B1FFF1F7-AF51-42DB-8054-923D1AB6BAE2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShoppingCartManagement", "ShoppingCartManagement", "{B1FFF1F7-AF51-42DB-8054-923D1AB6BAE2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ShoppingCart.Application", "RandomApp.ShoppingCart.Application\RandomApp.ShoppingCart.Application.csproj", "{98DED728-A457-414A-AEDE-3BF417CAF77D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ShoppingCartManagement.Application", "RandomApp.ShoppingCart.Application\RandomApp.ShoppingCartManagement.Application.csproj", "{98DED728-A457-414A-AEDE-3BF417CAF77D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ShoppingCart.Domain", "RandomApp.ShoppingCart.Domain\RandomApp.ShoppingCart.Domain.csproj", "{12A340F3-2960-4A34-801A-0627EF0D4D5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ShoppingCartManagement.Domain", "RandomApp.ShoppingCart.Domain\RandomApp.ShoppingCartManagement.Domain.csproj", "{12A340F3-2960-4A34-801A-0627EF0D4D5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ShoppingCart.Infrastructure", "RandomApp.ShoppingCart.Infrastructure\RandomApp.ShoppingCart.Infrastructure.csproj", "{308517B6-8839-47F8-90DA-A6174F2EA68D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ShoppingCartManagement.Infrastructure", "RandomApp.ShoppingCart.Infrastructure\RandomApp.ShoppingCartManagement.Infrastructure.csproj", "{308517B6-8839-47F8-90DA-A6174F2EA68D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F790A2C2-16E0-4689-B94D-7E61FE97C08B} = {F790A2C2-16E0-4689-B94D-7E61FE97C08B}
 	EndProjectSection

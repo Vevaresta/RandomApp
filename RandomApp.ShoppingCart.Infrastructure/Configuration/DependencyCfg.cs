@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RandomApp.ShoppingCart.Infrastructure.DataAccess;
+using RandomApp.ShoppingCartManagement.Infrastructure.DataAccess;
 
-namespace RandomApp.ShoppingCart.Infrastructure.Configuration
+namespace RandomApp.ShoppingCartManagement.Infrastructure.Configuration
 {
     public static class DependencyCfg
     {

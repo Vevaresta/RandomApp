@@ -1,4 +1,4 @@
-﻿namespace RandomApp.ShoppingCart.Domain.Entities
+﻿namespace RandomApp.ShoppingCartManagement.Domain.Entities
 {
     public class ShoppingCart
     {
@@ -14,4 +14,3 @@
         }
     }
 }
- 

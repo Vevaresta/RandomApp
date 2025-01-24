@@ -1,8 +1,8 @@
 ﻿
 using Common.Shared.Repositories;
-using RandomApp.ShoppingCart.Infrastructure.DataAccess;
+using RandomApp.ShoppingCartManagement.Infrastructure.DataAccess;
 
-namespace RandomApp.ShoppingCart.Infrastructure.RepositoryImplementation
+namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementation
 {
     public class ShoppingCartUnitOfWork : IUnitOfWork
     {

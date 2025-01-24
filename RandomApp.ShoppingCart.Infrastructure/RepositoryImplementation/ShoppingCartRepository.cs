@@ -1,10 +1,10 @@
 ﻿using Common.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 using RandomApp.ShoppingCart.Domain.RepositoryInterfaces;
-using RandomApp.ShoppingCart.Infrastructure.DataAccess;
+using RandomApp.ShoppingCartManagement.Infrastructure.DataAccess;
 using System.Linq.Expressions;
 
-namespace RandomApp.ShoppingCart.Infrastructure.RepositoryImplementation
+namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementation
 {
     public class ShoppingCartRepository : GenericRepository<Domain.Entities.ShoppingCart>, IShoppingCartRepository
     {

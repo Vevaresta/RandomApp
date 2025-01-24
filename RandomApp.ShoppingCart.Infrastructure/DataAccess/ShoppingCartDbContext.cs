@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RandomApp.ShoppingCart.Domain.Entities;
 
-namespace RandomApp.ShoppingCart.Infrastructure.DataAccess
+namespace RandomApp.ShoppingCartManagement.Infrastructure.DataAccess
 {
     public class ShoppingCartDbContext : DbContext
     {
@@ -35,7 +35,7 @@ namespace RandomApp.ShoppingCart.Infrastructure.DataAccess
                 entity.Property(e => e.Quantity).IsRequired();
                 entity.Property(e => e.Image).IsRequired(false);
             });
-            
+
         }
     }
 }
