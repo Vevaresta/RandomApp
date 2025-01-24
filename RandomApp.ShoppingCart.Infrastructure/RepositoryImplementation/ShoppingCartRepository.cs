@@ -1,12 +1,12 @@
 ﻿using Common.Shared.Repositories;
-using Microsoft.EntityFrameworkCore;
-using RandomApp.ShoppingCart.Domain.RepositoryInterfaces;
+using RandomApp.ShoppingCartManagement.Domain.Entities;
+using RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces;
 using RandomApp.ShoppingCartManagement.Infrastructure.DataAccess;
-using System.Linq.Expressions;
+
 
 namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementation
 {
-    public class ShoppingCartRepository : GenericRepository<Domain.Entities.ShoppingCart>, IShoppingCartRepository
+    public class ShoppingCartRepository : GenericRepository<ShoppingCart>, IShoppingCartRepository
     {
         private readonly ShoppingCartDbContext _shoppingCartDbContext;
 
