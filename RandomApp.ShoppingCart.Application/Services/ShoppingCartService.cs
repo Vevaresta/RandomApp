@@ -16,6 +16,13 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
 
         public async Task AddToCartAsync(ShoppingCartItemDto itemDto, int userId)
         {
+            if (itemDto.Quantity <= 0)
+            {
+                _logger.Warn("Invalid quantity {quantity} for product {productId}", itemDto.Quantity);
+                throw new ArgumentException("Quantity must be greater than 0");
+            }
+
+            _logger.Info("Fetching cart with user id {id}", userId);
             var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
 
             if (cart == null)
@@ -23,11 +30,13 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
                 cart = new ShoppingCart()
                 {
                     UserId = userId,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
                     Items = new List<ShoppingCartItem>()
                 };
 
+                _logger.Info("New shopping cart created for user {userId}", userId);
                 await _shoppingCartRepository.AddAsync(cart);
+                _logger.Info("Shopping cart with id {id} added to the table", cart.Id);
             }
 
             var existingItem = cart.Items.FirstOrDefault(item => item.ProductId == itemDto.ProductId);
@@ -35,6 +44,10 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
             if (existingItem != null)
             {
                 existingItem.Quantity += itemDto.Quantity;
+                _logger.Info("Item {productId} quantity updated from {oldQuantity} to {newQuantity}",
+                    existingItem.ProductId,
+                    existingItem.Quantity - itemDto.Quantity,
+                    existingItem.Quantity);
             }
             else
             {
@@ -49,13 +62,37 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
                 });
 
             }
+
+            _logger.Info("Added item {productId} with quantity {quantity} to cart {cartId}",
+                itemDto.ProductId,
+                itemDto.Quantity,
+                cart.Id);
+
             await _unitOfWork.CompleteAsync();
+            _logger.Info("Saved cart {cartId} with {itemCount} items for user {userId}",
+                cart.Id,
+                cart.Items.Count,
+                userId);
         }
 
 
-        public Task ClearCartAsync(int userId)
+        public async Task ClearCartAsync(int userId)
         {
-            throw new NotImplementedException();
+            _logger.Info("Fetching cart with user id {id}", userId);
+            var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
+
+            if (cart != null)
+            {
+                cart.Items.Clear();
+                await _unitOfWork.CompleteAsync();
+                _logger.Info("Cleared cart for user {userI}", userId);
+            }
+
+            else
+            {
+                _logger.Info("No cart found to clear for user {user}", userId);
+            }
+
         }
 
 
@@ -74,9 +111,9 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
         }
 
 
-        public Task RemoveFromCartAsync(int itemId)
+        public async Task RemoveFromCartAsync(int itemId)
         {
-            throw new NotImplementedException();
+            var cart = await _shoppingCartRepository.GetCartByUserIdAsync;
         }
 
         public Task UpdateQuantityAsync(int itemId, int quantity)

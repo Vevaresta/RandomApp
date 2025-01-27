@@ -6,5 +6,7 @@ namespace RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces
     public interface IShoppingCartRepository : IGenericRepository<ShoppingCart>
     {
         Task<ShoppingCart> GetCartByUserIdAsync(int userId);
+
+        Task<ShoppingCart> GetCartByItemIdAsync(int itemId);
     }
 }

@@ -22,5 +22,15 @@ namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementati
                 .Include(cart => cart.Items)
                 .FirstOrDefaultAsync(cart => cart.UserId == userId);
         }
+
+        public async Task<ShoppingCart> GetCartByItemIdAsync(int itemId)
+        {
+            return await _shoppingCartDbContext.ShoppingCartItems
+                .Where(item => item.Id == itemId)
+                .Select(item => item.ShoppingCart)
+                .Include(cart => cart.Items)
+                .FirstOrDefaultAsync();
+               
+        }
     }
 }
