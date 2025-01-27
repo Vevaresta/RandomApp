@@ -3,6 +3,7 @@ using RandomApp.ShoppingCartManagement.Application.DataTransferObjects;
 using RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces;
 using NLog;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
+using AutoMapper;
 
 namespace RandomApp.ShoppingCartManagement.Application.Services
 {
@@ -11,6 +12,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
         private readonly IShoppingCartRepository _shoppingCartRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
+        private readonly IMapper _mapper;
 
         public async Task AddToCartAsync(ShoppingCartItemDto itemDto, int userId)
         {
@@ -21,7 +23,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
                 cart = new ShoppingCart()
                 {
                     UserId = userId,
-                    CreatedAt = DateTime.UtcNow,
+                    CreatedAt = DateTime.Now,
                     Items = new List<ShoppingCartItem>()
                 };
 
@@ -50,15 +52,27 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
             await _unitOfWork.CompleteAsync();
         }
 
+
         public Task ClearCartAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ShoppingCartDto> GetCartAsync(int userId)
+
+        public async Task<ShoppingCartDto> GetCartAsync(int userId)
         {
-            throw new NotImplementedException();
+            var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
+
+            if (cart == null)
+            {
+                return null;
+            }
+
+            var cartDto = _mapper.Map<ShoppingCartDto>(cart);
+
+            return cartDto;
         }
+
 
         public Task RemoveFromCartAsync(int itemId)
         {
