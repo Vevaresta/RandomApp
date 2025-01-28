@@ -29,8 +29,7 @@ namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementati
                 .Where(item => item.Id == itemId)
                 .Select(item => item.ShoppingCart)
                 .Include(cart => cart.Items)
-                .FirstOrDefaultAsync();
-               
+                .FirstOrDefaultAsync();             
         }
     }
 }

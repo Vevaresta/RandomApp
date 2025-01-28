@@ -19,7 +19,6 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
             if (itemDto.Quantity <= 0)
             {
                 _logger.Warn("Invalid quantity {quantity} for product {productId}", itemDto.Quantity);
-                throw new ArgumentException("Quantity must be greater than 0");
             }
 
             _logger.Info("Fetching cart with user id {id}", userId);
@@ -113,12 +112,52 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
 
         public async Task RemoveFromCartAsync(int itemId)
         {
-            var cart = await _shoppingCartRepository.GetCartByUserIdAsync;
+            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(itemId);
+
+            if (cart != null)
+            {
+                var itemToRemove = cart.Items.FirstOrDefault(item => item.Id == itemId);
+
+                if (itemToRemove != null)
+                {
+                    cart.Items.Remove(itemToRemove);
+                    await _unitOfWork.CompleteAsync();
+                }
+                else
+                {
+                    // log
+                }
+            }
+
+            else
+            {
+                // log
+            }
         }
 
-        public Task UpdateQuantityAsync(int itemId, int quantity)
+        public async Task UpdateQuantityAsync(int itemId, int quantity)
         {
-            throw new NotImplementedException();
+            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(itemId);
+
+            if (cart != null)
+            {
+                var item = cart.Items.FirstOrDefault(item => item.Id == itemId);
+
+                if (itemId != null)
+                {
+                    var oldQuantity = item.Quantity;
+                    item.Quantity = quantity;
+                    await _unitOfWork.CompleteAsync();
+                }
+                else
+                {
+                    //log
+                }
+            }
+            else
+            {
+                //log
+            }
         }
     }
 }
