@@ -76,9 +76,22 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<ShoppingCartDto> GetCartAsync(int userId)
+        public async Task<ShoppingCartDto> GetCartAsync(int userId)
         {
-            throw new NotImplementedException();
+            _logger.Info("Fetching cart with user id {id}", userId);
+            var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
+
+            if (cart == null)
+            {
+                _logger.Warn("Cart with user id {id} doesn't exist.", userId);
+                return null;
+            }
+
+            var shoppingCartDto = _mapper.Map<ShoppingCartDto>(cart);
+            _logger.Info("Cart with user id {id} successfully fetched with {itemCount} items", userId, shoppingCartDto.Items.ToList().Count);
+
+            return shoppingCartDto;
+            
         }
 
         public Task RemoveFromCartAsync(int itemId)
