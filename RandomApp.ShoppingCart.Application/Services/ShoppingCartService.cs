@@ -94,9 +94,31 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
             
         }
 
-        public Task RemoveFromCartAsync(int itemId)
+        public async Task RemoveFromCartAsync(int itemId)
         {
-            throw new NotImplementedException();
+            _logger.Info("Attempting to remove item {id}", itemId);
+
+            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(itemId);
+            if (cart == null)
+            {
+                _logger.Warn("No cart found containing item {id}", itemId);
+                return;
+            }
+
+            var itemToRemove = cart.Items.FirstOrDefault(item => item.Id == itemId);
+
+            if (itemToRemove == null)
+            {
+                cart.Items.Remove(itemToRemove);
+                await _unitOfWork.CompleteAsync();
+                _logger.Info("Item {itemId} successfully removed from cart {cartId}", itemId, cart.Id);
+            }
+
+            else
+            {
+                _logger.Warn("Item {itemId} not found in cart {cartId}", itemId, cart.Id);
+            }
+
         }
 
         public Task UpdateQuantityAsync(int itemId, int quantity)
