@@ -71,9 +71,20 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
             }
         }
 
-        public Task ClearCartAsync(int userId)
+        public async Task ClearCartAsync(int userId)
         {
-            throw new NotImplementedException();
+            _logger.Info("Attempting to clear cart for user {userId}", userId);
+
+            var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
+            if (cart == null)
+            {
+                _logger.Warn("No cart found for user {userId}", userId);
+                return;
+            }
+
+            cart.Items.Clear();
+            await _unitOfWork.CompleteAsync();
+            _logger.Info("Successfully cleared cart for user {userId}", userId);
         }
 
         public async Task<ShoppingCartDto> GetCartAsync(int userId)
