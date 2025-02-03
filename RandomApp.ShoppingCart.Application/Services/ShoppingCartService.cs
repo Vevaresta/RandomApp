@@ -132,9 +132,37 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
 
         }
 
-        public Task UpdateQuantityAsync(int itemId, int quantity)
+        public async Task UpdateQuantityAsync(int itemId, int quantity)
         {
-            throw new NotImplementedException();
+            if (quantity <= 0)
+            {
+                _logger.Warn("Invalid quantity {quantity} for item {itemId", quantity, itemId);
+                return;
+            }
+
+            _logger.Info("Attemtping to update quantity for item {itemId} to {quantity}", itemId, quantity);
+
+            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(itemId);
+
+            if (cart == null)
+            {
+                _logger.Warn("No cart found containing item {itemId}", itemId);
+                return;
+            }
+
+            var item = cart.Items.FirstOrDefault(item => item.Id == itemId);
+            if (item != null)
+            {
+                var oldQuantity = item.Quantity;
+                item.Quantity = quantity;
+                await _unitOfWork.CompleteAsync();
+                _logger.Info("Updated item {itemId} quantity from {oldQuantity} to {quantity}", itemId, oldQuantity, quantity);
+            }
+
+            else
+            {
+                _logger.Warn("Item {itemId} not found in cart {cartId}", itemId, cart.Id);
+            }
         }
     }
 }
