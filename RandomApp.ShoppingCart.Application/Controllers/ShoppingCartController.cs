@@ -6,6 +6,7 @@ using AutoMapper;
 using RandomApp.ShoppingCartManagement.Application.DataTransferObjects;
 using Microsoft.AspNetCore.Http;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
+using RandomApp.ShoppingCartManagement.Application.Services;
 
 namespace RandomApp.ShoppingCartManagement.Application.Controllers
 {
@@ -21,7 +22,8 @@ namespace RandomApp.ShoppingCartManagement.Application.Controllers
         public ShoppingCartController(IUnitOfWork unitOfWork, IShoppingCartRepository shoppingCartRepository, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _shoppingCartRepository = shoppingCartRepository;
+            //_shoppingCartRepository = shoppingCartRepository;
+            _shoppingCartRepository = MockShoppingCartService.CreateMockShoppingCartRepository().Object;
             _logger = LogManager.GetCurrentClassLogger();
             _mapper = mapper;
         }

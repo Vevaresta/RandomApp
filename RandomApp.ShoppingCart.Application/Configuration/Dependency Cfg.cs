@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RandomApp.ShoppingCartManagement.Application.Controllers;
 using RandomApp.ShoppingCartManagement.Application.Mapping;
+using RandomApp.ShoppingCartManagement.Application.Services;
+using RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces;
 
 
 namespace RandomApp.ShoppingCartManagement.Application.Configuration
@@ -13,7 +15,6 @@ namespace RandomApp.ShoppingCartManagement.Application.Configuration
             services.AddAutoMapper(typeof(ShoppingCartMappingProfile));
             services.AddControllers()
                     .AddApplicationPart(typeof(ShoppingCartController).Assembly);
-
         }
     }
 

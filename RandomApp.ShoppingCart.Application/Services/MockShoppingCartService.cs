@@ -34,6 +34,8 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
             mockRepo.Setup(x => x.GetCartByUserIdAsync(It.IsAny<int>()))
                 .ReturnsAsync((int userId) => mockCarts.FirstOrDefault(c => c.UserId == userId));
 
+            mockRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(mockCarts);
+
             return mockRepo;
         }
     }
