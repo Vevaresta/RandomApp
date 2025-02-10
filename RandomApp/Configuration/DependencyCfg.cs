@@ -14,6 +14,9 @@ namespace RandomApp.Server.Api.Configuration
             Authentication.Configuration.DependencyCfg.ConfigureIdentity(services);
             Authentication.Configuration.DependencyCfg.RegisterAuthServices(services);
             Authentication.Configuration.JwtConfiguration.ConfigureJWT(services, configuration);
+            ShoppingCartManagement.Application.Configuration.DependencyCfg.RegisterApplicationServices(services);
+            ShoppingCartManagement.Infrastructure.Configuration.DependencyCfg.RegisterInfrastructureServices(services);
+            ShoppingCartManagement.Infrastructure.Configuration.DependencyCfg.RegisterDbContext(services, configuration);
 
         }
 

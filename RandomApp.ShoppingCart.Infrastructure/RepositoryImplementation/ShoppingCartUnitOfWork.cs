@@ -40,4 +40,4 @@ namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementati
         }
     }
 }
-}
+
