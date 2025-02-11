@@ -16,6 +16,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Configuration
             services.AddControllers()
                     .AddApplicationPart(typeof(ShoppingCartController).Assembly);
         }
+
     }
 
 }
