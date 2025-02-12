@@ -18,7 +18,7 @@ namespace RandomApp.ProductManagement.Domain.Entities
         public SKU SKU { get; private set; }
 
         public string Category { get; private set; }
-        public string Description { get; private set; }
+        public ProductDescription ProductDescription{ get; private set; }
 
         public string Image { get; private set; }
     }
