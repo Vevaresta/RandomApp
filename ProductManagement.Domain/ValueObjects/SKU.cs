@@ -5,8 +5,8 @@ namespace RandomApp.ProductManagement.Domain.ValueObjects
     public record SKU
     {
         private const int DefaultLength = 15;
-        private SKU(string value) => Value = value;
         public string Value { get; private init; }
+        private SKU(string value) => Value = value;
 
         // can be only created through the Create method -> forces factory method pattern
         public static SKU? Create(string value)
