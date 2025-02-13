@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RandomApp.ProductManagement.Domain.Entities;
+using RandomApp.ProductManagement.Infrastructure.Configuration;
 
 
 namespace RandomApp.ProductManagement.Infrastructure.DataAccess
@@ -12,7 +13,7 @@ namespace RandomApp.ProductManagement.Infrastructure.DataAccess
         public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.ApplyConfiguration(new ProductValueObjectMapping());
 
         }
     }

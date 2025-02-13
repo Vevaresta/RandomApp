@@ -18,7 +18,7 @@ namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
         public async Task<IEnumerable<Product>> GetPopularProducts(string keyword)
         {
             return await _productDbContext.Products
-                .Where(p => p.Description.Contains(keyword))
+                .Where(p => p.ProductDescription.Value.Contains(keyword))
                 .ToListAsync();
 
         }
