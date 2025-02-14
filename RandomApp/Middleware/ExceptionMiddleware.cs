@@ -1,7 +1,7 @@
 ﻿using Common.Shared.ErrorHandling;
 using System.Net;
 
-namespace RandomApp.Server.Api.Middleware
+namespace RandomApp.Presentation.Api.Middleware
 {
     public class ExceptionMiddleware
     {

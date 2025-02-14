@@ -1,4 +1,4 @@
-﻿namespace RandomApp.OrderProcessing.Domain.Entities
+﻿namespace RandomApp.Order.Domain.Entities
 {
     public class Order
     {

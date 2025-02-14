@@ -2,11 +2,11 @@ using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 using RandomApp.ProductManagement.Infrastructure.Configuration;
-using RandomApp.Server.Api.Configuration;
-using RandomApp.Server.Api.Middleware;
 using RandomApp.Web.Client.Configuration;
 using System.Text.Json.Serialization;
 using RandomApp.Server.Authentication.Configuration;
+using RandomApp.Presentation.Api.Configuration;
+using RandomApp.Presentation.Api.Middleware;
 
 internal class Program
 {

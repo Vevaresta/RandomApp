@@ -14,14 +14,12 @@ namespace RandomApp.ProductManagement.Application.Mapping
             CreateMap<ProductDto, Product>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.OriginalApiId, opt => opt.MapFrom(src => src.Id))
-                // if Title is null or empty return "Unknown Product" else Title
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Name) ? "Unknown Product" : src.Name))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => new Price(src.Amount, src.Currency ?? "USD")))
-                .ForMember(dest => dest.SKU, opt => opt.MapFrom(src => SKU.Create(src.SKU ?? "UNKNOWN-SKU")))
-                // if Category is null or empty return "Uncategorized" else Category
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => Enum.Parse<Category>(src.Category ?? "Unassigned")))
-                .ForMember(dest => dest.ProductDescription, opt => opt.MapFrom(src => new ProductDescription(src.ProductDescription ?? "No description set")))
-                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image == "No image set"));
+                .ForMember(dest => dest.SKU, opt => opt.MapFrom(src => SKU.Create(src.SKU)))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => Enum.Parse<Category>(src.Category)))
+                .ForMember(dest => dest.ProductDescription, opt => opt.MapFrom(src => new ProductDescription(src.ProductDescription)))
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
 
 
             CreateMap<Product, ProductDto>()

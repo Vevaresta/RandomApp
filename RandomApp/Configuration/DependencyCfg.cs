@@ -1,6 +1,6 @@
 ﻿using NLog;
 
-namespace RandomApp.Server.Api.Configuration
+namespace RandomApp.Presentation.Api.Configuration
 {
     public static class DependencyCfg
     {

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Mapping;
 using RandomApp.ProductManagement.Application.Orchestrators;
 
@@ -10,6 +12,7 @@ namespace RandomApp.ProductManagement.Application.Configuration
         {
             services.AddScoped<IProductSyncOrchestrator, ProductSyncOrchestrator>();
             services.AddAutoMapper(typeof(ProductMappingProfile));
+            services.AddValidatorsFromAssemblyContaining<ProductDtoValidator>();
         }
     }
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Server.Api", "RandomApp\RandomApp.Server.Api.csproj", "{EDF127DF-2383-4EF5-A411-26D6C74CCDF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Presentation.Api", "RandomApp\RandomApp.Presentation.Api.csproj", "{EDF127DF-2383-4EF5-A411-26D6C74CCDF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductManagement", "ProductManagement", "{570DEA5D-5223-4746-A095-C96C49511E33}"
 EndProject
@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{44EDAC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Shared", "Common.Infrastructure\Common.Shared.csproj", "{F790A2C2-16E0-4689-B94D-7E61FE97C08B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{EDCFA3CF-1DC6-4375-ACCE-884F21637D73}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{EDCFA3CF-1DC6-4375-ACCE-884F21637D73}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Server.Authentication", "RandomApp.Server.Authentication\RandomApp.Server.Authentication.csproj", "{7ABDA541-2062-40E1-8504-8BF4EF68E078}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Presentation.Authentication", "RandomApp.Server.Authentication\RandomApp.Presentation.Authentication.csproj", "{7ABDA541-2062-40E1-8504-8BF4EF68E078}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{C97CE7D4-3446-407C-986F-317315A11C2D}"
 EndProject
@@ -42,13 +42,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ShoppingCartManag
 		{F790A2C2-16E0-4689-B94D-7E61FE97C08B} = {F790A2C2-16E0-4689-B94D-7E61FE97C08B}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderProcessing", "OrderProcessing", "{97C01737-6039-4F85-84B3-65F928DC7146}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{97C01737-6039-4F85-84B3-65F928DC7146}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomApp.OrderProcessing.Application", "RandomApp.OrderProcessing.Application\RandomApp.OrderProcessing.Application.csproj", "{418BD3E0-C1F3-49B0-969B-423465E2F39C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Order.Application", "RandomApp.OrderProcessing.Application\RandomApp.Order.Application.csproj", "{418BD3E0-C1F3-49B0-969B-423465E2F39C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomApp.OrderProcessing.Domain", "RandomApp.OrderProcessing.Domain\RandomApp.OrderProcessing.Domain.csproj", "{19B769FF-820F-4AFD-B5CC-92B7486792B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Order.Domain", "RandomApp.OrderProcessing.Domain\RandomApp.Order.Domain.csproj", "{19B769FF-820F-4AFD-B5CC-92B7486792B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomApp.OrderProcessing.Infrastructure", "RandomApp.OrderProcessing.Infrastructure\RandomApp.OrderProcessing.Infrastructure.csproj", "{A43C99EF-6820-4DD3-8B86-4FC3790460FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Order.Infrastructure", "RandomApp.OrderProcessing.Infrastructure\RandomApp.Order.Infrastructure.csproj", "{A43C99EF-6820-4DD3-8B86-4FC3790460FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
