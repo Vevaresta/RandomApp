@@ -57,6 +57,15 @@ namespace RandomApp.ProductManagement.Domain.Entities
             };
         }
 
+        public void UpdateProduct(string name, Price price, Category category, ProductDescription description, string image)
+        {
+            Name = name;
+            Price = price;
+            Category = category;
+            ProductDescription = description;
+            Image = image;
+        }
+
         public void UpdatePrice(Price newPrice)
         {
             Price = newPrice ?? throw new DomainException("New price can't be null");

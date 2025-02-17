@@ -1,9 +1,9 @@
-﻿using RandomApp.ProductManagement.Domain.Entities;
+﻿using RandomApp.ProductManagement.Application.DataTransferObjects;
 
 namespace RandomApp.ProductManagement.Application.Services
 {
     public interface IProductService
     {
-        Task<IEnumerable<Product>> GetProductsFromApiAsync();
+        Task<IEnumerable<ProductDto>> GetProductsFromApiAsync();
     }
 }

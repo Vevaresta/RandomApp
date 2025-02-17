@@ -1,10 +1,12 @@
 ﻿using Common.Shared.Repositories;
-using RandomApp.ProductManagement.Domain.Models;
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using NLog;
 using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Application.Services;
-
+using RandomApp.ProductManagement.Application.DataTransferObjects;
+using RandomApp.ProductManagement.Domain.Models;
+using RandomApp.ProductManagement.Domain.ValueObjects;
+using RandomApp.ProductManagement.Domain.Enums;
 namespace RandomApp.ProductManagement.Application.Orchestrators
 {
     public class ProductSyncOrchestrator : IProductSyncOrchestrator
@@ -25,48 +27,48 @@ namespace RandomApp.ProductManagement.Application.Orchestrators
 
         public async Task<SyncResult> SyncProducts()
         {
-            var products = await _productService.GetProductsFromApiAsync();
-            if (!products.Any())
+            var productDtos = await _productService.GetProductsFromApiAsync();
+            if (!productDtos.Any())
             {
                 _logger.Warn("No products retrieved from API");
                 return new SyncResult { Message = "No products retrieved from API" };
             }
 
             var existingProducts = await _productRepository.GetAllAsync();
-            var (newCount, updateCount) = await UpdateProductDatabase(products, existingProducts);
+            var result = await UpdateProductDatabase(productDtos, existingProducts);
 
             await _unitOfWork.CompleteAsync();
 
             return new SyncResult
             {
                 Message = "Products processed successfully.",
-                NewProductsAdded = newCount,
-                ProductsUpdated = updateCount,
+                NewProductsAdded = result.newCount,
+                ProductsUpdated = result.updateCount,
                 Success = true
             };
 
         }
 
         private async Task<(int newCount, int updateCount)> UpdateProductDatabase(
-            IEnumerable<Product> products,
+            IEnumerable<ProductDto> productDtos,
             IEnumerable<Product> existingProducts)
         {
             int newProducts = 0;
             int updatedProducts = 0;
 
-            foreach (var product in products)
+            foreach (var dto in productDtos)
             {
                 var existingProduct = existingProducts.FirstOrDefault(p =>
-                    p.OriginalApiId == product.OriginalApiId);
+                    p.OriginalApiId == dto.Id);
 
                 if (existingProduct == null)
                 {
-                    await AddNewProduct(product);
+                    await AddNewProduct(dto);
                     newProducts++;
                 }
                 else
                 {
-                    UpdateExistingProduct(existingProduct, product);
+                    UpdateExistingProduct(existingProduct, dto);
                     updatedProducts++;
                 }
             }
@@ -74,24 +76,36 @@ namespace RandomApp.ProductManagement.Application.Orchestrators
             return (newProducts, updatedProducts);
         }
 
-        private async Task AddNewProduct(Product product)
+        private async Task AddNewProduct(ProductDto dto)
         {
-            // resets ID to 0 for database auto-increment
-            product.Id = 0;
+            var price = new Price(dto.Amount, dto.Currency);
+            var description = new ProductDescription(dto.ProductDescription);
+            var category = Enum.Parse<Category>(dto.Category);
+
+            var product = Product.Create(
+                dto.Id,
+                dto.Name,
+                price,
+                SKU.Create(dto.SKU),
+                category,
+                description,
+                dto.Image
+                );
+
             await _productRepository.AddAsync(product);
             _logger.Info("Adding new/restored product with OriginalApiId {0}", product.OriginalApiId);
         }
 
-        private void UpdateExistingProduct(Product existingProduct, Product newProduct)
+        private async Task UpdateExistingProduct(Product existingProduct, ProductDto dto)
         {
-            existingProduct.Name = newProduct.Name;
-            existingProduct.Price = newProduct.Price;
-            existingProduct.Category = newProduct.Category;
-            existingProduct.Description = newProduct.Description;
-            existingProduct.Image = newProduct.Image;
+            var price = new Price(dto.Amount, dto.Currency);
+            var description = new ProductDescription(dto.ProductDescription);
+            var category = Enum.Parse<Category>(dto.Category);
 
+            existingProduct.UpdateProduct(dto.Name, price, category, description, dto.Image);
             _productRepository.Update(existingProduct);
             _logger.Info("Updating existing product with OriginalApiId: {0}", existingProduct.OriginalApiId);
         }
+
     }
 }
