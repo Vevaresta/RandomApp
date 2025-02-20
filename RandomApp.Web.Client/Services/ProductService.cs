@@ -15,7 +15,7 @@ namespace RandomApp.Web.Client.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsFromApiAsync()
+        public async Task<IEnumerable<ProductDto>> GetProductsFromApiAsync()
         {
             var response = await HttpClient.GetAsync("products");
 
@@ -33,15 +33,12 @@ namespace RandomApp.Web.Client.Services
 
             if (productDtos == null)
             {
-                return new List<Product>();
+                return new List<ProductDto>();
             }
-
-            var products = productDtos
-                .Where(dto => !string.IsNullOrEmpty(dto.Title))
-                .Select(_mapper.Map<Product>)
+            
+            return productDtos
+                .Where(dto=> !string.IsNullOrEmpty(dto.Name))
                 .ToList();
-
-            return products;
         }
     }
 }
