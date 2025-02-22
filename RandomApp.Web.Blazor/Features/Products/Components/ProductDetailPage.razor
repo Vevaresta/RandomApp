@@ -35,7 +35,7 @@
         <div class="col-md-6">
             @if (productDto != null)
             {
-                <h2>@productDto.Title</h2>
+                <h2>@productDto.Name</h2>
                 <div class="mb-3">
                     <div class="d-flex align-items-center">
                         <div class="text-warning me-2">
@@ -48,9 +48,9 @@
                         <span class="text-muted">(128 reviews)</span>
                     </div>
                 </div>
-                <p class="lead">@productDto.Description</p>
+                <p class="lead">@productDto.ProductDescription</p>
                 <div class="mt-3">
-                    <p><strong>Price:</strong> @productDto.Price</p>
+                    <p><strong>Price:</strong> @productDto.Amount</p>
                     <p><strong>Category:</strong> @productDto.Category</p>
                     @*@if (!string.IsNullOrEmpty(productDto.Image))
                 {
