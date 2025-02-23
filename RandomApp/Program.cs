@@ -1,10 +1,7 @@
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
-using RandomApp.ProductManagement.Infrastructure.Configuration;
-using RandomApp.Web.Client.Configuration;
 using System.Text.Json.Serialization;
-using RandomApp.Server.Authentication.Configuration;
 using RandomApp.Presentation.Api.Configuration;
 using RandomApp.Presentation.Api.Middleware;
 
@@ -25,10 +22,12 @@ internal class Program
 
 
             builder.Services.AddControllers()
+                .AddApplicationPart(typeof(Program).Assembly)
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                });
+                }               
+                );
             // if my API calls often send the same data, instead of having to to back to the DB, with this methods I can cache the data in memory
             builder.Services.AddResponseCaching();
 

@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RandomApp.Server.Authentication.DataAccess;
+using RandomApp.Presentation.Authentication.DataAccess;
+
 
 #nullable disable
 

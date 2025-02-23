@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RandomApp.Server.Authentication.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using RandomApp.Server.Authentication.Models;
 using Microsoft.AspNetCore.Identity;
-using RandomApp.Server.Authentication.Mapping;
-using RandomApp.Server.Authentication.Services;
 using Common.Shared.Authorization;
+using RandomApp.Presentation.Authentication.Services;
+using RandomApp.Presentation.Authentication.Models;
+using RandomApp.Presentation.Authentication.Mapping;
+using RandomApp.Presentation.Authentication.DataAccess;
 
-namespace RandomApp.Server.Authentication.Configuration
+namespace RandomApp.Presentation.Authentication.Configuration
 {
     public static class DependencyCfg
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using RandomApp.Server.Authentication.DataTransferObjects;
+using RandomApp.Presentation.Authentication.DataTransferObjects;
 
-namespace RandomApp.Server.Authentication.Services
+namespace RandomApp.Presentation.Authentication.Services
 {
     public interface IAuthenticationService
     {

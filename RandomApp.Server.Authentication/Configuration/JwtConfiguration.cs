@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 
-namespace RandomApp.Server.Authentication.Configuration
+namespace RandomApp.Presentation.Authentication.Configuration
 {
     public static class JwtConfiguration
     {

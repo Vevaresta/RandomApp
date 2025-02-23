@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
-using RandomApp.Server.Authentication.DataTransferObjects;
-using RandomApp.Server.Authentication.Services;
+using RandomApp.Presentation.Authentication.DataTransferObjects;
+using RandomApp.Presentation.Authentication.Services;
 
-namespace RandomApp.Server.Authentication.Controllers
+namespace RandomApp.Presentation.Authentication.Controllers
 {
     [Route("api/token")]
     [ApiController]

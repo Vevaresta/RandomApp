@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace RandomApp.Server.Authentication.Models
+namespace RandomApp.Presentation.Authentication.Models
 {
     public class User : IdentityUser
     {

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using RandomApp.Server.Authentication.DataTransferObjects;
 using NLog;
 using AutoMapper;
-using RandomApp.Server.Authentication.Models;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
@@ -10,8 +8,10 @@ using System.Text;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Http.HttpResults;
+using RandomApp.Presentation.Authentication.DataTransferObjects;
+using RandomApp.Presentation.Authentication.Models;
 
-namespace RandomApp.Server.Authentication.Services
+namespace RandomApp.Presentation.Authentication.Services
 {
     public sealed class AuthenticationService : IAuthenticationService
     {
@@ -50,7 +50,7 @@ namespace RandomApp.Server.Authentication.Services
         {
             _user = await _userManager.FindByNameAsync(userForAuth.UserName);
 
-            var result = (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuth.Password));
+            var result = _user != null && await _userManager.CheckPasswordAsync(_user, userForAuth.Password);
 
             if (!result)
             {
@@ -128,7 +128,7 @@ namespace RandomApp.Server.Authentication.Services
 
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
-        {          
+        {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings.GetValue<string>("SecretKey");
 

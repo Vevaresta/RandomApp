@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RandomApp.Server.Authentication.DataTransferObjects
+namespace RandomApp.Presentation.Authentication.DataTransferObjects
 {
     public record UserForAuthenticationDto
     {

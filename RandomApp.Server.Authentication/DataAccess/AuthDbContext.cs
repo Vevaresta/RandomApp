@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RandomApp.Server.Authentication.Configuration;
-using RandomApp.Server.Authentication.Models;
+using RandomApp.Presentation.Authentication.Configuration;
+using RandomApp.Presentation.Authentication.Models;
 
-namespace RandomApp.Server.Authentication.DataAccess
+namespace RandomApp.Presentation.Authentication.DataAccess
 {
     public class AuthDbContext : IdentityDbContext<User>
     {
@@ -14,6 +14,6 @@ namespace RandomApp.Server.Authentication.DataAccess
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new RoleConfiguration());
-        }        
+        }
     }
 }

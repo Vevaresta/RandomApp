@@ -1,10 +1,10 @@
-﻿using RandomApp.Server.Authentication.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
-using RandomApp.Server.Authentication.DataTransferObjects;
 using Microsoft.AspNetCore.Http;
+using RandomApp.Presentation.Authentication.DataTransferObjects;
+using RandomApp.Presentation.Authentication.Services;
 
-namespace RandomApp.Server.Authentication.Controllers
+namespace RandomApp.Presentation.Authentication.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
@@ -17,7 +17,7 @@ namespace RandomApp.Server.Authentication.Controllers
         {
             _logger = logger;
             _authenticationService = authenticationService;
-               
+
         }
 
 
@@ -66,5 +66,5 @@ namespace RandomApp.Server.Authentication.Controllers
 
 
     }
-        
+
 }

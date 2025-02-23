@@ -1,7 +1,6 @@
 ﻿using Common.Shared.Authorization;
 using Common.Shared.Repositories;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using RandomApp.ProductManagement.Application.Services;
@@ -11,7 +10,7 @@ using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using System.Linq.Expressions;
 
 
-namespace RandomApp.ProductManagement.Application.Controllers
+namespace RandomApp.Presentation.Api.Controllers
 {
 
     // ModelState.IsValid property is not required in controllers that have been decorated with the ApiController attribute.  
@@ -21,7 +20,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductRepository _productRepository;
-        private readonly ILogger _logger;
+        private readonly NLog.ILogger _logger;
         private readonly IProductService _productService;
         private readonly IProductSyncService _productSyncService;
 
@@ -61,7 +60,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
         [HttpGet("all")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-       
+
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
             _logger.Info("Fetching all products.");
@@ -94,7 +93,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
 
             Expression<Func<Product, bool>> filter = entity =>
                 !string.IsNullOrEmpty(name) && entity.Name.Contains(name) ||
-                !string.IsNullOrEmpty(description) && entity.Description.Contains(description);
+                !string.IsNullOrEmpty(description) && entity.ProductDescription.ToString().Contains(description);
 
             var entities = await _productRepository.Find(filter);
 
@@ -201,7 +200,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
             }
 
             _logger.Info("Fetching products for the provided IDs.");
-            var productsToDelete = await _productRepository.Find(p => products.Contains(p.Id));
+            var productsToDelete = await _productRepository.Find(p => products.ToList().Contains(p.Id.GetHashCode()));
 
             if (!productsToDelete.Any())
             {
@@ -262,7 +261,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
             var status = _productSyncService.CurrentSyncStatus;
             return Ok(new
             {
-                status = status,
+                status,
                 message = "Current sync status retrieved"
             });
         }
@@ -288,7 +287,7 @@ namespace RandomApp.ProductManagement.Application.Controllers
             {
                 message = result.Success ? "Sync compleed successfully" : "Sync failed",
                 status = _productSyncService.CurrentSyncStatus,
-                result = result
+                result
             });
         }
 
