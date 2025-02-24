@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RandomApp.ProductManagement.Application.Services;
+using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.Web.Client.Services;
 
 namespace RandomApp.Web.Client.Configuration

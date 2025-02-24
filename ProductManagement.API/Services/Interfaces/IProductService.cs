@@ -1,6 +1,6 @@
 ﻿using RandomApp.ProductManagement.Application.DataTransferObjects;
 
-namespace RandomApp.ProductManagement.Application.Services
+namespace RandomApp.ProductManagement.Application.Services.Interfaces
 {
     public interface IProductService
     {

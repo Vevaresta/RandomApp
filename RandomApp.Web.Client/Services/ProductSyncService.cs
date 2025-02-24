@@ -2,8 +2,8 @@
 using RandomApp.ProductManagement.Domain.Enums;
 using Microsoft.Extensions.Hosting;
 using RandomApp.ProductManagement.Application.Orchestrators;
-using RandomApp.ProductManagement.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
+using RandomApp.ProductManagement.Application.Services.Interfaces;
 
 namespace RandomApp.Web.Client.Services
 {

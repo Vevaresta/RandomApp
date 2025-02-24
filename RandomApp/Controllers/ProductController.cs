@@ -3,7 +3,8 @@ using Common.Shared.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using RandomApp.ProductManagement.Application.Services;
+using RandomApp.ProductManagement.Application.DataTransferObjects;
+using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Domain.Models;
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
@@ -36,10 +37,10 @@ namespace RandomApp.Presentation.Api.Controllers
 
         // ProducesResponseType->usefull for swagger API documentation, public facing APIs and when dealing with multiple response scenarios
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = Policies.RequireAdminPolicy)]
-        public async Task<ActionResult<Product>> GetProductById(int id)
+        public async Task<ActionResult<ProductDto>> GetProductById(int id)
         {
             _logger.Info("Fetching product with ID: {id}", id);
             var product = await _productRepository.GetByIdAsync(id);

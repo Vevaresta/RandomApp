@@ -2,11 +2,11 @@
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using NLog;
 using RandomApp.ProductManagement.Domain.Entities;
-using RandomApp.ProductManagement.Application.Services;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Domain.Models;
 using RandomApp.ProductManagement.Domain.ValueObjects;
 using RandomApp.ProductManagement.Domain.Enums;
+using RandomApp.ProductManagement.Application.Services.Interfaces;
 namespace RandomApp.ProductManagement.Application.Orchestrators
 {
     public class ProductSyncOrchestrator : IProductSyncOrchestrator

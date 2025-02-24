@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
-using RandomApp.ProductManagement.Application.Services;
+using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Domain.Entities;
 using System.Text.Json;
 
