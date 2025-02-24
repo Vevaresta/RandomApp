@@ -20,16 +20,16 @@ namespace RandomApp.Presentation.Api.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IProductRepository _productRepository;
+        private readonly IProductQueryService _productQueryService;
         private readonly NLog.ILogger _logger;
         private readonly IProductService _productService;
         private readonly IProductSyncService _productSyncService;
 
 
-        public ProductController(IUnitOfWork unitOfWork, IProductRepository productRepository, IProductService productService, IProductSyncService productSyncService)
+        public ProductController(IUnitOfWork unitOfWork, IProductQueryService productQueryService, IProductService productService, IProductSyncService productSyncService)
         {
             _unitOfWork = unitOfWork;
-            _productRepository = productRepository;
+            _productQueryService = productQueryService;
             _logger = LogManager.GetCurrentClassLogger();
             _productService = productService;
             _productSyncService = productSyncService;
@@ -43,13 +43,12 @@ namespace RandomApp.Presentation.Api.Controllers
         public async Task<ActionResult<ProductDto>> GetProductById(int id)
         {
             _logger.Info("Fetching product with ID: {id}", id);
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await _productQueryService.GetProductByIdAsync(id);
 
             if (product == null)
             {
                 _logger.Warn("Product with ID {id} not found.", id);
                 return NotFound($"Product with ID {id} not found.");
-                //return StatusCode(StatusCodes.Status404NotFound, ("Product with ID {id} not found.", id));
             }
 
             _logger.Info("Returning product with ID {id}", id);
@@ -59,13 +58,12 @@ namespace RandomApp.Presentation.Api.Controllers
 
 
         [HttpGet("all")]
-        [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
             _logger.Info("Fetching all products.");
-            var products = await _productRepository.GetAllAsync();
+            var products = await _productQueryService.GetAllProductsAsync();
 
             if (products == null)
             {
@@ -81,31 +79,17 @@ namespace RandomApp.Presentation.Api.Controllers
         [HttpGet("find")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> FindEProducts(string? name, string? description)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> FindProducts([FromQuery] string searchTerm)
         {
-            _logger.Info("Fetching product with name {name} and description {description}.", name, description);
-
-            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(description))
+            if (string.IsNullOrEmpty(searchTerm))
             {
-                _logger.Warn("No search criteria provided.");
-                return BadRequest("No search criteria provided.");
+                _logger.Warn("Search attempted with empty search term");
+                return BadRequest("Search term is required");
             }
 
-            Expression<Func<Product, bool>> filter = entity =>
-                !string.IsNullOrEmpty(name) && entity.Name.Contains(name) ||
-                !string.IsNullOrEmpty(description) && entity.ProductDescription.ToString().Contains(description);
-
-            var entities = await _productRepository.Find(filter);
-
-            if (!entities.Any())
-            {
-                _logger.Info("No products found matching the criteria");
-                return NotFound("No products found matching the criteria");
-            }
-
-            _logger.Info("Found {Count} products matching the criteria.", entities.Count());
-            return Ok(entities);
+            var products = await _productQueryService.FindByNameOrDescription(searchTerm);
+            _logger.Info("Search completed for term {searchTerm}. Found {Count} results.", searchTerm, products.Count());
+            return Ok(products);
         }
 
 
@@ -127,7 +111,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Info("Adding a new product with the name {product.Name}", product.Name);
 
-            await _productRepository.AddAsync(product);
+            await _productQueryService.AddAsync(product);
             await _unitOfWork.CompleteAsync();
 
             _logger.Info("Product {product.Name} saved to the database with ID {product.Id}.", product.Name, product.Id);
@@ -149,7 +133,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Info("Attempting to add products");
 
-            await _productRepository.AddRangeAsync(products);
+            await _productQueryService.AddRangeAsync(products);
             await _unitOfWork.CompleteAsync();
 
             _logger.Info("Products added to the database");
@@ -167,7 +151,7 @@ namespace RandomApp.Presentation.Api.Controllers
             _logger.Info("Attempting to find product with ID {id}", id);
 
 
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await _productQueryService.GetByIdAsync(id);
 
             if (product == null)
             {
@@ -177,7 +161,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Warn("Attempting to remove product with an ID {id}", id);
 
-            _productRepository.Remove(product);
+            _productQueryService.Remove(product);
             await _unitOfWork.CompleteAsync();
 
             _logger.Info("Product with an ID {id} removed succesfully.", id);
@@ -201,7 +185,7 @@ namespace RandomApp.Presentation.Api.Controllers
             }
 
             _logger.Info("Fetching products for the provided IDs.");
-            var productsToDelete = await _productRepository.Find(p => products.ToList().Contains(p.Id.GetHashCode()));
+            var productsToDelete = await _productQueryService.Find(p => products.ToList().Contains(p.Id.GetHashCode()));
 
             if (!productsToDelete.Any())
             {
@@ -211,7 +195,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Info("Removing {Count} products.", productsToDelete.Count());
 
-            _productRepository.RemoveRange(productsToDelete);
+            _productQueryService.RemoveRange(productsToDelete);
             await _unitOfWork.CompleteAsync();
 
             _logger.Info("Successfully removed products with IDs: {ProductIds}", string.Join(", ", products));
@@ -236,7 +220,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Info("Fetching products with the keyword {keyword}", keyword);
 
-            var popularProducts = await _productRepository.GetPopularProducts(keyword);
+            var popularProducts = await _productQueryService.GetPopularProducts(keyword);
 
             if (!popularProducts.Any())
             {
