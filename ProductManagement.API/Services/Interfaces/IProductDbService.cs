@@ -4,10 +4,12 @@ namespace RandomApp.ProductManagement.Application.Services.Interfaces
 {
     public interface IProductDbService
     {
-        public Task<ProductDto> GetProductByIdAsync(int productId);
+        Task<ProductDto> GetProductByIdAsync(int productId);
         Task<IEnumerable<ProductDto>> GetAllProductsAsync();
         Task<IEnumerable<ProductDto>> FindByNameOrDescription(string searchTerm);
 
-        public Task<ProductDto> AddAsync(ProductDto productDto);
+        Task<ProductDto> AddAsync(ProductDto productDto);
+
+        Task<IEnumerable<ProductDto>> AddRangeAsync(IEnumerable<ProductDto> productDto);
     }
 }

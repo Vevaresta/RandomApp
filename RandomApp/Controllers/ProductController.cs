@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
-using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Domain.Models;
 
 namespace RandomApp.Presentation.Api.Controllers
@@ -91,7 +90,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
 
         [HttpPost("add")]
-        [ProducesResponseType(typeof(Product), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddProduct(ProductDto productDto)
         {
@@ -104,18 +103,18 @@ namespace RandomApp.Presentation.Api.Controllers
             _logger.Info("Adding a new product with the name {product.Name}", productDto.Name);
             var savedProductDto = await _productDbService.AddAsync(productDto);
             
-            _logger.Info("Product {product.Name} saved to the database with ID {product.Id}.", savedProductDto.Name, savedProductDto.Id);
+            _logger.Info("Product {product.Name} successfully created with ID {product.Id}.", savedProductDto.Name, savedProductDto.Id);
 
             return CreatedAtAction(nameof(GetProductById), new { id = savedProductDto.Id }, savedProductDto);
         }
 
 
         [HttpPost("addRange")]
-        [ProducesResponseType(typeof(IEnumerable<Product>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(IEnumerable<ProductDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddProducts(IEnumerable<Product> products)
+        public async Task<IActionResult> AddProducts(IEnumerable<ProductDto> productDtos)
         {
-            if (products == null || !products.Any())
+            if (productDtos == null || !productDtos.Any())
             {
                 _logger.Warn("Attempt to add null products or empty product list.");
                 return BadRequest("Attempt to add null products or empty product list.");
@@ -123,12 +122,11 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Info("Attempting to add products");
 
-            await _productDbService.AddRangeAsync(products);
-            await _unitOfWork.CompleteAsync();
+            var savedProductDtos = await _productDbService.AddRangeAsync(productDtos);
 
             _logger.Info("Products added to the database");
 
-            return CreatedAtAction(nameof(GetAllProducts), null, products);
+            return CreatedAtAction(nameof(GetAllProducts), null, savedProductDtos);
 
         }
 

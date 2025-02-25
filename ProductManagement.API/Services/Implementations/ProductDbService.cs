@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Common.Shared.Repositories;
+using NLog;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Domain.Entities;
@@ -12,12 +13,14 @@ namespace RandomApp.ProductManagement.Application.Services.Implementations
         private readonly IProductRepository _productRepository;        
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-
+        private readonly ILogger _logger;
+        // TODO logging
         public ProductDbService(IProductRepository productRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _productRepository = productRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public async Task<ProductDto> AddAsync(ProductDto productDto)
@@ -26,6 +29,14 @@ namespace RandomApp.ProductManagement.Application.Services.Implementations
             await _productRepository.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
             return _mapper.Map<ProductDto>(entity);
+        }
+
+        public async Task<IEnumerable<ProductDto>> AddRangeAsync(IEnumerable<ProductDto> productDtos)
+        {
+            var entities = _mapper.Map<IEnumerable<Product>>(productDtos);
+            await _productRepository.AddRangeAsync(entities);
+            await _unitOfWork.CompleteAsync();
+            return _mapper.Map<IEnumerable<ProductDto>>(entities);
         }
 
         public async Task<IEnumerable<ProductDto>> FindByNameOrDescription(string searchTerm)
