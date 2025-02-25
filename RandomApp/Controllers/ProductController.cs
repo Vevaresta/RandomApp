@@ -7,9 +7,6 @@ using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Domain.Models;
-using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
-using System.Linq.Expressions;
-
 
 namespace RandomApp.Presentation.Api.Controllers
 {
@@ -20,16 +17,16 @@ namespace RandomApp.Presentation.Api.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IProductQueryService _productQueryService;
+        private readonly IProductDbService _productDbService;
         private readonly NLog.ILogger _logger;
         private readonly IProductService _productService;
         private readonly IProductSyncService _productSyncService;
 
 
-        public ProductController(IUnitOfWork unitOfWork, IProductQueryService productQueryService, IProductService productService, IProductSyncService productSyncService)
+        public ProductController(IUnitOfWork unitOfWork, IProductDbService productDbService, IProductService productService, IProductSyncService productSyncService)
         {
             _unitOfWork = unitOfWork;
-            _productQueryService = productQueryService;
+            _productDbService = productDbService;
             _logger = LogManager.GetCurrentClassLogger();
             _productService = productService;
             _productSyncService = productSyncService;
@@ -43,7 +40,7 @@ namespace RandomApp.Presentation.Api.Controllers
         public async Task<ActionResult<ProductDto>> GetProductById(int id)
         {
             _logger.Info("Fetching product with ID: {id}", id);
-            var product = await _productQueryService.GetProductByIdAsync(id);
+            var product = await _productDbService.GetProductByIdAsync(id);
 
             if (product == null)
             {
@@ -63,7 +60,7 @@ namespace RandomApp.Presentation.Api.Controllers
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
             _logger.Info("Fetching all products.");
-            var products = await _productQueryService.GetAllProductsAsync();
+            var products = await _productDbService.GetAllProductsAsync();
 
             if (products == null)
             {
@@ -87,7 +84,7 @@ namespace RandomApp.Presentation.Api.Controllers
                 return BadRequest("Search term is required");
             }
 
-            var products = await _productQueryService.FindByNameOrDescription(searchTerm);
+            var products = await _productDbService.FindByNameOrDescription(searchTerm);
             _logger.Info("Search completed for term {searchTerm}. Found {Count} results.", searchTerm, products.Count());
             return Ok(products);
         }
@@ -96,27 +93,20 @@ namespace RandomApp.Presentation.Api.Controllers
         [HttpPost("add")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddProduct(Product product)
+        public async Task<IActionResult> AddProduct(ProductDto productDto)
         {
-            // Check if the model is valid (e.g., all required fields are provided and valid) you don't have to write this if you activate [ApiController] it does it automatically
-            //if (!ModelState.IsValid) 
-            //{
-            //    return BadRequest(ModelState);
-            //}
-            if (product == null)
+            if (productDto == null)
             {
                 _logger.Warn("Attempt to add a null product.");
                 return BadRequest("Attempt to add a null product.");
             }
 
-            _logger.Info("Adding a new product with the name {product.Name}", product.Name);
+            _logger.Info("Adding a new product with the name {product.Name}", productDto.Name);
+            var savedProductDto = await _productDbService.AddAsync(productDto);
+            
+            _logger.Info("Product {product.Name} saved to the database with ID {product.Id}.", savedProductDto.Name, savedProductDto.Id);
 
-            await _productQueryService.AddAsync(product);
-            await _unitOfWork.CompleteAsync();
-
-            _logger.Info("Product {product.Name} saved to the database with ID {product.Id}.", product.Name, product.Id);
-
-            return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
+            return CreatedAtAction(nameof(GetProductById), new { id = savedProductDto.Id }, savedProductDto);
         }
 
 
@@ -133,7 +123,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Info("Attempting to add products");
 
-            await _productQueryService.AddRangeAsync(products);
+            await _productDbService.AddRangeAsync(products);
             await _unitOfWork.CompleteAsync();
 
             _logger.Info("Products added to the database");
@@ -151,7 +141,7 @@ namespace RandomApp.Presentation.Api.Controllers
             _logger.Info("Attempting to find product with ID {id}", id);
 
 
-            var product = await _productQueryService.GetByIdAsync(id);
+            var product = await _productDbService.GetByIdAsync(id);
 
             if (product == null)
             {
@@ -161,7 +151,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Warn("Attempting to remove product with an ID {id}", id);
 
-            _productQueryService.Remove(product);
+            _productDbService.Remove(product);
             await _unitOfWork.CompleteAsync();
 
             _logger.Info("Product with an ID {id} removed succesfully.", id);
@@ -185,7 +175,7 @@ namespace RandomApp.Presentation.Api.Controllers
             }
 
             _logger.Info("Fetching products for the provided IDs.");
-            var productsToDelete = await _productQueryService.Find(p => products.ToList().Contains(p.Id.GetHashCode()));
+            var productsToDelete = await _productDbService.Find(p => products.ToList().Contains(p.Id.GetHashCode()));
 
             if (!productsToDelete.Any())
             {
@@ -195,7 +185,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Info("Removing {Count} products.", productsToDelete.Count());
 
-            _productQueryService.RemoveRange(productsToDelete);
+            _productDbService.RemoveRange(productsToDelete);
             await _unitOfWork.CompleteAsync();
 
             _logger.Info("Successfully removed products with IDs: {ProductIds}", string.Join(", ", products));
@@ -220,7 +210,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             _logger.Info("Fetching products with the keyword {keyword}", keyword);
 
-            var popularProducts = await _productQueryService.GetPopularProducts(keyword);
+            var popularProducts = await _productDbService.GetPopularProducts(keyword);
 
             if (!popularProducts.Any())
             {

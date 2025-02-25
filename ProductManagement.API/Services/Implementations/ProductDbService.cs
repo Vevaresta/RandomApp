@@ -1,19 +1,31 @@
 ﻿using AutoMapper;
+using Common.Shared.Repositories;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
+using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 
 namespace RandomApp.ProductManagement.Application.Services.Implementations
 {
-    public class ProductQueryService : IProductQueryService
+    public class ProductDbService : IProductDbService
     {
         private readonly IProductRepository _productRepository;        
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ProductQueryService(IProductRepository productRepository, IMapper mapper)
+        public ProductDbService(IProductRepository productRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _productRepository = productRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<ProductDto> AddAsync(ProductDto productDto)
+        {
+            var entity = _mapper.Map<Product>(productDto);
+            await _productRepository.AddAsync(entity);
+            await _unitOfWork.CompleteAsync();
+            return _mapper.Map<ProductDto>(entity);
         }
 
         public async Task<IEnumerable<ProductDto>> FindByNameOrDescription(string searchTerm)
