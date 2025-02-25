@@ -11,5 +11,7 @@ namespace RandomApp.ProductManagement.Application.Services.Interfaces
         Task<ProductDto> AddAsync(ProductDto productDto);
 
         Task<IEnumerable<ProductDto>> AddRangeAsync(IEnumerable<ProductDto> productDto);
+
+        Task<bool> Remove(int productId);
     }
 }

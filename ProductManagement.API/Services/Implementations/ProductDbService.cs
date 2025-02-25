@@ -62,5 +62,26 @@ namespace RandomApp.ProductManagement.Application.Services.Implementations
             var productDto = _mapper.Map<ProductDto>(product);
             return productDto;
         }
+
+        public async Task<bool> Remove(int productId)
+        {
+            if (productId <= 0)
+            {
+                _logger.Warn("Product with ID {id} not found", productId);
+                return false;
+            }
+            var product = await _productRepository.GetByIdAsync(productId);
+
+            if (product == null)
+            {
+                _logger.Warn("The product with an ID {id} doesn't exist", productId);
+                return false;
+            }
+
+            _productRepository.Remove(product);
+            await _unitOfWork.CompleteAsync();
+            _logger.Info("Product with an Id {id] successfully removed", productId);
+            return true;
+        }
     }
 }

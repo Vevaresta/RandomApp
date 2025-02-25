@@ -136,25 +136,15 @@ namespace RandomApp.Presentation.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> RemoveProduct(int id)
         {
-            _logger.Info("Attempting to find product with ID {id}", id);
+            _logger.Info("Attempting to remove product with an ID {id}", id);
+            var success = await _productDbService.Remove(id);
 
-
-            var product = await _productDbService.GetByIdAsync(id);
-
-            if (product == null)
+            if (success)
             {
-                _logger.Warn("Product with ID {id} not found", id);
-                return NotFound($"Product with ID {id} not found.");
+                _logger.Info("Product with an ID {id} removed succesfully.", id);
+                return NoContent();
             }
-
-            _logger.Warn("Attempting to remove product with an ID {id}", id);
-
-            _productDbService.Remove(product);
-            await _unitOfWork.CompleteAsync();
-
-            _logger.Info("Product with an ID {id} removed succesfully.", id);
-
-            return NoContent();
+            return NotFound();
         }
 
 
