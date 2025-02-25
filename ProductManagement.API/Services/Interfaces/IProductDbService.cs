@@ -13,5 +13,7 @@ namespace RandomApp.ProductManagement.Application.Services.Interfaces
         Task<IEnumerable<ProductDto>> AddRangeAsync(IEnumerable<ProductDto> productDto);
 
         Task<bool> Remove(int productId);
+
+        Task<bool> RemoveRange(IEnumerable<ProductDto> productDto);
     }
 }

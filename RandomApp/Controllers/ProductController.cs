@@ -141,7 +141,7 @@ namespace RandomApp.Presentation.Api.Controllers
 
             if (success)
             {
-                _logger.Info("Product with an ID {id} removed succesfully.", id);
+                _logger.Info("Product with an ID {id} removed succesfully", id);
                 return NoContent();
             }
             return NotFound();
@@ -150,35 +150,20 @@ namespace RandomApp.Presentation.Api.Controllers
 
         [HttpDelete("removeRange")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> RemoveProducts(IEnumerable<int> products)
+        public async Task<IActionResult> RemoveProducts(IEnumerable<ProductDto> products)
         {
             _logger.Info("Attempting to remove range of products.");
 
-            if (products == null || !products.Any())
+            var success = await _productDbService.RemoveRange(products);
+
+            if (success)
             {
-                _logger.Warn("Product IDs cannot be null or empty.");
-                return BadRequest("Product IDs cannot be null or empty.");
+                _logger.Info("Products removed successfully");
+                return NoContent();
             }
 
-            _logger.Info("Fetching products for the provided IDs.");
-            var productsToDelete = await _productDbService.Find(p => products.ToList().Contains(p.Id.GetHashCode()));
-
-            if (!productsToDelete.Any())
-            {
-                _logger.Warn("No products found with the given IDs: {products}", products);
-                return NotFound($"No products found with the given IDs: {string.Join(", ", products)}.");
-            }
-
-            _logger.Info("Removing {Count} products.", productsToDelete.Count());
-
-            _productDbService.RemoveRange(productsToDelete);
-            await _unitOfWork.CompleteAsync();
-
-            _logger.Info("Successfully removed products with IDs: {ProductIds}", string.Join(", ", products));
-
-            return NoContent();
+            return NotFound();
         }
 
 

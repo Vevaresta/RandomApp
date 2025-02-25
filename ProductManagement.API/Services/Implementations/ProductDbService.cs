@@ -83,5 +83,30 @@ namespace RandomApp.ProductManagement.Application.Services.Implementations
             _logger.Info("Product with an Id {id] successfully removed", productId);
             return true;
         }
+
+        public async Task<bool> RemoveRange(IEnumerable<ProductDto> productDtos)
+        {
+            if (productDtos == null || !productDtos.Any())
+            {
+                _logger.Warn("No products specified for removal");
+                return false;
+            }
+
+            var idsToRemove = productDtos.Select(p => p.Id).ToList();
+            var productsToRemove = await _productRepository.Find(p => idsToRemove.Contains(p.Id));
+
+            var count = productsToRemove.Count();
+            if (count == 0)
+            {
+                _logger.Warn("None of the specified products were found in the database");
+                return false;
+            }
+
+            _productRepository.RemoveRange(productsToRemove);
+            await _unitOfWork.CompleteAsync();
+            _logger.Info("Successfully removed {count} products", count);
+
+            return true;
+        }
     }
 }
