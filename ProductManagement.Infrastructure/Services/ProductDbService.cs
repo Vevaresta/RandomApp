@@ -24,9 +24,12 @@ namespace RandomApp.ProductManagement.Infrastructure.Services
 
         public async Task<ProductDto> AddAsync(ProductDto productDto)
         {
+            _logger.Info("Adding product {product} to database", productDto);
             var entity = _mapper.Map<Product>(productDto);
             await _productRepository.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
+
+            _logger.Info("Product successfully saved to database", productDto);
             return _mapper.Map<ProductDto>(entity);
         }
 
@@ -35,7 +38,7 @@ namespace RandomApp.ProductManagement.Infrastructure.Services
             var productList = productDtos.ToList();
             var count = productList.Count;
 
-            _logger.Info("Adding {count} products to database.", count);
+            _logger.Info("Adding {count} products to database", count);
 
             var entities = _mapper.Map<IEnumerable<Product>>(productDtos);
             await _productRepository.AddRangeAsync(entities);
@@ -47,6 +50,7 @@ namespace RandomApp.ProductManagement.Infrastructure.Services
 
         public async Task<IEnumerable<ProductDto>> FindByNameOrDescription(string searchTerm)
         {
+            _logger.Info("Looking for product with search term {searchTerm}", searchTerm);
             var products = await _productRepository.Find(p =>
                 p.Name.Contains(searchTerm) ||
                 p.ProductDescription.Value.Contains(searchTerm));
@@ -57,6 +61,7 @@ namespace RandomApp.ProductManagement.Infrastructure.Services
 
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
         {
+            _logger.Info("Fetching all products");
             var products = await _productRepository.GetAllAsync();
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
             return productsDto;
@@ -64,6 +69,7 @@ namespace RandomApp.ProductManagement.Infrastructure.Services
 
         public async Task<ProductDto> GetProductByIdAsync(int productId)
         {
+            _logger.Info("Fetching product with an ID {id}", productId);
             var product = await _productRepository.GetByIdAsync(productId);
             var productDto = _mapper.Map<ProductDto>(product);
             return productDto;
