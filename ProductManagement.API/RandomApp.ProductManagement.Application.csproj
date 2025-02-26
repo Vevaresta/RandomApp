@@ -17,7 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductManagement.Infrastructure\RandomApp.ProductManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\Common.Infrastructure\Common.Shared.csproj" />
+    <ProjectReference Include="..\RandomApp.OrderProcessing.Domain\RandomApp.Order.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,10 +2,9 @@
 using Common.Shared.Http;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
-using RandomApp.ProductManagement.Domain.Entities;
 using System.Text.Json;
 
-namespace RandomApp.Web.Client.Services
+namespace RandomApp.ProductManagement.Infrastructure.Services.ExternalApi
 {
     public class ProductService : ApiClientBase, IProductService
     {
@@ -36,9 +35,9 @@ namespace RandomApp.Web.Client.Services
             {
                 return new List<ProductDto>();
             }
-            
+
             return productDtos
-                .Where(dto=> !string.IsNullOrEmpty(dto.Name))
+                .Where(dto => !string.IsNullOrEmpty(dto.Name))
                 .ToList();
         }
     }

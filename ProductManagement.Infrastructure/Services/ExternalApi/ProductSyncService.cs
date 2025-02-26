@@ -5,7 +5,7 @@ using RandomApp.ProductManagement.Application.Orchestrators;
 using Microsoft.Extensions.DependencyInjection;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
 
-namespace RandomApp.Web.Client.Services
+namespace RandomApp.ProductManagement.Infrastructure.Services.ExternalApi
 {
     public class ProductSyncService : BackgroundService, IProductSyncService
     {
