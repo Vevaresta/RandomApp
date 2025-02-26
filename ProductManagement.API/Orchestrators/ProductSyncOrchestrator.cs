@@ -58,8 +58,8 @@ namespace RandomApp.ProductManagement.Application.Orchestrators
 
             foreach (var dto in productDtos)
             {
-                var existingProduct = existingProducts.FirstOrDefault(p =>
-                    p.OriginalApiId == dto.Id);
+                var existingProduct = existingProducts.FirstOrDefault
+                    (p => p.OriginalApiId == dto.OriginalApiId);
 
                 if (existingProduct == null)
                 {
@@ -83,7 +83,7 @@ namespace RandomApp.ProductManagement.Application.Orchestrators
             var category = Enum.Parse<Category>(dto.Category);
 
             var product = Product.Create(
-                dto.Id,
+                dto.OriginalApiId,
                 dto.Name,
                 price,
                 SKU.Create(dto.SKU),
