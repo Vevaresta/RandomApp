@@ -72,26 +72,28 @@ internal class Program
             builder.Services.RegisterLogging();
 
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
+            { 
+                // Configure the HTTP request pipeline.
+                if (app.Environment.IsDevelopment())
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
-                });
+                    app.UseSwagger();
+                    app.UseSwaggerUI(c =>
+                    {
+                        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
+                    });
+                }
+                app.UseMiddleware<ExceptionMiddleware>();
+                app.UseHttpsRedirection();
+
+                // Authentication has to come before Authorization otherwise your tokens wont be validated because authorization
+                // middleware tries to check permissions before the user is autenticated
+                app.UseAuthentication();
+                app.UseAuthorization();
+                app.MapControllers();
+
+                app.Run();
             }
-            app.UseMiddleware<ExceptionMiddleware>();
-            app.UseHttpsRedirection();
 
-            // Authentication has to come before Authorization otherwise your tokens wont be validated because authorization
-            // middleware tries to check permissions before the user is autenticated
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.MapControllers();
-
-            app.Run();
         }
         catch (Exception ex)
         {
@@ -102,6 +104,7 @@ internal class Program
         {
             NLog.LogManager.Shutdown();
         }
+
 
 
     }

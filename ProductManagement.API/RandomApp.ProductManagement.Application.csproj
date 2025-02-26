@@ -21,4 +21,8 @@
     <ProjectReference Include="..\ProductManagement.Domain\RandomApp.ProductManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authentication\" />
+  </ItemGroup>
+
 </Project>

@@ -42,7 +42,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.ShoppingCartManag
 		{F790A2C2-16E0-4689-B94D-7E61FE97C08B} = {F790A2C2-16E0-4689-B94D-7E61FE97C08B}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{97C01737-6039-4F85-84B3-65F928DC7146}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderManagement", "OrderManagement", "{97C01737-6039-4F85-84B3-65F928DC7146}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomApp.Order.Application", "RandomApp.OrderProcessing.Application\RandomApp.Order.Application.csproj", "{418BD3E0-C1F3-49B0-969B-423465E2F39C}"
 EndProject

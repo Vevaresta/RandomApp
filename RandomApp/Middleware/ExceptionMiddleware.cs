@@ -1,4 +1,4 @@
-﻿using Common.Shared.ErrorHandling;
+﻿using Common.Shared.GlobalErrorHandling;
 using System.Net;
 
 namespace RandomApp.Presentation.Api.Middleware

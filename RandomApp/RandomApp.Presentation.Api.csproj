@@ -33,8 +33,6 @@
     <ProjectReference Include="..\ProductManagement.Infrastructure\RandomApp.ProductManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\RandomApp.Server.Authentication\RandomApp.Presentation.Authentication.csproj" />
     <ProjectReference Include="..\RandomApp.ShoppingCart.Application\RandomApp.ShoppingCartManagement.Application.csproj" />
-    <ProjectReference Include="..\RandomApp.ShoppingCart.Infrastructure\RandomApp.ShoppingCartManagement.Infrastructure.csproj" />
-    <ProjectReference Include="..\RandomApp.Web.Client\RandomApp.Web.Client.csproj" />
   </ItemGroup>
 
 </Project>
