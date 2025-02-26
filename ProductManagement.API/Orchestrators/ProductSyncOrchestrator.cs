@@ -1,5 +1,4 @@
 ﻿using Common.Shared.Repositories;
-using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using NLog;
 using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Application.DataTransferObjects;

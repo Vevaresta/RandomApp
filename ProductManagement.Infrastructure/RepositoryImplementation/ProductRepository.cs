@@ -1,7 +1,7 @@
 ﻿using Common.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
+using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Domain.Entities;
-using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using RandomApp.ProductManagement.Infrastructure.DataAccess;
 
 namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation

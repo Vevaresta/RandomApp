@@ -4,13 +4,12 @@ using NLog;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Domain.Entities;
-using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 
-namespace RandomApp.ProductManagement.Application.Services.Implementations
+namespace RandomApp.ProductManagement.Infrastructure.Services
 {
     public class ProductDbService : IProductDbService
     {
-        private readonly IProductRepository _productRepository;        
+        private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
@@ -33,9 +32,16 @@ namespace RandomApp.ProductManagement.Application.Services.Implementations
 
         public async Task<IEnumerable<ProductDto>> AddRangeAsync(IEnumerable<ProductDto> productDtos)
         {
+            var productList = productDtos.ToList();
+            var count = productList.Count;
+
+            _logger.Info("Adding {count} products to database.", count);
+
             var entities = _mapper.Map<IEnumerable<Product>>(productDtos);
             await _productRepository.AddRangeAsync(entities);
             await _unitOfWork.CompleteAsync();
+
+            _logger.Info("{count} products successfully added to database", count);
             return _mapper.Map<IEnumerable<ProductDto>>(entities);
         }
 
@@ -54,11 +60,6 @@ namespace RandomApp.ProductManagement.Application.Services.Implementations
             var products = await _productRepository.GetAllAsync();
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
             return productsDto;
-        }
-
-        public Task<ProductDto> GetPopularProduct(ProductDto productDto)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<ProductDto> GetProductByIdAsync(int productId)

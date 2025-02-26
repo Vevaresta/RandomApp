@@ -1,6 +1,6 @@
 ﻿using Common.Shared.Http;
 using RandomApp.ProductManagement.Application.Mapping;
-using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
+using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.Web.Client;
 using RandomApp.Web.Client.Services;
 

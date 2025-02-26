@@ -1,6 +1,6 @@
 ﻿using RandomApp.ProductManagement.Application.DataTransferObjects;
 using AutoMapper;
-using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
+using RandomApp.ProductManagement.Application.Services.Interfaces;
 
 namespace RandomApp.Web.Client.Services
 {
