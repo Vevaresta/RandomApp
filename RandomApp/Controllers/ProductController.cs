@@ -167,40 +167,6 @@ namespace RandomApp.Presentation.Api.Controllers
         }
 
 
-        [HttpGet("getPopularProducts")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetPopularProducts(string? keyword)
-        {
-            _logger.Info("Attempting to search for product with the keyword {keyword}", keyword);
-
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
-                _logger.Warn("Keyword cannot be null or empty");
-                return BadRequest("Keyword cannot be null or empty");
-            }
-
-            _logger.Info("Fetching products with the keyword {keyword}", keyword);
-
-            var popularProducts = await _productDbService.GetPopularProducts(keyword);
-
-            if (!popularProducts.Any())
-            {
-                _logger.Info("No products with the keyword {keyword} found", keyword);
-                return NotFound($"No products with the keyword {keyword} found");
-            }
-
-            _logger.Info("Found {Count} products for the keyword: {keyword}", popularProducts.Count(), keyword);
-
-            return Ok(new
-            {
-                Count = popularProducts.Count(),
-                Products = popularProducts
-            });
-        }
-
-
         [HttpGet("sync/status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ProductSyncStatus?> GetProductSyncStatus()

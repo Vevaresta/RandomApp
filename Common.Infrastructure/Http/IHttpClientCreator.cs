@@ -1,4 +1,4 @@
-﻿namespace RandomApp.Web.Client
+﻿namespace Common.Shared.Http
 {
     public interface IHttpClientCreator
     {

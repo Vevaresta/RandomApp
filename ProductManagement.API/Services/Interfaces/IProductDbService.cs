@@ -15,5 +15,6 @@ namespace RandomApp.ProductManagement.Application.Services.Interfaces
         Task<bool> Remove(int productId);
 
         Task<bool> RemoveRange(IEnumerable<ProductDto> productDto);
+
     }
 }

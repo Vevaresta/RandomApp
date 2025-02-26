@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 
 
-namespace RandomApp.Web.Client
+namespace Common.Shared.Http
 {
     // centralizes http client creation
     public class HttpClientCreator : IHttpClientCreator

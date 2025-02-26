@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.Shared.Http;
 using RandomApp.ProductManagement.Domain.Entities;
 using RandomApp.ProductManagement.Domain.RepositoryInterfaces;
 using System.Linq.Expressions;

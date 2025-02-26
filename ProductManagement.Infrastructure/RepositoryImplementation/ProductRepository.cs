@@ -15,14 +15,6 @@ namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
             _productDbContext = context;
         }
 
-        public async Task<IEnumerable<Product>> GetPopularProducts(string keyword)
-        {
-            return await _productDbContext.Products
-                .Where(p => p.ProductDescription.Value.Contains(keyword))
-                .ToListAsync();
-
-        }
-
         public async Task<Product> GetProductByApiIdAsync(int originalApiId)
         {
             return await _productDbContext.Products.FirstOrDefaultAsync(p => p.OriginalApiId == originalApiId);

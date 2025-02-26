@@ -56,6 +56,11 @@ namespace RandomApp.ProductManagement.Application.Services.Implementations
             return productsDto;
         }
 
+        public Task<ProductDto> GetPopularProduct(ProductDto productDto)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ProductDto> GetProductByIdAsync(int productId)
         {
             var product = await _productRepository.GetByIdAsync(productId);

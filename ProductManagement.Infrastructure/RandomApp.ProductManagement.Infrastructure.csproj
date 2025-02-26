@@ -25,4 +25,8 @@
     <ProjectReference Include="..\ProductManagement.Domain\RandomApp.ProductManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\ExternalApi\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace RandomApp.Web.Client
+﻿namespace Common.Shared.Http
 {
     // Provides a base class that any API client (like Product Service) can inherit
     public abstract class ApiClientBase

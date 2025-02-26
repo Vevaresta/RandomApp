@@ -17,6 +17,7 @@ namespace RandomApp.Presentation.Api.Configuration
             ShoppingCartManagement.Application.Configuration.DependencyCfg.RegisterApplicationServices(services);
             ShoppingCartManagement.Infrastructure.Configuration.DependencyCfg.RegisterInfrastructureServices(services);
             ShoppingCartManagement.Infrastructure.Configuration.DependencyCfg.RegisterDbContext(services, configuration);
+            Common.Shared.Configuration.DependencyCfg.HttpClientServices(services);
 
         }
 
