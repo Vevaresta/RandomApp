@@ -3,7 +3,7 @@ using NLog;
 using RandomApp.Presentation.Authentication.DataTransferObjects;
 using RandomApp.Presentation.Authentication.Services;
 
-namespace RandomApp.Presentation.Authentication.Controllers
+namespace RandomApp.Presentation.Api.Controllers
 {
     [Route("api/token")]
     [ApiController]

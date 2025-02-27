@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using Microsoft.AspNetCore.Http.HttpResults;
 using RandomApp.Presentation.Authentication.DataTransferObjects;
 using RandomApp.Presentation.Authentication.Models;
 

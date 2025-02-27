@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using RandomApp.Presentation.Authentication.DataTransferObjects;
 using RandomApp.Presentation.Authentication.Services;
 
-namespace RandomApp.Presentation.Authentication.Controllers
+namespace RandomApp.Presentation.Api.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
@@ -21,7 +21,7 @@ namespace RandomApp.Presentation.Authentication.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterUser(UserForRegistrationDto userForRegistration)
