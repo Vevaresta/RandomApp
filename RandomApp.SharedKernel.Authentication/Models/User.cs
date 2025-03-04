@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-
+﻿
 namespace RandomApp.SharedKernel.Authentication.Domain.Models
 {
-    public class User : IdentityUser
+    public class User : Microsoft.AspNetCore.Identity.IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
