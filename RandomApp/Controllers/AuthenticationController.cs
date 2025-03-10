@@ -10,10 +10,10 @@ namespace RandomApp.Presentation.Api.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly NLog.ILogger _logger;
         private readonly IAuthenticationService _authenticationService;
 
-        public AuthenticationController(ILogger logger, IAuthenticationService authenticationService)
+        public AuthenticationController(NLog.ILogger logger, IAuthenticationService authenticationService)
         {
             _logger = logger;
             _authenticationService = authenticationService;

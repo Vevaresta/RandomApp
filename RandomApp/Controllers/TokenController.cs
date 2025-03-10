@@ -9,10 +9,10 @@ namespace RandomApp.Presentation.Api.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly NLog.ILogger _logger;
         private readonly IAuthenticationService _authenticationService;
 
-        public TokenController(ILogger logger, IAuthenticationService authenticationService)
+        public TokenController(NLog.ILogger logger, IAuthenticationService authenticationService)
         {
             _logger = logger;
             _authenticationService = authenticationService;
