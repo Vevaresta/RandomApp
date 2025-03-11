@@ -1,4 +1,6 @@
-﻿namespace RandomApp.ShoppingCartManagement.Domain.Entities
+﻿using RandomApp.ShoppingCartManagement.Domain.Entities;
+
+namespace RandomApp.ShoppingCartManagement.Domain.ValueObjects
 {
     public class ShoppingCartItem
     {

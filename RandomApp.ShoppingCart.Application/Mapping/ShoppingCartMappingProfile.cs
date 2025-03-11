@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RandomApp.ShoppingCartManagement.Application.DataTransferObjects;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
+using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 
 namespace RandomApp.ShoppingCartManagement.Application.Mapping
 {

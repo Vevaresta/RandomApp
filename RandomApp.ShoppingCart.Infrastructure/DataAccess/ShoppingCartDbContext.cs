@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
+using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 
 
 namespace RandomApp.ShoppingCartManagement.Infrastructure.DataAccess

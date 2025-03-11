@@ -7,6 +7,7 @@ using RandomApp.ShoppingCartManagement.Application.DataTransferObjects;
 using Microsoft.AspNetCore.Http;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
 using RandomApp.ShoppingCartManagement.Application.Services;
+using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 
 namespace RandomApp.ShoppingCartManagement.Application.Controllers
 {
