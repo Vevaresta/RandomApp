@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common.Infrastructure\Common.Shared.csproj" />
-    <ProjectReference Include="..\RandomApp.ShoppingCart.Domain\RandomApp.ShoppingCartManagement.Domain.csproj" />
+    <ProjectReference Include="..\RandomApp.ShoppingCart.Application\RandomApp.ShoppingCartManagement.Application.csproj" />
   </ItemGroup>
 
 </Project>
