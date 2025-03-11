@@ -2,7 +2,7 @@
 
 namespace RandomApp.ShoppingCartManagement.Domain.ValueObjects
 {
-    public class ShoppingCartItem
+    public record ShoppingCartItem
     {
         public int ProductId { get; private init; }
         public string Name { get; private init; } = string.Empty;
