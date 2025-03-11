@@ -1,7 +1,6 @@
 ﻿using RandomApp.ProductManagement.Domain.ValueObjects;
 using RandomApp.ProductManagement.Domain.Enums;
-using RandomApp.ProductManagement.Domain.Exceptions;
-using System.Reflection.Metadata.Ecma335;
+using Common.Shared.Exceptions;
 
 namespace RandomApp.ProductManagement.Domain.Entities
 {

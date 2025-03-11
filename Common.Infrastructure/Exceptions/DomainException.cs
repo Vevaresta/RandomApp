@@ -1,4 +1,4 @@
-﻿namespace RandomApp.ProductManagement.Domain.Exceptions
+﻿namespace Common.Shared.Exceptions
 {
     public sealed class DomainException : Exception
     {
