@@ -5,7 +5,7 @@ namespace RandomApp.ShoppingCartManagement.Domain.Entities
 {
     public class ShoppingCart
     {
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
         public int UserId { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
@@ -14,6 +14,8 @@ namespace RandomApp.ShoppingCartManagement.Domain.Entities
         private readonly List<ShoppingCartItem> _items = new List<ShoppingCartItem>();
 
         public IReadOnlyCollection<ShoppingCartItem> Items => _items.AsReadOnly();
+
+        public decimal TotalPriceCart => _items.Sum(item => item.TotalPriceItem);
 
         private ShoppingCart() { }
 

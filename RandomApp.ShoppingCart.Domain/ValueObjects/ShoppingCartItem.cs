@@ -4,14 +4,14 @@ namespace RandomApp.ShoppingCartManagement.Domain.ValueObjects
 {
     public class ShoppingCartItem
     {
-        public int ProductId { get; init; }
-        public string Name { get; init; } = string.Empty;
-        public decimal Price { get; init; }
-        public string Image { get; init; }
-        public int Quantity { get; init; }
-        public bool IsAvailable { get; init; }
+        public int ProductId { get; private init; }
+        public string Name { get; private init; } = string.Empty;
+        public decimal Price { get; private init; }
+        public string Image { get; private init; }
+        public int Quantity { get; private init; }
+        public bool IsAvailable { get; private init; }
 
-        public decimal TotalPrice => Price * Quantity;
+        public decimal TotalPriceItem => Price * Quantity;
 
         private ShoppingCartItem() { }
 

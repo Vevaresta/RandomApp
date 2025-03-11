@@ -1,4 +1,4 @@
-﻿using RandomApp.ProductManagement.Domain.Exceptions;
+﻿using Common.Shared.Exceptions;
 
 namespace RandomApp.ProductManagement.Domain.ValueObjects
 {
