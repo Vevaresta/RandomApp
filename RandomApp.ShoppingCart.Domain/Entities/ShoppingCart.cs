@@ -29,7 +29,7 @@ namespace RandomApp.ShoppingCartManagement.Domain.Entities
             };
         }
 
-        public void AddItem(int productId, int quantity, decimal unitPrice)
+        public void AddItem(int productId, string name, int quantity, decimal price, string image)
         {
             var existingItem = _items.FirstOrDefault(item => item.ProductId == productId);
 
@@ -38,11 +38,21 @@ namespace RandomApp.ShoppingCartManagement.Domain.Entities
                 _items.Remove(existingItem);
                 _items.Add(new ShoppingCartItem(
                     productId,
-                    existingItem.Quantity + quantity, unitPrice));
+                    name,
+                    price,
+                    image,
+                    existingItem.Quantity + quantity,
+                    true));
             }
             else
             {
-                _items.Add(new ShoppingCartItem(productId, quantity, unitPrice));
+                _items.Add(new ShoppingCartItem(
+                    productId,
+                    name, 
+                    price,
+                    image, 
+                    quantity, 
+                    true));
             }
 
             LastModified = DateTime.UtcNow;
@@ -58,13 +68,19 @@ namespace RandomApp.ShoppingCartManagement.Domain.Entities
             }
         }
 
-        public void UpdateItemQuantity(int productId, int quantity)
+        public void UpdateItemQuantity(int productId, string name, int quantity, decimal price, string image)
         {
             var existingItem = _items.FirstOrDefault(item => item.ProductId == productId);
             if (existingItem != null)
             {
                 _items.Remove(existingItem);
-                _items.Add(new ShoppingCartItem(productId, quantity, existingItem.Price));
+                _items.Add(new ShoppingCartItem(
+                    productId,
+                    name,
+                    price,
+                    image,
+                    quantity,
+                    true));
                  LastModified = DateTime.UtcNow;
             }
         }
