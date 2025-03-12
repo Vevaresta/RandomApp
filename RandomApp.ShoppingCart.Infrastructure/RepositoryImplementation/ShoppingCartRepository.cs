@@ -23,13 +23,13 @@ namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementati
                 .FirstOrDefaultAsync(cart => cart.UserId == userId);
         }
 
-        public async Task<ShoppingCart> GetCartByItemIdAsync(int itemId)
+        public async Task<ShoppingCart> GetCartByItemIdAsync(int userId, int productId)
         {
-            return await _shoppingCartDbContext.ShoppingCartItems
-                .Where(item => item.Id == itemId)
-                .Select(item => item.ShoppingCart)
+            return await _shoppingCartDbContext.ShoppingCarts
                 .Include(cart => cart.Items)
-                .FirstOrDefaultAsync();             
+                .FirstOrDefaultAsync(cart => cart.UserId == userId &&
+                    cart.Items.Any(item => item.ProductId == productId));
+              
         }
     }
 }
