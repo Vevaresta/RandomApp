@@ -6,7 +6,9 @@
         public int UserId { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public IEnumerable<ShoppingCartItemDto> Items { get; set; }
+        public DateTime? LastModified { get; set; }
+
+        public IEnumerable<ShoppingCartItemDto> Items { get; set; } = new List<ShoppingCartItemDto>();
         public decimal TotalAmount
         {
             get

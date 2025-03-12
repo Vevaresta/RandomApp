@@ -4,7 +4,6 @@ using RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces;
 using NLog;
 using AutoMapper;
 using RandomApp.ShoppingCartManagement.Application.DataTransferObjects;
-using Microsoft.AspNetCore.Http;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
 using RandomApp.ShoppingCartManagement.Application.Services;
 using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
@@ -17,7 +16,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IShoppingCartRepository _shoppingCartRepository;
-        private readonly ILogger _logger;
+        private readonly NLog.ILogger _logger;
         private readonly IMapper _mapper;
 
         public ShoppingCartController(IUnitOfWork unitOfWork, IShoppingCartRepository shoppingCartRepository, IMapper mapper)
