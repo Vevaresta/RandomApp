@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using RandomApp.ProductManagement.Application.DataTransferObjects;
 using RandomApp.ProductManagement.Application.Mapping;
@@ -12,6 +13,7 @@ namespace RandomApp.ProductManagement.Application.Configuration
         {
             services.AddScoped<IProductSyncOrchestrator, ProductSyncOrchestrator>();
             services.AddAutoMapper(typeof(ProductMappingProfile));
+            services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<ProductDtoValidator>();
         }
     }

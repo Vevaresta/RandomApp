@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
+using RandomApp.ShoppingCartManagement.Application.DataTransferObjects;
 using RandomApp.ShoppingCartManagement.Application.Mapping;
 
 
@@ -11,8 +14,9 @@ namespace RandomApp.ShoppingCartManagement.Application.Configuration
         public static void RegisterApplicationServices(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ShoppingCartMappingProfile));
-            //services.AddControllers()
-            //        .AddApplicationPart(typeof(ShoppingCartController).Assembly);
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<ShoppingCartDtoValidator>();
+
         }
 
     }
