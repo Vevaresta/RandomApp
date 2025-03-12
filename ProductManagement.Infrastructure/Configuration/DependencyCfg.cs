@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
-using RandomApp.ProductManagement.Infrastructure.DataAccess;
+using RandomApp.ProductManagement.Infrastructure.Persistence;
 using RandomApp.ProductManagement.Infrastructure.RepositoryImplementation;
 using RandomApp.ProductManagement.Infrastructure.Services.ExternalApi;
 

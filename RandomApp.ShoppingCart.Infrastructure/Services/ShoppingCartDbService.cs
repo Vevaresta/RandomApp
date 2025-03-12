@@ -9,14 +9,14 @@ using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 
 namespace RandomApp.ShoppingCartManagement.Application.Services
 {
-    public class ShoppingCartService : IShoppingCartService
+    public class ShoppingCartDbService : IShoppingCartService
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly IShoppingCartRepository _shoppingCartRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ShoppingCartService(IMapper mapper, IShoppingCartRepository shoppingCartRepository, IUnitOfWork unitOfWork)
+        public ShoppingCartDbService(IMapper mapper, IShoppingCartRepository shoppingCartRepository, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _logger = LogManager.GetCurrentClassLogger();
