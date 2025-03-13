@@ -26,51 +26,39 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
 
         public async Task AddToCartAsync(ShoppingCartItemDto itemDto, int userId)
         {
-            if (itemDto != null && itemDto.Quantity > 0)
-            {
-                _logger.Info("Fetching cart for user {userId}", userId);
-                var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
-
-                if (cart == null)
-                {
-                    cart = new ShoppingCart
-                    {
-                        UserId = userId,
-                        CreatedAt = DateTime.UtcNow,
-                        Items = new List<ShoppingCartItem>()
-                    };
-                    _logger.Info("Created new cart for user {userId}", userId);
-                    await _shoppingCartRepository.AddAsync(cart);
-                }
-
-                var existingItem = cart.Items.FirstOrDefault(item => item.ProductId == itemDto.ProductId);
-                if (existingItem != null)
-                {
-                    existingItem.Quantity += itemDto.Quantity;
-                    _logger.Info("Updated quantity for item {productId} in cart. New quantity: {quantity}",
-                        itemDto.ProductId, existingItem.Quantity);
-                }
-                else
-                {
-                    cart.Items.Add(new ShoppingCartItem
-                    {
-                        ProductId = itemDto.ProductId,
-                        Name = itemDto.Name,
-                        Price = itemDto.Price,
-                        Quantity = itemDto.Quantity,
-                        Image = itemDto.Image
-                    });
-                    _logger.Info("Added new item {productId} to cart", itemDto.ProductId);
-                }
-
-                await _unitOfWork.CompleteAsync();
-                _logger.Info("Saved changes to cart for user {userId}", userId);
-            }
-            else
+            if (itemDto == null || itemDto.Quantity <= 0)
             {
                 _logger.Warn("Invalid item or quantity for user {userId}", userId);
+                return;
             }
+
+            _logger.Info("Fetching cart for user {userId}", userId);
+            var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
+
+            if (cart == null)
+            {
+                _logger.Info("Creating new cart for user {userId}", userId);
+                cart = ShoppingCart.Create(userId);
+                await _shoppingCartRepository.AddAsync(cart);
+            }
+
+            var cartItem = _mapper.Map<ShoppingCartItem>(itemDto);
+
+            cart.AddItem(
+                cartItem.ProductId,
+                cartItem.Name,
+                cartItem.Quantity,
+                cartItem.Price,
+                cartItem.Image
+                );
+
+            _logger.Info("Updated cart for product {productId}", itemDto.ProductId);
+
+            await _unitOfWork.CompleteAsync();
+            _logger.Info("Saved changes to cart for user {userId}", userId);
         }
+        
+ 
 
         public async Task ClearCartAsync(int userId)
         {
