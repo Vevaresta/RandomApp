@@ -42,23 +42,40 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
                 await _shoppingCartRepository.AddAsync(cart);
             }
 
-            var cartItem = _mapper.Map<ShoppingCartItem>(itemDto);
+            var existingItem = cart.Items.FirstOrDefault(item => item.ProductId == itemDto.ProductId);
+            if (existingItem == null)
+            {
+                _logger.Info("Item {productId} already exist in cart for user {userId}. Updating quantity.", itemDto.ProductId, userId);
+                cart.UpdateItemQuantity(
+                    existingItem.ProductId,
+                    existingItem.Name,
+                    existingItem.Quantity + itemDto.Quantity,
+                    existingItem.Price,
+                    existingItem.Image
+                    );
+            }
+            else
+            {
 
-            cart.AddItem(
-                cartItem.ProductId,
-                cartItem.Name,
-                cartItem.Quantity,
-                cartItem.Price,
-                cartItem.Image
-                );
+                var cartItem = _mapper.Map<ShoppingCartItem>(itemDto);
 
-            _logger.Info("Updated cart for product {productId}", itemDto.ProductId);
+                cart.AddItem(
+                    cartItem.ProductId,
+                    cartItem.Name,
+                    cartItem.Quantity,
+                    cartItem.Price,
+                    cartItem.Image
+                    );
+                _logger.Info("Updated cart for product {productId}", itemDto.ProductId);
 
+            }
+
+            _shoppingCartRepository.Update(cart);
             await _unitOfWork.CompleteAsync();
             _logger.Info("Saved changes to cart for user {userId}", userId);
         }
-        
- 
+
+
 
         public async Task ClearCartAsync(int userId)
         {
@@ -71,87 +88,91 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
                 return;
             }
 
-            cart.Items.Clear();
+            cart.Clear();
             await _unitOfWork.CompleteAsync();
             _logger.Info("Successfully cleared cart for user {userId}", userId);
         }
 
         public async Task<ShoppingCartDto> GetCartAsync(int userId)
         {
-            _logger.Info("Fetching cart with user id {id}", userId);
+            _logger.Info("Fetching cart with user id {userId}", userId);
             var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
 
             if (cart == null)
             {
-                _logger.Warn("Cart with user id {id} doesn't exist.", userId);
+                _logger.Warn("Cart with user id {userId} doesn't exist.", userId);
                 return null;
             }
 
             var shoppingCartDto = _mapper.Map<ShoppingCartDto>(cart);
-            _logger.Info("Cart with user id {id} successfully fetched with {itemCount} items", userId, shoppingCartDto.Items.ToList().Count);
+            if (shoppingCartDto == null || shoppingCartDto.Items == null)
+            {
+                _logger.Warn("Cart mapping returned null or empty for user {userId}", userId);
+                return null;
+            }
+            _logger.Info("Cart with user id {userId} successfully fetched with {itemCount} items", userId, shoppingCartDto.Items.Count());
 
             return shoppingCartDto;
-            
+
         }
 
-        public async Task RemoveFromCartAsync(int itemId)
+        public async Task RemoveFromCartAsync(int userId, int productId)
         {
-            _logger.Info("Attempting to remove item {id}", itemId);
+            _logger.Info("Attempting to remove product {productId} from cart for user {userId}", productId, userId);
 
-            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(itemId);
+            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(userId);
+
             if (cart == null)
             {
-                _logger.Warn("No cart found containing item {id}", itemId);
+                _logger.Warn("No cart found containing item {productId}", productId);
                 return;
             }
 
-            var itemToRemove = cart.Items.FirstOrDefault(item => item.Id == itemId);
-
-            if (itemToRemove == null)
+            var item = cart.Items.FirstOrDefault(item => item.ProductId == productId);
+            if (item == null)
             {
-                cart.Items.Remove(itemToRemove);
-                await _unitOfWork.CompleteAsync();
-                _logger.Info("Item {itemId} successfully removed from cart {cartId}", itemId, cart.Id);
+                _logger.Warn("Item {productId} not found in cart for user {userId}", productId, userId);
+                return;
             }
 
-            else
-            {
-                _logger.Warn("Item {itemId} not found in cart {cartId}", itemId, cart.Id);
-            }
+            cart.RemoveItem(productId);
+            _shoppingCartRepository.Update(cart);
+            await _unitOfWork.CompleteAsync();
+            _logger.Info("Item {productId} removed from cart for user {userId}", productId, userId);
 
         }
 
-        public async Task UpdateQuantityAsync(int itemId, int quantity)
+        public async Task UpdateQuantityAsync(int productId, int quantity, int userId)
         {
             if (quantity <= 0)
             {
-                _logger.Warn("Invalid quantity {quantity} for item {itemId", quantity, itemId);
+                _logger.Warn("Invalid quantity {quantity} for item {productId}", quantity, productId);
                 return;
             }
 
-            _logger.Info("Attemtping to update quantity for item {itemId} to {quantity}", itemId, quantity);
+            _logger.Info("Attemtping to update quantity for item {productId} to {quantity} for user {userId}", productId, quantity, userId);
 
-            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(itemId);
+            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(userId);
 
             if (cart == null)
             {
-                _logger.Warn("No cart found containing item {itemId}", itemId);
+                _logger.Warn("No cart found containing item {productId}", productId);
                 return;
             }
 
-            var item = cart.Items.FirstOrDefault(item => item.Id == itemId);
-            if (item != null)
+            var item = cart.Items.FirstOrDefault(item => item.ProductId == productId);
+            if (item == null)
             {
-                var oldQuantity = item.Quantity;
-                item.Quantity = quantity;
-                await _unitOfWork.CompleteAsync();
-                _logger.Info("Updated item {itemId} quantity from {oldQuantity} to {quantity}", itemId, oldQuantity, quantity);
+                _logger.Warn("Item {productId} not found in cart for user {userId}", productId, userId);
+                return;
             }
 
-            else
-            {
-                _logger.Warn("Item {itemId} not found in cart {cartId}", itemId, cart.Id);
-            }
+            cart.UpdateItemQuantity(productId, item.Name, quantity, item.Price, item.Image);
+
+            _shoppingCartRepository.Update(cart);
+            await _unitOfWork.CompleteAsync();
+
+            _logger.Info("Successfull updated quantity for item {productId} to {quantity} for user {userId}", productId, quantity, userId);
         }
     }
 }

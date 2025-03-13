@@ -86,5 +86,11 @@ namespace RandomApp.ShoppingCartManagement.Domain.Entities
                  LastModified = DateTime.UtcNow;
             }
         }
+
+        public void Clear()
+        {
+            _items.Clear();
+            LastModified = DateTime.UtcNow;
+        }
     }
 }

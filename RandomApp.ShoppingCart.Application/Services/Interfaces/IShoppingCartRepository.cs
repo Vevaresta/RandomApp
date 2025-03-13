@@ -7,6 +7,6 @@ namespace RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces
     {
         Task<ShoppingCart> GetCartByUserIdAsync(int userId);
 
-        Task<ShoppingCart> GetCartByItemIdAsync(int userId, int productId);
+        Task<ShoppingCart> GetCartByItemIdAsync(int userId);
     }
 }
