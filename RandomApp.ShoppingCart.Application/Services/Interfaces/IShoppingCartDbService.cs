@@ -6,8 +6,8 @@ namespace RandomApp.ShoppingCartManagement.Application.Services.Interfaces
     {
         Task<ShoppingCartDto> GetCartAsync(int userId);
         Task AddToCartAsync(ShoppingCartItemDto itemDto, int userId);
-        Task UpdateQuantityAsync(int productId, int quantity, int userId);
-        Task RemoveFromCartAsync(int userId, int productId);
-        Task ClearCartAsync(int userId);
+        Task <bool>UpdateQuantityAsync(int productId, int quantity, int userId);
+        Task <bool>RemoveFromCartAsync(int userId, int productId);
+        Task <bool>ClearCartAsync(int userId);
     }
 }

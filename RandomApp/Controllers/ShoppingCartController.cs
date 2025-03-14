@@ -6,6 +6,7 @@ using RandomApp.ShoppingCartManagement.Application.DataTransferObjects;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
 using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 using RandomApp.ShoppingCartManagement.Application.Services.Interfaces;
+using RandomApp.ProductManagement.Domain.Entities;
 
 namespace RandomApp.ShoppingCartManagement.Application.Controllers
 {
@@ -82,63 +83,34 @@ namespace RandomApp.ShoppingCartManagement.Application.Controllers
         [HttpPut("update-quantity")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateQuantity(int itemId, int quantity)
+        public async Task<IActionResult> UpdateQuantity(int userId, int productId, int quantity)
         {
-            if (quantity <= 0)
+            var success = await _shoppingCartDbService.UpdateQuantityAsync(productId, quantity, userId);
+
+            if (!success)
             {
-                _logger.Warn("Invalid quantity {quantity} provided for item {itemId}", quantity, itemId);
-                return BadRequest("Quantity must be greater than 0");
+                return NotFound("Product {productId} not found in the cart or invalid quantity.");
             }
 
-            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(itemId);
-            if (cart == null)
-            {
-                _logger.Warn("No cart found containing item {itemId}", itemId);
-                return NotFound($"Item {itemId} not found in any cart");
-            }
-
-            var item = cart.Items.FirstOrDefault(item => item.Id == itemId);
-            if (item != null)
-            {
-                var oldQuantity = item.Quantity;
-                item.Quantity = quantity;
-                await _unitOfWork.CompleteAsync();
-                _logger.Info("Updated item {itemId} quantity from {oldQuantity} to {quantity}",
-                    itemId, oldQuantity, quantity);
-                return Ok();
-            }
-
-            _logger.Warn("Item {itemId} not found in cart {cartId}", itemId, cart.Id);
-            return NotFound($"Item {itemId} not found in cart");
+            return Ok(new { Message = "Quantity updated successfully", ProductId =  productId, NewQuantity = quantity });
         }
 
 
-        [HttpDelete("remove/{itemId}")]
+        [HttpDelete("remove/{productId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> RemoveFromCart(int itemId)
+        public async Task<IActionResult> RemoveFromCart(int productId, [FromQuery] int userId)
         {
-            _logger.Info("Attempting to remove item {itemId}", itemId);
-            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(itemId);
+            _logger.Info("Attempting to remove product {productId} from cart for user {userId}", productId, userId);
+            
+            bool success = await _shoppingCartDbService.RemoveFromCartAsync(userId, productId);
 
-            if (cart == null)
+            if (!success)
             {
-                _logger.Warn("No cart found containing item {itemId}", itemId);
-                return NotFound($"Item {itemId} not found in any cart");
+                return NotFound("Product or user not found.");
             }
 
-            var itemToRemove = cart.Items.FirstOrDefault(item => item.Id == itemId);
-            if (itemToRemove != null)
-            {
-                cart.Items.Remove(itemToRemove);
-                await _unitOfWork.CompleteAsync();
-                _logger.Info("Item {itemId} removed from cart {cartId}", itemId, cart.Id);
-                return Ok();
-            }
-
-            _logger.Warn("Item {itemId} not found in cart {cartId}", itemId, cart.Id);
-            return NotFound($"Item {itemId} not found in cart");
+            return Ok();
         }
 
 
@@ -148,18 +120,15 @@ namespace RandomApp.ShoppingCartManagement.Application.Controllers
         public async Task<IActionResult> ClearCart(int userId)
         {
             _logger.Info("Attempting to clear cart for user {userId}", userId);
-            var cart = await _shoppingCartRepository.GetCartByUserIdAsync(userId);
+            var success = await _shoppingCartDbService.ClearCartAsync(userId);
 
-            if (cart == null)
+            if (!success)
             {
-                _logger.Warn("No cart found for user {userId}", userId);
-                return NotFound($"No cart found for user {userId}");
+                return NotFound($"User {userId} not found.");
             }
 
-            cart.Items.Clear();
-            await _unitOfWork.CompleteAsync();
-            _logger.Info("Cleared cart for user {userId}", userId);
             return Ok();
+
         }
     }
 }
