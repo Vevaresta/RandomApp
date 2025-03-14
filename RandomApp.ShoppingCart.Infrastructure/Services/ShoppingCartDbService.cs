@@ -4,12 +4,11 @@ using NLog;
 using RandomApp.ShoppingCartManagement.Application.DataTransferObjects;
 using RandomApp.ShoppingCartManagement.Application.Services.Interfaces;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
-using RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces;
 using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 
 namespace RandomApp.ShoppingCartManagement.Application.Services
 {
-    public class ShoppingCartDbService : IShoppingCartService
+    public class ShoppingCartDbService : IShoppingCartDbService
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;

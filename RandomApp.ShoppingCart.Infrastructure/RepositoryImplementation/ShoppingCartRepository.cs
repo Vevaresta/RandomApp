@@ -1,7 +1,7 @@
 ﻿using Common.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
+using RandomApp.ShoppingCartManagement.Application.Services.Interfaces;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
-using RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces;
 using RandomApp.ShoppingCartManagement.Infrastructure.DataAccess;
 
 namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementation

@@ -1,7 +1,7 @@
 ﻿using Common.Shared.Repositories;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
 
-namespace RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces
+namespace RandomApp.ShoppingCartManagement.Application.Services.Interfaces
 {
     public interface IShoppingCartRepository : IGenericRepository<ShoppingCart>
     {

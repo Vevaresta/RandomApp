@@ -1,6 +1,6 @@
 ﻿using Moq;
+using RandomApp.ShoppingCartManagement.Application.Services.Interfaces;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
-using RandomApp.ShoppingCartManagement.Domain.RepositoryInterfaces;
 using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 
 

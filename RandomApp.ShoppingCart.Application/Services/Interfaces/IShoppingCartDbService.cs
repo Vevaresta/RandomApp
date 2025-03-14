@@ -2,7 +2,7 @@
 
 namespace RandomApp.ShoppingCartManagement.Application.Services.Interfaces
 {
-    public interface IShoppingCartService
+    public interface IShoppingCartDbService
     {
         Task<ShoppingCartDto> GetCartAsync(int userId);
         Task AddToCartAsync(ShoppingCartItemDto itemDto, int userId);
