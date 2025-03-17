@@ -6,7 +6,7 @@ using RandomApp.ShoppingCartManagement.Application.Services.Interfaces;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
 using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 
-namespace RandomApp.ShoppingCartManagement.Application.Services
+namespace RandomApp.ShoppingCartManagement.Infrastructure.Services
 {
     public class ShoppingCartDbService : IShoppingCartDbService
     {
@@ -121,7 +121,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
         {
             _logger.Info("Attempting to remove product {productId} from cart for user {userId}", productId, userId);
 
-            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(userId);
+            var cart = await _shoppingCartRepository.GetCartByItemIdAsync(userId, productId);
 
             if (cart == null)
             {
@@ -144,7 +144,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Services
 
         }
 
-        public async Task<bool>UpdateQuantityAsync(int productId, int quantity, int userId)
+        public async Task<bool> UpdateQuantityAsync(int productId, int quantity, int userId)
         {
             if (quantity <= 0)
             {

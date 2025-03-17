@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RandomApp.ShoppingCartManagement.Application.Services.Interfaces;
-using RandomApp.ShoppingCartManagement.Infrastructure.DataAccess;
+using RandomApp.ShoppingCartManagement.Infrastructure.Persistance;
 using RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementation;
 
 namespace RandomApp.ShoppingCartManagement.Infrastructure.Configuration

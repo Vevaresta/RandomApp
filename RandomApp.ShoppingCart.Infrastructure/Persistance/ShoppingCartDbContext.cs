@@ -4,7 +4,7 @@ using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 using RandomApp.ShoppingCartManagement.Infrastructure.Configuration;
 
 
-namespace RandomApp.ShoppingCartManagement.Infrastructure.DataAccess
+namespace RandomApp.ShoppingCartManagement.Infrastructure.Persistance
 {
     public class ShoppingCartDbContext : DbContext
     {

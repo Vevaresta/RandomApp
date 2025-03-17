@@ -1,6 +1,6 @@
 ﻿
 using Common.Shared.Repositories;
-using RandomApp.ShoppingCartManagement.Infrastructure.DataAccess;
+using RandomApp.ShoppingCartManagement.Infrastructure.Persistance;
 
 namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementation
 {

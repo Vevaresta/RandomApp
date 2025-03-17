@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RandomApp.ShoppingCartManagement.Application.Services.Interfaces;
 using RandomApp.ShoppingCartManagement.Domain.Entities;
-using RandomApp.ShoppingCartManagement.Infrastructure.DataAccess;
+using RandomApp.ShoppingCartManagement.Infrastructure.Persistance;
 
 namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementation
 {
@@ -25,11 +25,11 @@ namespace RandomApp.ShoppingCartManagement.Infrastructure.RepositoryImplementati
 
         public async Task<ShoppingCart> GetCartByItemIdAsync(int userId, int productId)
         {
-            return await _shoppingCartDbContext.ShoppingCarts
-                .Include(cart => cart.Items)
-                .FirstOrDefaultAsync(cart => cart.UserId == userId &&
+                return await _shoppingCartDbContext.ShoppingCarts
+                    .Include(cart => cart.Items)
+                    .FirstOrDefaultAsync(cart => cart.UserId == userId &&
                     cart.Items.Any(item => item.ProductId == productId));
-              
         }
+
     }
 }

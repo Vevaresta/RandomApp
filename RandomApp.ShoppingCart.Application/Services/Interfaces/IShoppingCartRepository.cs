@@ -7,6 +7,6 @@ namespace RandomApp.ShoppingCartManagement.Application.Services.Interfaces
     {
         Task<ShoppingCart> GetCartByUserIdAsync(int userId);
 
-        Task<ShoppingCart> GetCartByItemIdAsync(int userId);
+        Task<ShoppingCart> GetCartByItemIdAsync(int userId, int productId);
     }
 }

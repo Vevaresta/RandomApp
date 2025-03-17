@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProductManagement.API\RandomApp.ProductManagement.Application.csproj" />
+    <ProjectReference Include="..\ProductManagement.Domain\RandomApp.ProductManagement.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Domain.Entities;
-using RandomApp.ProductManagement.Infrastructure.DataAccess;
+using RandomApp.ProductManagement.Infrastructure.Persistence;
 
 namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
 {

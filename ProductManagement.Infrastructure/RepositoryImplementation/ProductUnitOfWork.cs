@@ -1,5 +1,5 @@
 ﻿using Common.Shared.Repositories;
-using RandomApp.ProductManagement.Infrastructure.DataAccess;
+using RandomApp.ProductManagement.Infrastructure.Persistence;
 
 namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
 {

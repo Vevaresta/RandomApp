@@ -14,11 +14,11 @@ namespace RandomApp.Web.Blazor.Configuration
         {
             services.AddHttpClient();
             services.AddSingleton<IHttpClientCreator, HttpClientCreator>();
-            services.AddScoped<IProductRepository, ClientProductRepository>();
-            //services.AddScoped<IProductDisplayService, ProductDisplayService>();
-            services.AddScoped<IProductDisplayService>(serviceProvider => MockProductDisplayService.CreateMockProductService());
+            //services.AddScoped<IProductRepository, ClientProductRepository>();
+            ////services.AddScoped<IProductDisplayService, ProductDisplayService>();
+            //services.AddScoped<IProductDisplayService>(serviceProvider => MockProductDisplayService.CreateMockProductService());
             services.AddAutoMapper(typeof(ProductMappingProfile).Assembly);
-            
+
         }
     }
 }
