@@ -8,7 +8,7 @@ using RandomApp.ShoppingCartManagement.Domain.ValueObjects;
 using RandomApp.ShoppingCartManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Domain.Entities;
 
-namespace RandomApp.ShoppingCartManagement.Application.Controllers
+namespace RandomApp.Presentation.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -42,7 +42,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Controllers
                 _logger.Warn("No cart with User Id {id} found.", userId);
                 return NotFound($"Cart for user ID {userId} not found.");
             }
-            
+
             _logger.Info("Returning cart with user Id {id}", userId);
 
             return Ok(cart);
@@ -92,7 +92,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Controllers
                 return NotFound("Product {productId} not found in the cart or invalid quantity.");
             }
 
-            return Ok(new { Message = "Quantity updated successfully", ProductId =  productId, NewQuantity = quantity });
+            return Ok(new { Message = "Quantity updated successfully", ProductId = productId, NewQuantity = quantity });
         }
 
 
@@ -102,7 +102,7 @@ namespace RandomApp.ShoppingCartManagement.Application.Controllers
         public async Task<IActionResult> RemoveFromCart(int productId, [FromQuery] int userId)
         {
             _logger.Info("Attempting to remove product {productId} from cart for user {userId}", productId, userId);
-            
+
             bool success = await _shoppingCartDbService.RemoveFromCartAsync(userId, productId);
 
             if (!success)

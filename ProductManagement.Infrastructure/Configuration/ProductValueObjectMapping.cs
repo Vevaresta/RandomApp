@@ -14,7 +14,7 @@ namespace RandomApp.ProductManagement.Infrastructure.Configuration
             builder.OwnsOne(product => product.Price, price =>
             {
                 price.Property(product => product.Amount).HasColumnName("Price");
-                price.Property(product => product.Currency).HasColumnName("Currenty");
+                price.Property(product => product.Currency).HasColumnName("Currency");
             });
 
             builder.Property(product => product.SKU).HasConversion(

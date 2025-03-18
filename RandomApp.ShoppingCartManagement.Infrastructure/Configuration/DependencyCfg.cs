@@ -21,7 +21,7 @@ namespace RandomApp.ShoppingCartManagement.Infrastructure.Configuration
             services.AddDbContext<ShoppingCartDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("RandomApp.ShoppingCart.Infrastructure")));
+                    b => b.MigrationsAssembly("RandomApp.ShoppingCartManagement.Infrastructure")));
         }
     }
 }
