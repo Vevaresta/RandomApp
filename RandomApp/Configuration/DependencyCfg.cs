@@ -10,10 +10,10 @@ namespace RandomApp.Presentation.Api.Configuration
             ProductManagement.Application.Configuration.DependencyCfg.RegisterApplicationServices(services);
             ProductManagement.Infrastructure.Configuration.DependencyCfg.RegisterInfrastructureServices(services);
             ProductManagement.Infrastructure.Configuration.DependencyCfg.RegisterDbContext(services, configuration);
-            Authentication.Configuration.DependencyCfg.RegisterAuthDbContext(services, configuration);
-            Authentication.Configuration.DependencyCfg.ConfigureIdentity(services);
-            Authentication.Configuration.DependencyCfg.RegisterAuthServices(services);
-            Authentication.Configuration.JwtConfiguration.ConfigureJWT(services, configuration);
+            SharedKernel.Authentication.Infrastructure.Configuration.DependencyCfg.RegisterAuthDbContext(services, configuration);
+            SharedKernel.Authentication.Infrastructure.Configuration.DependencyCfg.ConfigureIdentity(services);
+            SharedKernel.Authentication.Infrastructure.Configuration.DependencyCfg.RegisterAuthServices(services);
+            SharedKernel.Authentication.Application.Configuration.JwtConfiguration.ConfigureJWT(services, configuration);
             ShoppingCartManagement.Application.Configuration.DependencyCfg.RegisterApplicationServices(services);
             ShoppingCartManagement.Infrastructure.Configuration.DependencyCfg.RegisterInfrastructureServices(services);
             ShoppingCartManagement.Infrastructure.Configuration.DependencyCfg.RegisterDbContext(services, configuration);

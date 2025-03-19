@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
-using Microsoft.AspNetCore.Http;
-using RandomApp.Presentation.Authentication.DataTransferObjects;
-using RandomApp.Presentation.Authentication.Services;
+using RandomApp.SharedKernel.Authentication.Application.DataTransferObjects;
+using RandomApp.SharedKernel.Authentication.Application.Interfaces;
 
 namespace RandomApp.Presentation.Api.Controllers
 {

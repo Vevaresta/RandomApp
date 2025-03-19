@@ -7,14 +7,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RandomApp.SharedKernel.Authentication.Infrastructure.Persistence;
 
-
 #nullable disable
 
-namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrations
+namespace RandomApp.SharedKernel.Authentication.Infrastructure.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20241229095958_AddedRolesToDb")]
-    partial class AddedRolesToDb
+    [Migration("20250319090540_initialAuthDbContextMigration")]
+    partial class initialAuthDbContextMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,13 +54,13 @@ namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrat
                     b.HasData(
                         new
                         {
-                            Id = "69d0066e-9930-4cb4-b319-c58fd17e5ebf",
+                            Id = "87929acd-bb0e-4713-94dd-5c058d4fcf22",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "658046d7-996b-457f-87a0-2d50015888e4",
+                            Id = "12abb2af-6234-4eb6-938b-ace40bab3f57",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -173,7 +172,7 @@ namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrat
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("RandomApp.Server.Authentication.Models.User", b =>
+            modelBuilder.Entity("RandomApp.SharedKernel.Authentication.Domain.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -223,6 +222,12 @@ namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrat
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -257,7 +262,7 @@ namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrat
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("RandomApp.Server.Authentication.Models.User", null)
+                    b.HasOne("RandomApp.SharedKernel.Authentication.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -266,7 +271,7 @@ namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrat
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("RandomApp.Server.Authentication.Models.User", null)
+                    b.HasOne("RandomApp.SharedKernel.Authentication.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -281,7 +286,7 @@ namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrat
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RandomApp.Server.Authentication.Models.User", null)
+                    b.HasOne("RandomApp.SharedKernel.Authentication.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -290,7 +295,7 @@ namespace RandomApp.Server.Authentication.RandomApp.Server.Authentication.Migrat
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("RandomApp.Server.Authentication.Models.User", null)
+                    b.HasOne("RandomApp.SharedKernel.Authentication.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

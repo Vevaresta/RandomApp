@@ -8,7 +8,7 @@ namespace RandomApp.SharedKernel.Authentication.Infrastructure.Persistence
 {
     public class AuthDbContext : IdentityDbContext<User>
     {
-        public AuthDbContext(DbContextOptions options) : base(options) { }
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

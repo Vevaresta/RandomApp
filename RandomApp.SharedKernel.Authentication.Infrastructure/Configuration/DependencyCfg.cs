@@ -18,7 +18,7 @@ namespace RandomApp.SharedKernel.Authentication.Infrastructure.Configuration
             services.AddDbContext<AuthDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("RandomApp.Server.Authentication")));
+                    b => b.MigrationsAssembly("RandomApp.SharedKernel.Authentication.Infrastructure")));
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)
