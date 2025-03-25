@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RandomApp.OrderManagement.Domain.Enums;
+using RandomApp.OrderManagement.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +16,7 @@ namespace RandomApp.OrderManagement.Domain.Entities
         public DateTime CreatedAt { get; private set; }
 
         public DateTime LastModified {  get; private set; }
-        public Enum OrderStatus { get; private set; }
+        public OrderStatus OrderStatus { get; private set; }
         private readonly List<OrderItem> _orderItems = new List<OrderItem>();
 
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
@@ -23,8 +25,8 @@ namespace RandomApp.OrderManagement.Domain.Entities
         public BillingAddress BillingAddress { get; private set; }
         public TotalPrice 
 
-        public Enum PaymentMethod {  get; private set; }
+        public PaymentMethod PaymentMethod {  get; private set; }
 
-        public Enum PaymentStatus { get; private set; }
+        public PaymentStatus PaymentStatus { get; private set; }
     }
 }
