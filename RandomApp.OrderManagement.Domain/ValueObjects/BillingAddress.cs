@@ -2,17 +2,17 @@
 
 namespace RandomApp.OrderManagement.Domain.ValueObjects
 {
-    public record ShippingAddress
+    public record BillingAddress
     {
         public string Address { get; private init; }
+
         public string City { get; private init; }
         public int PostalCode { get; private init; }
-
         public string Country { get; private init; }
 
-        public string RecipientName { get; private init; }
+        public string CardholderName { get; private init; }
 
-        public ShippingAddress(string address, string city, int postalCode, string country, string recipientName)
+        public BillingAddress(string address, string city, int postalCode, string country, string cardholderName)
         {
             if (string.IsNullOrWhiteSpace(address))
                 throw new DomainException("Address cannot be empty");
@@ -26,14 +26,14 @@ namespace RandomApp.OrderManagement.Domain.ValueObjects
             if (string.IsNullOrWhiteSpace(country))
                 throw new DomainException("Country name is required");
 
-            if (!string.IsNullOrWhiteSpace(recipientName))
-                throw new DomainException("RecipientName is required");
+            if (!string.IsNullOrWhiteSpace(cardholderName))
+                throw new DomainException("CardholderName is required"); 
 
             Address = address;
             City = city;
             PostalCode = postalCode;
             Country = country;
-            RecipientName = recipientName;
+            CardholderName = cardholderName;
         }
     }
 }
