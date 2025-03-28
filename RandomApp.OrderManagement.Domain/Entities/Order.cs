@@ -1,10 +1,6 @@
-﻿using RandomApp.OrderManagement.Domain.Enums;
+﻿using Common.Shared.Exceptions;
+using RandomApp.OrderManagement.Domain.Enums;
 using RandomApp.OrderManagement.Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RandomApp.OrderManagement.Domain.Entities
 {
@@ -19,14 +15,26 @@ namespace RandomApp.OrderManagement.Domain.Entities
         public OrderStatus OrderStatus { get; private set; }
         private readonly List<OrderItem> _orderItems = new List<OrderItem>();
 
+        public decimal Subtotal => _orderItems.Sum(item => item.LineTotal);
+
+        public decimal Discount {  get; private set; }
+        public decimal Total => Subtotal - Discount;
+
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
         public ShippingAddress ShippingAddress { get; private set; }
         public BillingAddress BillingAddress { get; private set; }
-        public TotalPrice 
-
         public PaymentMethod PaymentMethod {  get; private set; }
 
         public PaymentStatus PaymentStatus { get; private set; }
+
+        public void ApplyDiscount(decimal discount)
+        {
+            if (discount < 0 || discount > Subtotal)
+                throw new DomainException("Invalid discount amount.");
+
+            Discount = discount;
+        }
+
     }
 }
