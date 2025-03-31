@@ -1,6 +1,7 @@
 ﻿using Common.Shared.Exceptions;
 using RandomApp.OrderManagement.Domain.Enums;
 using RandomApp.OrderManagement.Domain.ValueObjects;
+using System.Reflection.Metadata.Ecma335;
 
 namespace RandomApp.OrderManagement.Domain.Entities
 {
@@ -27,6 +28,35 @@ namespace RandomApp.OrderManagement.Domain.Entities
         public PaymentMethod PaymentMethod {  get; private set; }
 
         public PaymentStatus PaymentStatus { get; private set; }
+
+        private Order()
+        {
+
+        }
+
+        public static Order Create(
+            int customerId,
+            PaymentMethod paymentMethod,
+            ShippingAddress shippingAddress,
+            BillingAddress billingAddress)
+        {
+            if (shippingAddress == null || billingAddress == null)
+                throw new DomainException("Shipping/Billing address is required");
+            
+            return new Order()
+            {
+                Id = Guid.NewGuid(),
+                CustomerId = customerId,
+                CreatedAt = DateTime.UtcNow,
+                LastModified = DateTime.UtcNow,
+                OrderStatus = OrderStatus.Pending,
+                PaymentMethod = paymentMethod,
+                PaymentStatus = PaymentStatus.Pending,
+                ShippingAddress = shippingAddress,
+                BillingAddress = billingAddress
+            };
+        }
+
 
         public void ApplyDiscount(decimal discount)
         {
