@@ -38,22 +38,23 @@ namespace RandomApp.OrderManagement.Domain.Entities
             int customerId,
             PaymentMethod paymentMethod,
             ShippingAddress shippingAddress,
-            BillingAddress billingAddress)
+            BillingAddress billingAddress,
+            List<OrderItem>? items = null)
         {
             if (shippingAddress == null || billingAddress == null)
                 throw new DomainException("Shipping/Billing address is required");
-            
+
             return new Order()
             {
                 Id = Guid.NewGuid(),
-                CustomerId = customerId,
+                CustomerId = customerId > 0 ? customerId : throw new DomainException("Customer ID must be positive."),
                 CreatedAt = DateTime.UtcNow,
                 LastModified = DateTime.UtcNow,
                 OrderStatus = OrderStatus.Pending,
                 PaymentMethod = paymentMethod,
                 PaymentStatus = PaymentStatus.Pending,
                 ShippingAddress = shippingAddress,
-                BillingAddress = billingAddress
+                BillingAddress = billingAddress,              
             };
         }
 
