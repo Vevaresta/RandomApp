@@ -67,5 +67,11 @@ namespace RandomApp.OrderManagement.Domain.Entities
             Discount = discount;
         }
 
+        public void AddItem(OrderItem item)
+        {
+            _orderItems.Add(item ?? throw new DomainException("Order item can't be null."));
+            LastModified = DateTime.UtcNow;
+        }
+
     }
 }
