@@ -58,6 +58,28 @@ namespace RandomApp.OrderManagement.Domain.Entities
             };
         }
 
+        public void Confirm()
+        {
+            OrderStatus = OrderStatus switch
+            {
+                OrderStatus.Pending => OrderStatus.Confirmed,
+                OrderStatus.Cancelled => throw new DomainException("Can't confirm a cancelled order."),
+                _ => throw new DomainException("Order is already confirmed.")
+            };
+            LastModified = DateTime.UtcNow;
+        }
+
+        public void Cancel()
+        {
+            OrderStatus = OrderStatus switch
+            {
+                OrderStatus.Pending or OrderStatus.Confirmed => OrderStatus.Cancelled,
+                OrderStatus.Shipped => throw new DomainException("Can't cancel a shipped order."),
+                _ => throw new DomainException("Order is already cancelled/delivered.")
+            };
+            LastModified = DateTime.UtcNow;
+        }
+
 
         public void ApplyDiscount(decimal discount)
         {
