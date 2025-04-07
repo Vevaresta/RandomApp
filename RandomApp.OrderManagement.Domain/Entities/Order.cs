@@ -80,6 +80,24 @@ namespace RandomApp.OrderManagement.Domain.Entities
             LastModified = DateTime.UtcNow;
         }
 
+        public void Ship()
+        {
+            if (PaymentStatus != PaymentStatus.Paid)
+                throw new DomainException("Order must be paid before shipping.");
+
+            OrderStatus = OrderStatus.Shipped;
+            LastModified = DateTime.UtcNow;
+        }
+
+        public void Deliver()
+        {
+            if (OrderStatus != OrderStatus.Shipped)
+                throw new DomainException("Order must be shipped before delivery.");
+
+            OrderStatus = OrderStatus.Delivered;
+            LastModified = DateTime.UtcNow;
+        }
+
 
         public void ApplyDiscount(decimal discount)
         {
