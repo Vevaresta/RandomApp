@@ -113,5 +113,14 @@ namespace RandomApp.OrderManagement.Domain.Entities
             LastModified = DateTime.UtcNow;
         }
 
+        public void ClearItems()
+        {
+            if (OrderStatus != OrderStatus.Pending)
+                throw new DomainException("Can't clear items after order confirmation");
+
+            _orderItems.Clear();
+            LastModified = DateTime.UtcNow;
+        }
+
     }
 }
