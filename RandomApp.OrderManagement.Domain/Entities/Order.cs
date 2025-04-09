@@ -107,6 +107,12 @@ namespace RandomApp.OrderManagement.Domain.Entities
             Discount = discount;
         }
 
+        public void RemoveDiscount()
+        {
+            Discount = 0;
+            LastModified = DateTime.UtcNow;
+        }
+
         public void AddItem(OrderItem item)
         {
             _orderItems.Add(item ?? throw new DomainException("Order item can't be null."));
@@ -121,6 +127,7 @@ namespace RandomApp.OrderManagement.Domain.Entities
             _orderItems.Clear();
             LastModified = DateTime.UtcNow;
         }
+
 
     }
 }
