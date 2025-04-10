@@ -128,6 +128,18 @@ namespace RandomApp.OrderManagement.Domain.Entities
             LastModified = DateTime.UtcNow;
         }
 
+        public void RemoveItem(int productId)
+        {
+            if (OrderStatus != OrderStatus.Pending)
+                throw new DomainException("Can't modify order after confirmations.");
+
+            var itemToRemove = _orderItems.FirstOrDefault(item => item.ProductId == productId)
+                ?? throw new DomainException($"Product {productId} not found in order.");
+
+            _orderItems.Remove(itemToRemove);
+            LastModified = DateTime.UtcNow;
+        }
+
 
     }
 }
