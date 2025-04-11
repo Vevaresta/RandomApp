@@ -2,9 +2,10 @@
 {
     public enum PaymentMethod
     {
-        CreditCard = 0,
+        None = 0,
         PayPal = 1,
         Stripe = 2,
         Klarna = 3,
+        CreditCard = 4,
     }
 }

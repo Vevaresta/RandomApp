@@ -140,6 +140,22 @@ namespace RandomApp.OrderManagement.Domain.Entities
             LastModified = DateTime.UtcNow;
         }
 
+        public void MarkAsPaid(PaymentMethod paymentMethod, decimal amountPaid)
+        {
+            if (Math.Abs(amountPaid - Total) > 0.01m)
+                throw new DomainException($"Paid amount {amountPaid} doesn't match order total {Total}");
 
+            if (OrderStatus != OrderStatus.Confirmed)
+                throw new DomainException(OrderStatus == OrderStatus.Pending
+                    ? "Order must be confirmed before payment"
+                    : $"Can't pay order in {OrderStatus} status");
+
+            if (paymentMethod == PaymentMethod.None)
+                throw new DomainException("Payment method must be specified");
+
+            PaymentMethod = paymentMethod;
+            PaymentStatus = PaymentStatus.Paid;
+            LastModified = DateTime.UtcNow;
+        }
     }
 }
