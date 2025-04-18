@@ -6,7 +6,7 @@ namespace RandomApp.ProductManagement.Domain.Entities
 {
     public class Product
     {
-        public Guid Id { get; private set; }
+        public int Id { get; private set; }
 
         public int OriginalApiId { get; private set; }
 
@@ -44,8 +44,7 @@ namespace RandomApp.ProductManagement.Domain.Entities
                 throw new DomainException("Original API ID must be positive");
 
             return new Product
-            {
-                Id = Guid.NewGuid(),
+            {              
                 OriginalApiId = originalApiId,
                 Name = name,
                 Price = price ?? throw new DomainException("Price can't be null"),

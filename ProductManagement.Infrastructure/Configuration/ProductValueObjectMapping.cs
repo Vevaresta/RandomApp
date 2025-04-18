@@ -13,7 +13,7 @@ namespace RandomApp.ProductManagement.Infrastructure.Configuration
 
             builder.OwnsOne(product => product.Price, price =>
             {
-                price.Property(product => product.Amount).HasColumnName("Price");
+                price.Property(product => product.Amount).HasColumnName("Price").HasPrecision(18, 2);
                 price.Property(product => product.Currency).HasColumnName("Currency");
             });
 
