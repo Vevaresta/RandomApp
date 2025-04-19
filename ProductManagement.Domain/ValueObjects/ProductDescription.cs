@@ -4,7 +4,7 @@ namespace RandomApp.ProductManagement.Domain.ValueObjects
 {
     public record ProductDescription
     {
-        private const int MaxLength = 100;
+        private const int MaxLength = 1000;
         public string Value { get; private init; }
 
         public ProductDescription(string description)

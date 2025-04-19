@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using RandomApp.ProductManagement.Application.Services.Interfaces;
 using RandomApp.ProductManagement.Infrastructure.Persistence;
 using RandomApp.ProductManagement.Infrastructure.RepositoryImplementation;
+using RandomApp.ProductManagement.Infrastructure.Services;
 using RandomApp.ProductManagement.Infrastructure.Services.ExternalApi;
 
 
@@ -20,8 +21,10 @@ namespace RandomApp.ProductManagement.Infrastructure.Configuration
             services.AddSingleton<ProductSyncService>();
             services.AddSingleton<IHostedService>(sp => sp.GetRequiredService<ProductSyncService>());
             services.AddSingleton<IProductSyncService>(sp => sp.GetRequiredService<ProductSyncService>());
+            services.AddScoped<IProductService, FakeStoreProductService>();
 
-            services.AddScoped<IProductService, ProductService>();
+
+            services.AddScoped<IProductDbService, ProductDbService>();
 
         }
 
