@@ -13,7 +13,7 @@ namespace RandomApp.ProductManagement.Application.Mapping
         {
             CreateMap<ProductDto, Product>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.OriginalApiId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.OriginalApiId, opt => opt.MapFrom(src => src.OriginalApiId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => new Price(src.Amount, src.Currency ?? "USD")))
                 .ForMember(dest => dest.SKU, opt => opt.MapFrom(src => SKU.Create(src.SKU)))
@@ -23,7 +23,8 @@ namespace RandomApp.ProductManagement.Application.Mapping
 
 
             CreateMap<Product, ProductDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.OriginalApiId))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.OriginalApiId, opt => opt.MapFrom(src => src.OriginalApiId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Price.Amount))
                 .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Price.Currency))

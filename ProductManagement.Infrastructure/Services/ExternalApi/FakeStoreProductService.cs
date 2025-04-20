@@ -40,18 +40,22 @@ namespace RandomApp.ProductManagement.Infrastructure.Services.ExternalApi
                 return new List<ProductDto>();
             }
 
-            var productDtos = fakeStoreProducts.Select(fakeProduct => new ProductDto
+
+            var productDtos = fakeStoreProducts
+                .Where(fakeProduct => !string.IsNullOrEmpty(fakeProduct.Title))
+                .Select(fakeProduct => new ProductDto
             {
-                Id = fakeProduct.Id,
+                Id = 0,
+                OriginalApiId = fakeProduct.Id,
                 Name = fakeProduct.Title,
                 Amount = fakeProduct.Price,
                 Currency = DefaultCurrency,
-                SKU = GenerateSku(fakeProduct.Id),
+                SKU = GenerateSku(fakeProduct.Id > 0 ? fakeProduct.Id : 1),
                 Category = NormalizeCategory(fakeProduct.Category),
                 ProductDescription = fakeProduct.Description,
                 Image = fakeProduct.Image
             })
-            .Where(dto => !string.IsNullOrEmpty(dto.Name)).ToList();
+            .ToList();
 
             return productDtos;
         }
