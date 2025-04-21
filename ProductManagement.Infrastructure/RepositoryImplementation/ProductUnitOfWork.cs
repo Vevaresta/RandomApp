@@ -1,4 +1,5 @@
 ﻿using Common.Shared.Repositories;
+using NLog;
 using RandomApp.ProductManagement.Infrastructure.Persistence;
 
 namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
@@ -8,9 +9,11 @@ namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
         private readonly ProductDbContext _context;
         private bool _disposed;
 
+
         public ProductUnitOfWork(ProductDbContext context)
         {
             _context = context;
+
         }
 
         public int Complete()
@@ -22,6 +25,7 @@ namespace RandomApp.ProductManagement.Infrastructure.RepositoryImplementation
         {
             return await _context.SaveChangesAsync();
         }
+
 
         protected virtual void Dispose(bool disposing)
         {

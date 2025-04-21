@@ -26,6 +26,7 @@ namespace RandomApp.ProductManagement.Application.Orchestrators
 
         public async Task<SyncResult> SyncProducts()
         {
+
             var productDtos = await _productService.GetProductsFromApiAsync();
             if (!productDtos.Any())
             {
